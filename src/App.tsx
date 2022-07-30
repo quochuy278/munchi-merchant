@@ -1,25 +1,64 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Card, Container, styled, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import React from "react";
+
+import "./App.css";
+import Header from "./components/layout/Header";
+import PendingList from "./components/pendingitem/PendingList";
+import MainContent from "./container/MainContent";
+
+
+const CustomCard = styled(Card)(({ theme }) => ({
+  backgroundColor: "white",
+  height: "25px",
+  width: "25px",
+  textAlign: "center",
+  fontWeight: 700,
+  color: "#909090",
+}));
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MainContent>
+      <Box component="div" className="box" draggable={'false'}>
+        <Box className="wrapper">
+          <Box component="div" className="title__container">
+            <Typography
+              variant="h4"
+              className="title"
+              sx={{ marginRight: "10px" }}
+            >
+              Incoming
+            </Typography>
+            {/* card number */}
+            <CustomCard className="card">2</CustomCard>
+          </Box>
+          <Box component="div" className="main__content">
+            {/* main box content */}
+          </Box>
+          <Box component={"div"} draggable={false}>
+            <Container maxWidth={'lg'} sx={{marginTop: "10px"}}>
+              <PendingList/>
+            </Container>
+          </Box>
+        </Box>
+      </Box>
+      <Box component="div" className="box">
+        <Box className="wrapper">
+          <Box component="div" className="title__container">
+            <Typography variant="h4" sx={{ marginRight: "10px" }}>
+              Accepted
+            </Typography>
+            {/* card number */}
+            <CustomCard>2</CustomCard>
+          </Box>
+          <Box component="div" className="main__content">
+            {/* main box content */}
+          </Box>
+          dadasda
+        </Box>
+      </Box>
+    </MainContent>
   );
 }
 
