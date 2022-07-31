@@ -8,7 +8,7 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 export default function Header() {
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
+      <AppBar position="static">
         <Toolbar>
           <IconButton
             size="large"

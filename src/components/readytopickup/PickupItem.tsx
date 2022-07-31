@@ -67,7 +67,7 @@ const CustomCard = styled(Card)(({ theme }) => ({
     marignRight: "10px",
   },
 }));
-export default function Pendingitem(props: any) {
+export default function PickupItem(props: any) {
   const { id, user, items, note } = props.data;
   console.log(id, user, items);
   return (
@@ -104,8 +104,9 @@ export default function Pendingitem(props: any) {
             <Button
               variant="contained"
               sx={{ width: "100%", padding: 2, borderRadius: "15px" }}
+              color="success"
             >
-              Check
+            Mark as done
             </Button>
           </Box>
         </Box>

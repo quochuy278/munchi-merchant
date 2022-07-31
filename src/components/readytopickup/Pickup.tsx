@@ -1,6 +1,7 @@
 import { Box } from "@mui/system";
 import React, { Fragment } from "react";
-import Pendingitem from "./Pendingitem";
+import PickupItem from "./PickupItem";
+import Pendingitem from "./PickupItem";
 
 const DUMMY_DATA = [
   {
@@ -50,12 +51,12 @@ const DUMMY_DATA = [
   
 ];
 
-export default function PendingList() {
+export default function Pickup() {
   return (
     <Fragment>
       <Box sx={{display: "flex"}}> 
         {DUMMY_DATA.map((data) => {
-          return <Pendingitem data={data} id={data.id} />;
+          return <PickupItem data={data} id={data.id} />;
         })}
       </Box>
     </Fragment>

@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { Fragment } from 'react'
+import AcceptedItem from './AcceptedItem';
 
 const DUMMY_DATA = [
   {
@@ -29,6 +30,10 @@ const DUMMY_DATA = [
 
 export default function AcceptedList() {
   return (
-    <div>AcceptedList</div>
-  )
+    <Fragment>
+      {DUMMY_DATA.map((data) => {
+        return <AcceptedItem data={data} id={data.id} />;
+      })}
+    </Fragment>
+  );
 }
