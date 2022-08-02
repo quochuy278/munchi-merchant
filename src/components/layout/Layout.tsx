@@ -8,7 +8,7 @@ type Props = {
 
 export default function Layout({children} : Props) {
   return (
-    <div className={styles.app__container} draggable={false}>
+    <div className={styles.app__container}>
       <Header />
       <main>{children}</main>
       <Footer />

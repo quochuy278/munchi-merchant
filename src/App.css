@@ -1,75 +1,20 @@
-.content__container{
-  background-color: #909090;
-  width: 40% !important;
-  height: 100vh;
+
+.section__container {
+  height: calc(100% - 20px) !important;
+  padding: "10px";
+  background-color: #E8EAEE;
   border-radius: 10px;
 }
 
-.wrapper {
-  margin-top: 20px;
-  margin-left: 20px;
-  margin: auto;
+.section__header {
+  padding: 20px
 }
 
-
-.title {
-  margin-right: 10px;
-}
-
-.main__content {
-  flex: 1;
-  background-color: black;
-}
-
-.title__container {
-  align-items: center;
-}
-.boxCard {
-  height: calc(50% - 20px) !important;
-  max-height: calc(50% - 20px)  !important;
-}
-.right {
-  /* max-height: calc(100% -20px); */
-  height: calc(100% -20px);
+.card__container {
   overflow: scroll;
 }
-@media only screen and (min-width: 768px) and (max-width: 1324px) {
-  .main__content__container {
-    width: 50%;
-    margin-bottom: 20px;
-    height: 300px;
-  
-  }
-  
-  .content__container{
-  background-color: #909090;
-  width: 40% !important ; 
-  height: 100vh !important;
-  border-radius: 10px;
-  padding: 0 !important;
-}
-.wrapper {
-  margin-right: 20px !important;
-  padding: 15px !important;
-}
-
-
-.title {
-  margin-right: 10px;
-}
-
-.main__content {
-  flex: 1;
-  background-color: black;
-}
-
-.title__container {
-  align-items: center;
-}
-
-.first__content__container {
-  background-color: #909090;
-  border-radius: 10px;
-  height: 21.25rem;
+@media only screen and (min-width: 768px) and (max-width: 1184px) {
+ .card__container {
+  overflow: scroll;
 }
 }

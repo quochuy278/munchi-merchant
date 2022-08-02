@@ -3,12 +3,18 @@ import { Box } from "@mui/system";
 import React from "react";
 
 import "./App.css";
-import AcceptedList from "./components/accepteditem/AcceptedList";
+
 import Header from "./components/layout/Header";
-import PendingList from "./components/pendingitem/PendingList";
+
 import MainContent from "./container/MainContent";
 import Paper from "@mui/material/Paper";
-import Pickup from "./components/readytopickup/Pickup";
+
+import BaseActionCard from "./components/actioncard/BaseActionCard";
+import {
+  AcceptedButton,
+  PendingButton,
+  ReadyButton,
+} from "./components/actioncard/ActionButton";
 const CustomCard = styled(Card)(({ theme }) => ({
   backgroundColor: "white",
   height: "25px",
@@ -17,13 +23,21 @@ const CustomCard = styled(Card)(({ theme }) => ({
   fontWeight: 700,
   color: "#909090",
 }));
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
+
+const CustomeTypography = styled(Typography)(({ theme }) => ({
+  color: "black",
+  fontSize: "16px",
+  fontWeight: 600,
 }));
+
+const CustomeBox = styled(Box)(({ theme }) => ({
+  height: "26px",
+  width: "26px",
+  backgroundColor: "white",
+  textAlign: "center",
+  marginLeft: "10px",
+}));
+
 function App() {
   return (
     <MainContent>
@@ -31,60 +45,60 @@ function App() {
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
         gap={2}
-        sx={{ width: "100%", backgroundColor: "black", padding: "20px" }}
+        sx={{ width: "100%", padding: "10px" }}
       >
-        <Box gridColumn="span 7" sx={{ backgroundColor: "green" }}>
-          <Box
-            gridColumn="span 12"
-            sx={{
-              backgroundColor: "red",
-              height: "calc(50% -20px)",
-              padding: "10px",
-            }}
-            className="boxCard"
-          >
-            <Typography variant="h5">Incoming</Typography>
-            <PendingList />
+        <Box gridColumn="span 4" className="section__container">
+          <Box gridColumn="span 2" className="section__header" display="flex">
+            <CustomeTypography variant="h5">Pending</CustomeTypography>
+            <CustomeBox>2</CustomeBox>
           </Box>
           <Box
-            gridColumn="span 12"
-            sx={{
-              backgroundColor: "yellow",
-              height: "calc(50% -20px)",
-              padding: "10px",
-            }}
-            className="boxCard"
+            display="grid"
+            className="card__container"
+            gridTemplateColumns="repeat(1, 1fr)"
+            gap={2}
+            paddingX={2}
           >
-            <Typography variant="h5"> Ready to pick up</Typography>
-          <Pickup/>
+            <BaseActionCard>
+              <PendingButton />
+            </BaseActionCard>
           </Box>
         </Box>
-        <Box
-          gridColumn="span 5"
-          sx={{ backgroundColor: "blue" }}
-          className="right"
-        >
-          <Typography variant="h5">In progress</Typography>
-          <AcceptedList />
-          {/* <PendingList /> */}
-        </Box>
-        {/* <Box gridColumn="span 6" gap={2}>
+        <Box gridColumn="span 4" className="section__container">
+          <Box gridColumn="span 2" className="section__header" display="flex">
+            <CustomeTypography variant="h5">Accepted</CustomeTypography>
+            <CustomeBox>2</CustomeBox>
+          </Box>
           <Box
-            display="flex"
-            flexDirection="column"
-            justifyContent="space-evenly"
+            display="grid"
+            className="card__container"
+            gridTemplateColumns="repeat(1, 1fr)"
+            gap={2}
+            paddingX={2}
           >
-            <Box gridColumn="span 3">
-              <Box sx={{ height: "50%", backgroundColor: "red" }}>Hello</Box>
-            </Box>
-            <Box gridColumn="span 3">
-              <Box>Hello</Box>
-            </Box>
+            <BaseActionCard>
+              <AcceptedButton />
+            </BaseActionCard>
           </Box>
         </Box>
-        <Box gridColumn="span 6">
-          <Item>xs=6</Item>
-        </Box> */}
+
+        <Box gridColumn="span 4" className="section__container">
+          <Box gridColumn="span 2" className="section__header" display="flex">
+            <CustomeTypography variant="h5">Ready</CustomeTypography>
+            <CustomeBox>2</CustomeBox>
+          </Box>
+          <Box
+            display="grid"
+            className="card__container"
+            gridTemplateColumns="repeat(1, 1fr)"
+            gap={2}
+            paddingX={2}
+          >
+            <BaseActionCard>
+              <ReadyButton />
+            </BaseActionCard>
+          </Box>
+        </Box>
       </Box>
     </MainContent>
   );

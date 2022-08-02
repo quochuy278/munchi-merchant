@@ -7,5 +7,5 @@ type Props = {
 };
 
 export default function MainContent({children}: Props) {
-  return <div className={styles.container} draggable={false}>{children}</div>;
+  return <div className={styles.container}>{children}</div>;
 }
