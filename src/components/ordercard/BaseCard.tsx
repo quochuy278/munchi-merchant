@@ -5,6 +5,8 @@ import styles from "./baseactioncard.module.css";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { OrderInfo, OrdersObject } from "../../store/OrderSlice";
+import { AcceptedButtonFooter, PendingButtonFooter, ReadyButtonFooter } from "./Footer";
 
 const Item1 = {
   items: [
@@ -56,16 +58,33 @@ const Item2 = {
 type Props = {
   children?: JSX.Element | JSX.Element[];
   footer?: ( id:string ) => JSX.Element | JSX.Element[];
+  itemData?: OrderInfo[]
 };
+const filterStatusCard = (status: string) => {
+  let FooterButton = <></>;
 
-export default function BaseCard({ footer }: Props) {
-  const orders = useSelector((state: RootState) => state.order.orders);
-  console.log(orders);
+    if (status === "pending") {
+      FooterButton = <BaseCard footer={() => <PendingButtonFooter />} />;
+    } else if (status === "accepted") {
+      FooterButton = <BaseCard footer={() => <AcceptedButtonFooter />} />;
+    } else if (status === "ready") {
+      FooterButton = <BaseCard footer={() => <ReadyButtonFooter />} />;
+    }
+  return FooterButton as JSX.Element;
+};
+export default function BaseCard({ footer, itemData = [] }: Props) {
+  
+  console.log(itemData)
+  if( itemData == undefined) {
+    return <div>
+      Something wrong happned
+    </div>
+  }
   return (
     <>
-      {orders.map((order) => {
+      {itemData.map((order) => {
         return (
-          <Box className={styles.main__card__container}>
+          <Box className={styles.main__card__container} key={order.id}>
             <Box
               display="flex"
               sx={{ width: "100%" }}
@@ -143,7 +162,7 @@ export default function BaseCard({ footer }: Props) {
                 {order.note}
               </Typography>
             </Card>
-            <Box>{footer?.(order.id)}</Box>
+            <Box>{filterStatusCard(order.status)}</Box>
           </Box>
         );
       })}

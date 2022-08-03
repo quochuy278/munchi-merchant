@@ -1,5 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
-import type { PayloadAction } from "@reduxjs/toolkit";
+
+
+export type Item = {
+  id: number;
+  quantity: number;
+  name: string;
+};
+
+export type OrdersObject = OrderInfo[];
+
+export type OrderInfo = {
+  id: string;
+  status: string;
+  name: string;
+  items: Item[];
+  note: string;
+};
 
 const initialState = {
   orders: [
@@ -109,14 +125,14 @@ const initialState = {
     },
   ],
 };
-
-export const counterSlice = createSlice({
-  name: "counter",
+// bring orders
+export const orderSlice = createSlice({
+  name: "order",
   initialState,
   reducers: {},
 });
 
 // Action creators are generated for each case reducer function
-export const {} = counterSlice.actions;
+export const {} = orderSlice.actions;
 
-export default counterSlice.reducer;
+export default orderSlice.reducer;

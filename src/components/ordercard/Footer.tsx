@@ -13,7 +13,7 @@ const CustomPendingButton = styled(Button)(({ theme }) => ({
   border: "none",
 }));
 
-export const ReadyButton = () => {
+export const ReadyButtonFooter = () => {
   return (
     <Button
       variant="contained"
@@ -35,7 +35,7 @@ export const ReadyButton = () => {
   );
 };
 
-export const AcceptedButton = () => {
+export const AcceptedButtonFooter = () => {
    const orders = useSelector((state: RootState) => state.order.orders);
   return (
     <Box
@@ -84,19 +84,14 @@ export const AcceptedButton = () => {
   );
 };
 
-export const PendingButton = ({props} : any) => {
+export const PendingButtonFooter = ({props} : any) => {
   const [prepTime, setPrepTime] = useState(0);
   const [selectedStyle, setSelectedStyle] = useState(false)
   const presetPreparationTimes = [5, 10, 20];
-  console.log(props)
   const setTimeHandler = (event: any, time: number) => {
     event.preventDefault();
     event.stopPropagation();
     setPrepTime(time);
-    console.log(
-      "🚀 ~ file: ActionButton.tsx ~ line 91 ~ setTimeHandler ~ event.target.value",
-      prepTime
-    );
   };
   
   return (
