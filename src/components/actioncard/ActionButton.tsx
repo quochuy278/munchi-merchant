@@ -3,6 +3,9 @@ import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 import CloseIcon from "@mui/icons-material/Close";
+import { SyntheticEvent, useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 const CustomPendingButton = styled(Button)(({ theme }) => ({
   width: "calc(100% -10px)",
   height: "54px",
@@ -33,6 +36,7 @@ export const ReadyButton = () => {
 };
 
 export const AcceptedButton = () => {
+   const orders = useSelector((state: RootState) => state.order.orders);
   return (
     <Box
       display="flex"
@@ -80,108 +84,84 @@ export const AcceptedButton = () => {
   );
 };
 
-export const PendingButton = () => {
+export const PendingButton = ({props} : any) => {
+  const [prepTime, setPrepTime] = useState(0);
+  const [selectedStyle, setSelectedStyle] = useState(false)
+  const presetPreparationTimes = [5, 10, 20];
+  console.log(props)
+  const setTimeHandler = (event: any, time: number) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setPrepTime(time);
+    console.log(
+      "🚀 ~ file: ActionButton.tsx ~ line 91 ~ setTimeHandler ~ event.target.value",
+      prepTime
+    );
+  };
+  
   return (
     <Box
       display="grid"
       gridTemplateColumns="repeat(3, 1fr)"
       sx={{ marginTop: "10px" }}
-      gap={2}
+      rowGap={2}
     >
-      <Box gridColumn="span 1">
-        <Button
-          variant="outlined"
-          sx={{
-            width: "78px",
-            height: "54px",
-            backgroundColor: "#F3F5F7",
-            borderRadius: "8px",
-            border: "none",
-          }}
-        >
-          <Box display="flex" flexDirection="column">
-            <Typography
-              sx={{ color: "#000000" }}
-              fontSize="16px"
-              lineHeight="21px"
-              fontWeight={600}
+      {presetPreparationTimes.map((time) => {
+       
+        return (
+          <Box gridColumn="span 1" key={Math.random()}>
+            <Button
+              variant="outlined"
+              sx={{
+                width: "78px",
+                height: "54px",
+                backgroundColor: "#F3F5F7",
+                borderRadius: "8px",
+                border: "none",
+                "&:focus": {
+                  backgroundColor: "#F1F6ED",
+                  "&:focus ,&.MuiTypography-root": {
+                    color: "#74A047",
+                  },
+                },
+                "&:hover": {
+                  border: "none",
+                  backgroundColor: "none",
+                },
+              }}
+              onClick={(event) => setTimeHandler(event, time)}
+              type="submit"
+              disableFocusRipple={true}
+              disableTouchRipple={true}
             >
-              5
-            </Typography>
-            <Typography
-              sx={{ color: "#000000" }}
-              fontSize="7px"
-              lineHeight="9px"
-              textTransform="none"
-            >
-              min.
-            </Typography>
+              <Box display="flex" flexDirection="column">
+                <Typography
+                sx={{color: "#000000"}}
+                  fontSize="16px"
+                  lineHeight="21px"
+                  fontWeight={600}
+                >
+                  {time}
+                </Typography>
+                <Typography
+                  sx={{
+                    color: "#000000",
+                    "&:focus": {
+                      color: "#red",
+                    },
+                  }}
+                  fontSize="7px"
+                  lineHeight="9px"
+                  textTransform="none"
+                >
+                  min.
+                </Typography>
+              </Box>
+            </Button>
           </Box>
-        </Button>
-      </Box>
-      <Box gridColumn="span 1">
-        <Button
-          variant="outlined"
-          sx={{
-            width: "78px",
-            height: "54px",
-            backgroundColor: "#F3F5F7",
-            borderRadius: "8px",
-            border: "none",
-          }}
-        >
-          <Box display="flex" flexDirection="column">
-            <Typography
-              sx={{ color: "#000000" }}
-              fontSize="16px"
-              lineHeight="21px"
-              fontWeight={600}
-            >
-              10
-            </Typography>
-            <Typography
-              sx={{ color: "#000000" }}
-              fontSize="7px"
-              lineHeight="9px"
-              textTransform="none"
-            >
-              min.
-            </Typography>
-          </Box>
-        </Button>
-      </Box>
-      <Box gridColumn="span 1">
-        {" "}
-        <Button
-          variant="outlined"
-          sx={{
-            width: "78px",
-            height: "54px",
-            backgroundColor: "#F3F5F7",
-            borderRadius: "8px",
-            border: "none",
-          }}
-        >
-          <Box display="flex" flexDirection="column">
-            <Typography
-              sx={{ color: "#000000" }}
-              fontSize="16px"
-              lineHeight="21px"
-              fontWeight={600}
-            >
-              20
-            </Typography>
-            <Typography
-              sx={{ color: "#000000" }}
-              fontSize="7px"
-              lineHeight="9px"
-              textTransform="none"
-            >
-              min.
-            </Typography>
-          </Box>
-        </Button>
-      </Box>
+        );
+      })}
+
       <Box gridColumn="span 1">
         <Button
           variant="outlined"
@@ -191,7 +171,18 @@ export const PendingButton = () => {
             backgroundColor: "#FDF4F3",
             borderRadius: "8px",
             border: "none",
+            "&:focus": {
+              backgroundColor: "red",
+              svg: {
+                color: "black",
+              },
+            },
+            "&:hover": {
+              border: "none",
+              backgroundColor: "#FDF4F3",
+            },
           }}
+          disableRipple={true}
         >
           <Box display="flex" flexDirection="column">
             <CloseIcon sx={{ color: "#FF5F5F" }} />
@@ -201,8 +192,9 @@ export const PendingButton = () => {
 
       <Box gridColumn="span 2">
         <CustomPendingButton
-          variant="contained"
-          style={{ width: "calc(100% - 13px)" }}
+          {...(prepTime ? { variant: "contained" } : { disabled: true })}
+          style={{ width: `calc(100% - 10px` }}
+          href="/detail"
         >
           Accept
         </CustomPendingButton>
