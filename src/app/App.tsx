@@ -2,7 +2,7 @@ import { Card } from "@mui/material";
 import { Route, Link, Routes } from "react-router-dom";
 
 import "./App.css";
-import { DetailPage, MainPage } from "./pages";
+import { DetailPage, MainPage } from "../pages";
 
 function App() {
   return (

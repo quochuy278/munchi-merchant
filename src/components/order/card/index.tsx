@@ -4,9 +4,8 @@ import React, { Fragment } from "react";
 import styles from "./baseactioncard.module.css";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { OrderInfo, OrdersObject } from "../../store/OrderSlice";
-import { AcceptedButtonFooter, PendingButtonFooter, ReadyButtonFooter } from "./Footer";
+import { OrderInfo, OrdersObject } from "../../../store/OrderSlice";
+import { AcceptedButtonFooter, PendingButtonFooter, ReadyButtonFooter } from "./footer";
 
 const Item1 = {
   items: [

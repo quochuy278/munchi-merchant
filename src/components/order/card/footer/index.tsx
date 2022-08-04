@@ -5,7 +5,7 @@ import { Box } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 import { SyntheticEvent, useState } from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { RootState } from "../../../../store";
 const CustomPendingButton = styled(Button)(({ theme }) => ({
   width: "calc(100% -10px)",
   height: "54px",

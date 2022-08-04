@@ -3,20 +3,16 @@ import {
   AcceptedButtonFooter,
   PendingButtonFooter,
   ReadyButtonFooter,
-} from "../../components/ordercard/Footer";
-import MainContent from "../../container/MainContent";
-import BaseActionCard from "../../components/ordercard/BaseCard";
+} from "../../components/order/card/footer";
+import MainContent from "../../components/container/MainContent";
 import styled from "@emotion/styled";
 import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import styles from "./mainpage.module.css";
-import PendingCardList from "../../components/cartlist/PendingCardList";
-import AcceptedCardList from "../../components/cartlist/AcceptedCardList";
-import { OrdersObject } from "../../store/OrderSlice";
-import { useState } from "react";
-import BaseCard from "../../components/ordercard/BaseCard";
-import ReadyCardList from "../../components/cartlist/ReadyCardList";
+import OrderCardList from "../../components/order/list";
+import BaseCard from "../../components/order/card";
+
 
 const CustomeTypography = styled(Typography)(({ theme }) => ({
   color: "black",
@@ -71,15 +67,15 @@ const MainPage = () => {
             <CustomeTypography variant="h5">Pending</CustomeTypography>
             <CustomeBox>2</CustomeBox>
           </Box>
-          <PendingCardList>
+          <OrderCardList>
             <BaseCard itemData={pendingOrders}>
               <PendingButtonFooter />
             </BaseCard>
-          </PendingCardList>
+          </OrderCardList>
         </Box>
 
         {/* Accepted */}
-{/* 
+        {/* 
         <Box gridColumn="span 4" className={styles.section__container}>
           <Box
             gridColumn="span 2"
@@ -89,11 +85,11 @@ const MainPage = () => {
             <CustomeTypography variant="h5">Accepted</CustomeTypography>
             <CustomeBox>2</CustomeBox>
           </Box>
-          <AcceptedCardList>
+          <OrderCardList>
             <BaseCard itemData={acceptedOrders}>
               <AcceptedCardList />
             </BaseCard>
-          </AcceptedCardList>
+          </OrderCardList>
         </Box> */}
 
         {/* Ready */}
@@ -114,11 +110,11 @@ const MainPage = () => {
             gap={2}
             paddingX={2}
           >
-            <ReadyCardList>
+            <OrderCardList>
               <BaseCard itemData={readyOrders}>
                 <ReadyButton />
               </BaseCard>
-            </ReadyCardList>
+            </OrderCardList>
           </Box>
         </Box> */}
       </Box>
