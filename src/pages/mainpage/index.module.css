@@ -2,18 +2,21 @@
   height: calc(100% - 20px) !important;
   background-color: #E8EAEE;
   border-radius: 10px;
-}
+  overflow: scroll;
 
+}
+.section__container::-webkit-scrollbar {
+  display: none;
+}
 .section__header {
   padding: 20px
 }
 
-/* .card__container {
- 
-} */
-
 @media only screen and (min-width: 768px) and (max-width: 1184px) {
  .card__container {
   overflow: scroll;
+
+
+
 }
 }
