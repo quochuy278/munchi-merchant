@@ -1,0 +1,22 @@
+.section__container {
+  height: calc(100% - 20px) !important;
+  background-color: #e8eaee;
+  border-radius: 10px;
+  overflow: scroll;
+  -ms-overflow-style: none;
+}
+
+.title__container {
+background-color: #e8eaee;
+height: 55px;
+grid-row-start: 1;
+grid-row-end: 2;
+}
+.detail__container {
+    padding: 10px;
+}
+.detail__content {
+    background-color: #e8eaee;
+    height: calc(100vh - 120px );
+    border-radius: 8px;
+}

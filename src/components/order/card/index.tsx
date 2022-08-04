@@ -1,87 +1,20 @@
-import { Card, Divider, IconButton, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import React, { Fragment } from "react";
-import styles from "./baseactioncard.module.css";
 import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
-import { useDispatch, useSelector } from "react-redux";
-import { OrderInfo, OrdersObject } from "../../../store/OrderSlice";
-import { AcceptedButtonFooter, PendingButtonFooter, ReadyButtonFooter } from "./footer";
+import { Card, IconButton, Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import OrderFooter from "./footer";
+import styles from "./index.module.css";
 
-const Item1 = {
-  items: [
-    {
-      id: 1,
-      quantity: 1,
-      name: "Veggie burger with margarita on top of The burger double patty.",
-    },
-    {
-      id: 2,
-      quantity: 2,
-      name: "Juicy Original without mayo",
-    },
-    {
-      id: 3,
-      quantity: 1,
-      name: "Cuban Fritata",
-    },
-    {
-      id: 4,
-      quantity: 1,
-      name: "The New York",
-    },
-  ],
-  note: "No tomatoe please",
-};
-
-const Item2 = {
-  items: [
-    {
-      id: 1,
-      quantity: 1,
-      name: "Veggie taco",
-    },
-    {
-      id: 2,
-      quantity: 1,
-      name: "Sweet potato fries(modified)",
-    },
-    {
-      id: 3,
-      quantity: 1,
-      name: "Chicken Taco",
-    },
-  ],
-  note: "No cultery please",
-};
 
 type Props = {
   children?: JSX.Element | JSX.Element[];
   footer?: ( id:string ) => JSX.Element | JSX.Element[];
-  itemData?: OrderInfo[]
+  ordersData?: any
 };
-const filterStatusCard = (status: string) => {
-  let FooterButton = <></>;
 
-    if (status === "pending") {
-      FooterButton = <BaseCard footer={() => <PendingButtonFooter />} />;
-    } else if (status === "accepted") {
-      FooterButton = <BaseCard footer={() => <AcceptedButtonFooter />} />;
-    } else if (status === "ready") {
-      FooterButton = <BaseCard footer={() => <ReadyButtonFooter />} />;
-    }
-  return FooterButton as JSX.Element;
-};
-export default function BaseCard({ footer, itemData = [] }: Props) {
-  
-  console.log(itemData)
-  if( itemData == undefined) {
-    return <div>
-      Something wrong happned
-    </div>
-  }
+export default function OrderCard({ ordersData }: Props) {
   return (
     <>
-      {itemData.map((order) => {
+      {ordersData.map((order:any) => {
         return (
           <Box className={styles.main__card__container} key={order.id}>
             <Box
@@ -135,7 +68,7 @@ export default function BaseCard({ footer, itemData = [] }: Props) {
               Today at 15:30
             </Typography>
             <Box className={styles.card__item__container}>
-              {order.items.map((item) => {
+              {order.items.map((item:any) => {
                 return (
                   <Box sx={{ padding: "3px", textAlign: "left" }} key={item.id}>
                     <Typography
@@ -161,7 +94,7 @@ export default function BaseCard({ footer, itemData = [] }: Props) {
                 {order.note}
               </Typography>
             </Card>
-            <Box>{filterStatusCard(order.status)}</Box>
+           <OrderFooter orderStatus={order.status} orderId={order.id} />
           </Box>
         );
       })}

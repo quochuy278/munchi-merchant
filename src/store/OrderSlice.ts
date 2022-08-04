@@ -20,7 +20,7 @@ export type OrderInfo = {
 const initialState = {
   orders: [
     {
-      id: "#4225",
+      id: "4225",
       status: "pending",
       name: " Mario H.",
       items: [
@@ -48,7 +48,7 @@ const initialState = {
       note: "No tomatoe please",
     },
     {
-      id: "#4210",
+      id: "4210",
       name: " Julia K.",
       status: "accepted",
       items: [
@@ -86,7 +86,7 @@ const initialState = {
       note: "No tomatoe please",
     },
     {
-      id: "#4210",
+      id: "4210",
       name: " Julia K.",
       status: "ready",
       items: [

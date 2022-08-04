@@ -1,4 +1,4 @@
-import MainPage from "./mainpage/MainPage";
-import DetailPage from "./detailpage/DetailPage";
+import MainPage from "./mainpage";
+import DetailPage from "./detailpage";
 
 export {MainPage, DetailPage}

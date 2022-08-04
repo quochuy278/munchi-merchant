@@ -1,6 +1,5 @@
 .section__container {
   height: calc(100% - 20px) !important;
-  padding: "10px";
   background-color: #E8EAEE;
   border-radius: 10px;
 }

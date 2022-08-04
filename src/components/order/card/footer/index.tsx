@@ -3,17 +3,22 @@ import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
 import CloseIcon from "@mui/icons-material/Close";
-import { SyntheticEvent, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store";
+
 const CustomPendingButton = styled(Button)(({ theme }) => ({
   width: "calc(100% -10px)",
   height: "54px",
   borderRadius: "8px",
   border: "none",
 }));
+type Props = {
+  orderStatus: string;
+  orderId: string;
+};
 
-export const ReadyButtonFooter = () => {
+export const ReadyFooter = ({ orderStatus, orderId }: Props) => {
   return (
     <Button
       variant="contained"
@@ -35,8 +40,8 @@ export const ReadyButtonFooter = () => {
   );
 };
 
-export const AcceptedButtonFooter = () => {
-   const orders = useSelector((state: RootState) => state.order.orders);
+export const AcceptedFooter = ({ orderStatus, orderId }: Props) => {
+  const orders = useSelector((state: RootState) => state.order.orders);
   return (
     <Box
       display="flex"
@@ -84,16 +89,16 @@ export const AcceptedButtonFooter = () => {
   );
 };
 
-export const PendingButtonFooter = ({props} : any) => {
+export const PendingFooter = ({ orderStatus, orderId }: Props) => {
   const [prepTime, setPrepTime] = useState(0);
-  const [selectedStyle, setSelectedStyle] = useState(false)
+  const [selectedStyle, setSelectedStyle] = useState(false);
   const presetPreparationTimes = [5, 10, 20];
   const setTimeHandler = (event: any, time: number) => {
     event.preventDefault();
     event.stopPropagation();
     setPrepTime(time);
   };
-  
+
   return (
     <Box
       display="grid"
@@ -102,7 +107,6 @@ export const PendingButtonFooter = ({props} : any) => {
       rowGap={2}
     >
       {presetPreparationTimes.map((time) => {
-       
         return (
           <Box gridColumn="span 1" key={Math.random()}>
             <Button
@@ -131,7 +135,7 @@ export const PendingButtonFooter = ({props} : any) => {
             >
               <Box display="flex" flexDirection="column">
                 <Typography
-                sx={{color: "#000000"}}
+                  sx={{ color: "#000000" }}
                   fontSize="16px"
                   lineHeight="21px"
                   fontWeight={600}
@@ -189,7 +193,7 @@ export const PendingButtonFooter = ({props} : any) => {
         <CustomPendingButton
           {...(prepTime ? { variant: "contained" } : { disabled: true })}
           style={{ width: `calc(100% - 10px` }}
-          href="/detail"
+          href={`/detail/${orderId}`}
         >
           Accept
         </CustomPendingButton>
@@ -197,3 +201,17 @@ export const PendingButtonFooter = ({props} : any) => {
     </Box>
   );
 };
+
+export default function OrderFooter({ orderStatus, orderId }: Props) {
+  let orderFooter = <></>;
+  if (orderStatus === "pending") {
+    orderFooter = <PendingFooter orderStatus={orderStatus} orderId={orderId} />;
+  } else if (orderStatus === "accepted") {
+    orderFooter = (
+      <AcceptedFooter orderStatus={orderStatus} orderId={orderId} />
+    );
+  } else {
+    orderFooter = <ReadyFooter orderStatus={orderStatus} orderId={orderId} />;
+  }
+  return orderFooter;
+}

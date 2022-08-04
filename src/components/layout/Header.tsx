@@ -6,6 +6,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 
 import CircleIcon from "@mui/icons-material/Circle";
+import { Link } from "react-router-dom";
 export default function Header() {
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -32,6 +33,8 @@ export default function Header() {
                 borderRadius: 5,
                 marginLeft: 2,
               }}
+              component={Link}
+              to={'/'}
             >
               <Box
                 display="flex"

@@ -1,11 +1,14 @@
 import React from 'react'
 import { Box } from "@mui/material";
 import styles from "./index.module.css";
+import OrderCard from '../card';
+
 
 type Props = {
   children?: JSX.Element | JSX.Element[];
+  ordersData :any
 };
-export default function OrderCardList({ children }: Props) {
+export default function OrderCardList({  ordersData }: Props) {
   return (
     <Box
       display="grid"
@@ -14,7 +17,7 @@ export default function OrderCardList({ children }: Props) {
       gap={2}
       paddingX={2}
     >
-      {children}
+      <OrderCard ordersData={ordersData} />
     </Box>
   );
 }
