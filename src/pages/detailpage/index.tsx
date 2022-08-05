@@ -1,5 +1,5 @@
 import { Box, Button, Divider, IconButton, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import DetailContent from "../../components/container/DetailContent";
 import MainContent from "../../components/container/MainContent";
 import DetailTitle from "../../components/detail/title";
@@ -9,10 +9,16 @@ import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import styles from "./index.module.css";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import TakeoutDiningOutlinedIcon from "@mui/icons-material/TakeoutDiningOutlined";
+import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 
 const timeAvailable = [1, 5, 10, 15, 20, 30];
 
 export default function DetailPage() {
+  const param = useParams();
+  const detailId = param.detailId;
+
   return (
     <DetailContent>
       <DetailTitle orderId="42244" />
@@ -266,26 +272,31 @@ export default function DetailPage() {
               <Typography fontSize="10px" lineHeight="13px">
                 15:41
               </Typography>
-              <Box sx={{marginTop: "10px"}}>
-              
-                <Typography fontSize="18px" lineHeight="24px">
-                  Ready in
-                </Typography>
-              </Box>
             </Box>
 
             <Box
               display="grid"
               gridTemplateColumns="repeat(4, 1fr)"
               sx={{
-                padding: "10px",
-                height: "calc(100% - 150px)",
+                padding: "20px",
+                height: "calc(100% - 80px)",
               }}
               gap={1}
+              rowGap={1}
             >
-              {timeAvailable.map((time) => {
+              <Box gridColumn="span 4" sx={{ padding: 0 }}>
+                <Typography
+                  fontSize="20px"
+                  lineHeight="26px"
+                  fontWeight={800}
+                  fontFamily="DM-sans-bold"
+                >
+                  Ready in
+                </Typography>
+              </Box>
+              {timeAvailable.map((time, index) => {
                 return (
-                  <Box gridColumn="span 1">
+                  <Box gridColumn="span 1" id={`${index}`}>
                     <Button
                       variant="contained"
                       className={styles.time__btn}
@@ -294,10 +305,15 @@ export default function DetailPage() {
                         color: "black",
                         padding: 0,
                         borderRadius: "8px",
+                        boxShadow: "none",
                       }}
                     >
                       <Box>
-                        <Typography fontSize="20px" lineHeight="26px">
+                        <Typography
+                          fontSize="20px"
+                          lineHeight="26px"
+                          fontFamily="DM-sans-bold"
+                        >
                           {time}
                         </Typography>
                         <Typography
@@ -320,8 +336,9 @@ export default function DetailPage() {
                   sx={{
                     backgroundColor: "#F3F5F7",
                     color: "black",
-                    width: "calc(100% - 15px)",
+                    width: "100%",
                     borderRadius: "8px",
+                    boxShadow: "none",
                   }}
                 >
                   <Typography>Custom</Typography>
@@ -334,8 +351,9 @@ export default function DetailPage() {
                   sx={{
                     backgroundColor: "#F3F5F7",
                     color: "black",
-                    width: "calc(100% - 15px)",
+                    width: "100%",
                     borderRadius: "8px",
+                    boxShadow: "none",
                   }}
                 >
                   <Typography>Accept</Typography>

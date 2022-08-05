@@ -1,5 +1,5 @@
-import { createSlice } from "@reduxjs/toolkit";
-
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
+import { ExecFileSyncOptionsWithBufferEncoding } from "child_process";
 
 export type Item = {
   id: number;
@@ -15,6 +15,8 @@ export type OrderInfo = {
   name: string;
   items: Item[];
   note: string;
+  timeStamp: string,
+  timeReady?: ExecFileSyncOptionsWithBufferEncoding,
 };
 
 const initialState = {
@@ -46,7 +48,7 @@ const initialState = {
         },
       ],
       note: "No tomatoe please",
-      timestamp: "15:43",
+      timeStamp: "15:43",
       timeReady: "",
     },
     {
@@ -86,7 +88,7 @@ const initialState = {
         },
       ],
       note: "No tomatoe please",
-      timestamp: "15:43",
+      timeStamp: "15:43",
       timeReady: "",
     },
     {
@@ -126,7 +128,7 @@ const initialState = {
         },
       ],
       note: "No tomatoe please",
-      timestamp: "15:43",
+      timeStamp: "15:43",
       timeReady: "",
     },
   ],
@@ -136,13 +138,19 @@ export const orderSlice = createSlice({
   name: "order",
   initialState,
   reducers: {
-    changeToReady: (PayloadAction) => {
-        console.log(PayloadAction)
-    }
+    getOrderInfo: (state: any,PayloadAction) =>{
+        const orderId = PayloadAction.payload;
+        const currentState = current(state)
+        const filterOrder = currentState.orders.filter(
+          (order: any) => order.id == orderId
+        );
+        console.log(filterOrder);
+        return filterOrder;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { changeToReady } = orderSlice.actions;
+export const {  getOrderInfo } = orderSlice.actions;
 
 export default orderSlice.reducer;

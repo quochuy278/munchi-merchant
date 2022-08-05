@@ -65,18 +65,38 @@ export default function OrderCard({ ordersData }: Props) {
               fontSize="8px"
               lineHeight="10px"
             >
-              Today at 15:30
+              Today at {order.timestamp}
             </Typography>
             <Box className={styles.card__item__container}>
-              {order.items.map((item:any) => {
+              {order.items.map((item: any) => {
                 return (
-                  <Box sx={{ padding: "3px", textAlign: "left" }} key={item.id}>
+                  <Box
+                    sx={{ padding: "3px", textAlign: "left", display: "flex" }}
+                    key={item.id}
+                  >
                     <Typography
-                      sx={{ color: "#4D505A" }}
-                      fontSize="12px"
+                      sx={{ color: "#4D505A", display: "flex" }}
+                      fontSize="14px"
                       lineHeight="16px"
+                      fontWeight={600}
                     >
-                      {item.quantity} x {item.name}
+                      {item.quantity}
+                      <Typography
+                        sx={{ marginX: "10px", textTransform: "none" }}
+                        fontSize="14px"
+                        lineHeight="16px"
+                        fontWeight={600}
+                      >
+                        x
+                      </Typography>
+                      <Typography
+                        fontSize="14px"
+                        lineHeight="16px"
+                        fontWeight={600}
+                        sx={{ marginX: "10px",width:"100%" }}
+                      >
+                        {item.name}
+                      </Typography>
                     </Typography>
                   </Box>
                 );
@@ -94,7 +114,7 @@ export default function OrderCard({ ordersData }: Props) {
                 {order.note}
               </Typography>
             </Card>
-           <OrderFooter orderStatus={order.status} orderId={order.id} />
+            <OrderFooter orderStatus={order.status} orderId={order.id} />
           </Box>
         );
       })}

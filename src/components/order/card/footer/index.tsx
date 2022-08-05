@@ -1,4 +1,4 @@
-import {styled} from "@mui/system";
+import { styled } from "@mui/system";
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 
@@ -17,6 +17,9 @@ const CustomPendingButton = styled(Button)(({ theme }) => ({
   "&:focus": {
     backgroundColor: "#1565c0",
     border: "none",
+  },
+  "&.Mui-disabled ": {
+    backgroundColor: theme.palette.disable,
   },
   // "&:hover": {
   //   border: "none",
@@ -129,30 +132,65 @@ export const PendingFooter = ({ orderStatus, orderId }: Props) => {
     <Box
       display="grid"
       gridTemplateColumns="repeat(3, 1fr)"
-      sx={{ marginTop: "10px" }}
+      sx={{ marginTop: "15px" }}
       rowGap={2}
-      
     >
       {presetPreparationTimes.map((time) => {
         return (
           <Box gridColumn="span 1" key={Math.random()}>
             <Button
-              sx={{
-                color: "black",
-                display: "flex",
-                flexDirection: "column",
-                width: "90%",
-                height: "54px",
-                borderRadius: "8px",
-                backgroundColor: "#F3F5F7",
-                "&:focus": {
-                  backgroundColor: "#F1F6ED",
-                  color: "#74A047",
-                },
-              }}
               variant="contained"
               onClick={(event) => setTimeHandler(event, time)}
               type="submit"
+              {...(time === prepTime
+                ? {
+                    sx: {
+                      backgroundColor: "#F1F6ED",
+                      color: "#74A047",
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "90%",
+                      height: "54px",
+                      borderRadius: "8px",
+
+                      "&:focus": {
+                        backgroundColor: "#F1F6ED",
+                        color: "#74A047",
+                      },
+                      "&:active": {
+                        backgroundColor: "#5D8139",
+                        color: "white",
+                      },
+                      "&.MuiButton-selected": {
+                        backgroundColor: "#F1F6ED",
+                        color: "#74A047",
+                      },
+                    },
+                  }
+                : {
+                    sx: {
+                      backgroundColor: "#F3F5F7",
+                      color: "black",
+                      display: "flex",
+                      flexDirection: "column",
+                      width: "90%",
+                      height: "54px",
+                      borderRadius: "8px",
+
+                      "&:focus": {
+                        backgroundColor: "#F1F6ED",
+                        color: "#74A047",
+                      },
+                      "&:active": {
+                        backgroundColor: "#5D8139",
+                        color: "white",
+                      },
+                      "&.MuiButton-selected": {
+                        backgroundColor: "#F1F6ED",
+                        color: "#74A047",
+                      },
+                    },
+                  })}
             >
               <Typography
                 fontSize="16px"
@@ -166,54 +204,6 @@ export const PendingFooter = ({ orderStatus, orderId }: Props) => {
                 min.
               </Typography>
             </Button>
-
-            {/* <Button
-              variant="outlined"
-              sx={{
-                width: "90%",
-                height: "54px",
-                backgroundColor: "#F3F5F7",
-                borderRadius: "8px",
-                border: "none",
-                "&:focus": {
-                  border: "none",
-                  backgroundColor: "##F1F6ED",
-                },
-              }}
-              onClick={(event) => setTimeHandler(event, time)}
-              type="submit"
-              disableFocusRipple={true}
-              disableTouchRipple={true}
-              {...(prepTime == time
-                ? { backgroundColor: "#F1F6ED" }
-                : { backgroundColor: "#F3F5F7" })}
-            >
-              <Box display="flex" flexDirection="column" component={Button}>
-                <Typography
-                  fontSize="16px"
-                  lineHeight="21px"
-                  fontWeight={600}
-                  {...(prepTime == time
-                    ? { color: "#74A047" }
-                    : { color: "#000000" })}
-                >
-                  {time}
-                </Typography>
-                <Typography
-                  sx={{
-                    color: "#000000",
-                    "&:focus": {
-                      color: "#red",
-                    },
-                  }}
-                  fontSize="7px"
-                  lineHeight="9px"
-                  textTransform="none"
-                >
-                  min.
-                </Typography>
-              </Box>
-            </Button> */}
           </Box>
         );
       })}
@@ -247,12 +237,18 @@ export const PendingFooter = ({ orderStatus, orderId }: Props) => {
       </Box>
 
       <Box gridColumn="span 2">
-        <CustomPendingButton
+        <Button
           {...(prepTime ? { variant: "contained" } : { disabled: true })}
-          // href={`/detail/${orderId}`}
+          href={`/detail/${orderId}`}
+          sx={{
+            width: "calc(100% - 10px)",
+            height: "54px",
+            borderRadius: "8px",
+            border: "none",
+          }}
         >
           Accept
-        </CustomPendingButton>
+        </Button>
       </Box>
     </Box>
   );

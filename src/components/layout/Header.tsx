@@ -4,10 +4,11 @@ import Box from "@mui/material/Box";
 import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
-
+import Switch from "@mui/material/Switch";
 import CircleIcon from "@mui/icons-material/Circle";
 import { Link } from "react-router-dom";
 export default function Header() {
+  const [isOpen, setIsOpen] = React.useState(false);
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "#F3F5F7" }}>
@@ -34,7 +35,7 @@ export default function Header() {
                 marginLeft: 2,
               }}
               component={Link}
-              to={'/'}
+              to={"/"}
             >
               <Box
                 display="flex"
@@ -51,11 +52,17 @@ export default function Header() {
               </Box>
             </IconButton>
             <Box display={"flex"} alignItems="center">
+              <Switch checked={isOpen} onChange={() => setIsOpen(!isOpen)} />
               <CircleIcon
-                sx={{ color: "green", width: "10px", height: "10px",marginRight: "10px" }}
+                sx={{
+                  width: "10px",
+                  height: "10px",
+                  marginRight: "10px",
+                }}
+               {...isOpen ? {color: "success"} : {color: "warning"}}
               />
               <Typography color={"#000000"} fontSize="12px" lineHeight="16px">
-                Restaurant open
+                Restaurant {isOpen ? "open" : "close"}
               </Typography>
             </Box>
           </Box>
