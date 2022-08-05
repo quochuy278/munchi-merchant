@@ -46,6 +46,8 @@ const initialState = {
         },
       ],
       note: "No tomatoe please",
+      timestamp: "15:43",
+      timeReady: "",
     },
     {
       id: "4210",
@@ -84,6 +86,8 @@ const initialState = {
         },
       ],
       note: "No tomatoe please",
+      timestamp: "15:43",
+      timeReady: "",
     },
     {
       id: "4210",
@@ -122,6 +126,8 @@ const initialState = {
         },
       ],
       note: "No tomatoe please",
+      timestamp: "15:43",
+      timeReady: "",
     },
   ],
 };
@@ -129,10 +135,14 @@ const initialState = {
 export const orderSlice = createSlice({
   name: "order",
   initialState,
-  reducers: {},
+  reducers: {
+    changeToReady: (PayloadAction) => {
+        console.log(PayloadAction)
+    }
+  },
 });
 
 // Action creators are generated for each case reducer function
-export const {} = orderSlice.actions;
+export const { changeToReady } = orderSlice.actions;
 
 export default orderSlice.reducer;

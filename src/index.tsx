@@ -7,6 +7,8 @@ import Layout from "./components/layout/Layout";
 import { BrowserRouter } from "react-router-dom";
 import { store } from "./store";
 import { Provider } from "react-redux";
+import { ThemeProvider } from "@mui/material";
+import theme from "./theme";
 
 
 const root = ReactDOM.createRoot(
@@ -14,13 +16,15 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Provider store={store}>
-        <Layout>
-          <App />
-        </Layout>
-      </Provider>
-    </BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <BrowserRouter>
+        <Provider store={store}>
+          <Layout>
+            <App />
+          </Layout>
+        </Provider>
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>
 );
 
