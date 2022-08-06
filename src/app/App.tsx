@@ -7,8 +7,10 @@ import { DetailPage, MainPage } from "../pages";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />}/>
-      <Route path="/detail/:detailId" element={<DetailPage />} />
+      <Route path="/" element={<MainPage />} />
+      <Route path="/detail" element={<DetailPage />}>
+        <Route path="/detail/:detailId" element={<DetailPage />} />
+      </Route>
     </Routes>
   );
 }

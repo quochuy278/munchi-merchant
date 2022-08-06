@@ -8,7 +8,7 @@ import styles from "./index.module.css";
 
 const MainPage = () => {
   const orders = useSelector((state: RootState) => state.order.orders);
-  console.log("🚀 ~ file: MainPage.tsx ~ line 17 ~ MainPage ~ orders", orders)
+
 
   const pendingOrders = orders.filter((order) => {
     return order.status === "pending";

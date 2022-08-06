@@ -4,66 +4,12 @@ import { Box } from "@mui/system";
 
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
+import DialogAlert from "../../../dialog";
 
-const CustomPendingButton = styled(Button)(({ theme }) => ({
-  width: "calc(100% - 10px)",
-  height: "54px",
-  borderRadius: "8px",
-  border: "none",
-  backgroundColor: theme.palette.primary.main,
-  "&:active": {
-    backgroundColor: "#0d47a1",
-  },
-  "&:focus": {
-    backgroundColor: "#1565c0",
-    border: "none",
-  },
-  "&.Mui-disabled ": {
-    backgroundColor: theme.palette.disable,
-  },
-  // "&:hover": {
-  //   border: "none",
-  // },
-}));
+import { CustomAcceptedButton, CustomReadyButton } from "../../../customcomponents";
 
-const CustomAcceptedButton = styled(Button)(({ theme }) => ({
-  textAlign: "center",
-  backgroundColor: "#74A047",
-  borderRadius: "8px",
-  opacity: 1,
-  flex: 1,
-  height: "50px",
-  "&:active": {
-    backgroundColor: "#98BD73",
-  },
-  "&:focus": {
-    backgroundColor: "#5D8139",
-  },
-  "&:hover": {
-    backgroundColor: "#5D8139",
-    border: "none",
-  },
-}));
 
-const CustomReadyButton = styled(Button)(({ theme }) => ({
-  textAlign: "center",
-  marginTop: "15px",
-  backgroundColor: "#513DEA",
-  borderRadius: "8px",
-  opacity: 1,
-  width: "100%",
-  height: "50px",
-  "&:active": {
-    backgroundColor: "#9487F3",
-  },
-  "&:focus": {
-    backgroundColor: "#392BA4",
-  },
-  "&:hover": {
-    backgroundColor: "#4937D3",
-    border: "none",
-  },
-}));
+
 
 type Props = {
   orderStatus: string;
@@ -120,6 +66,7 @@ export const AcceptedFooter = ({ orderStatus, orderId }: Props) => {
 
 export const PendingFooter = ({ orderStatus, orderId }: Props) => {
   const [prepTime, setPrepTime] = useState(0);
+  const [open,setOpen] = useState(false)
   const [selectedStyle, setSelectedStyle] = useState(false);
   const presetPreparationTimes = [5, 10, 20];
   const setTimeHandler = (event: any, time: number) => {
@@ -127,7 +74,13 @@ export const PendingFooter = ({ orderStatus, orderId }: Props) => {
     event.stopPropagation();
     setPrepTime(time);
   };
+   const acceptHandler = () => {
+     setOpen(true);
+   };
 
+   const acceptDialogCloseHandler = () => {
+     setOpen(false);
+   };
   return (
     <Box
       display="grid"
@@ -239,17 +192,22 @@ export const PendingFooter = ({ orderStatus, orderId }: Props) => {
       <Box gridColumn="span 2">
         <Button
           {...(prepTime ? { variant: "contained" } : { disabled: true })}
-          href={`/detail/${orderId}`}
           sx={{
             width: "calc(100% - 10px)",
             height: "54px",
             borderRadius: "8px",
             border: "none",
           }}
+          onClick={acceptHandler}
         >
           Accept
         </Button>
       </Box>
+      <DialogAlert
+        open={open}
+        prepTime={prepTime}
+        onClose={acceptDialogCloseHandler}
+      />
     </Box>
   );
 };

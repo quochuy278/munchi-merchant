@@ -16,7 +16,7 @@ export type OrderInfo = {
   items: Item[];
   note: string;
   timeStamp: string,
-  timeReady?: ExecFileSyncOptionsWithBufferEncoding,
+  timeReady?: StringConstructor,
 };
 
 const initialState = {
@@ -46,6 +46,7 @@ const initialState = {
           quantity: 1,
           name: "The New York",
         },
+        
       ],
       note: "No tomatoe please",
       timeStamp: "15:43",
