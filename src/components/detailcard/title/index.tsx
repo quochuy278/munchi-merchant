@@ -1,9 +1,8 @@
 import { Box, Typography } from "@mui/material";
+import { Props } from "../../../shared/types/props.type";
 import styles from './index.module.css';
 
-type Props = {
-    orderId: string
-}
+
 
 export default function DetailTitle({ orderId }: Props) {
   return (

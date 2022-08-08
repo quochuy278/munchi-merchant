@@ -11,6 +11,10 @@ import React from "react";
 import { TransitionProps } from "@mui/material/transitions";
 import styles from "./index.module.css";
 import { CustomAcceptButton, CustomDeclineButton } from "../customcomponents";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import { updateState } from "../../store/OrderSlice";
+
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -26,10 +30,14 @@ type Props = {
   open: boolean;
   prepTime: any;
   onClose: () => void;
- 
+  orderId?: string | number;
 };
 
-export default function DialogAlert({ open, prepTime, onClose }: Props) {
+export default function DialogAlert({ open, prepTime, onClose, orderId }: Props) {
+  const dispatch = useDispatch<AppDispatch>();
+  const clickHandler = () => {
+    dispatch(updateState(orderId));
+  }
   return (
     <Dialog
       open={open}
@@ -47,7 +55,7 @@ export default function DialogAlert({ open, prepTime, onClose }: Props) {
         <CustomDeclineButton variant="contained" onClick={onClose}>
           Go Back
         </CustomDeclineButton>
-        <CustomAcceptButton onClick={onClose} variant="contained">
+        <CustomAcceptButton onClick={clickHandler} variant="contained">
           Confirm
         </CustomAcceptButton>
       </DialogActions>

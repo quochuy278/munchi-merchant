@@ -1,11 +1,9 @@
 import { Box } from '@mui/material';
+import { Props } from '../../../shared/types/props.type';
 import styles from './index.module.css';
 
 import InfoFooter from './infofooter';
 import InfoList from './infolist';
-type Props = {
-  detailOrder: any;
-};
 
 export default function InfoCard({detailOrder}:Props) {
   const { name, timeStamp,status } = detailOrder;

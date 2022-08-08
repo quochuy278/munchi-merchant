@@ -12,12 +12,3 @@ code {
 }
 
 
-@font-face {
-  font-family: 'DM-sans';
-  src: url('./assets//font//dm-sans//DMSans-Regular.ttf')format('ttf');
-}
-
-@font-face {
-  font-family: 'DM-sans-bold';
-  src: url('./assets//font//dm-sans//DMSans-Bold.ttf')format('ttf');
-}

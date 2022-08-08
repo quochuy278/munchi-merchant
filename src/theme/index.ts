@@ -39,6 +39,17 @@ const theme = createTheme({
         disableRipple: true, // No more ripple, on the whole application 💣!
       },
     },
+    MuiCssBaseline: {
+      styleOverrides: `
+      @font-face {
+  font-family: 'DM-Sans';
+  src: url('./assets//font//dm-sans//DMSans-Regular.ttf')format('ttf');
+                },
+    @font-face {
+  font-family: 'DM-Sans-bold';
+  src: url('./assets//font//dm-sans//DMSans-Bold.ttf')format('ttf');
+    }`,
+    },
   },
   transitions: {
     duration: {
@@ -67,6 +78,7 @@ const theme = createTheme({
     },
   },
   typography: {
+    fontFamily: ["DM-Sans"].join(","),
     body2: {
       fontFamily: "DM-sans",
       fontWeight: 400,

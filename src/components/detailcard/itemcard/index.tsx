@@ -7,12 +7,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Item } from "../../../store/OrderSlice";
 import ItemList from "./itemlist";
 import ItemFooter from "./itemfooter";
+import { Props } from "../../../shared/types/props.type";
 
-type Props = {
-  detailOrder: any;
-};
+
 export default function ItemCard({ detailOrder }: Props) {
-  const { id, items, name, note, status, timeReady, timeStamp } = detailOrder;
+  const { products, comments } = detailOrder;
   return (
     <Box gridColumn="span 6" className={styles.detail__content}>
       <Box className={styles.detail__card}>
@@ -23,7 +22,7 @@ export default function ItemCard({ detailOrder }: Props) {
           className={styles.detail__title}
         >
           <Typography fontSize="18px" lineHeight="24px" fontWeight={600}>
-            {items.length} items
+            {products.length} items
           </Typography>
           <IconButton sx={{ backgroundColor: "#F2F9FE", borderRadius: "8px" }}>
             <PrintIcon
@@ -36,7 +35,7 @@ export default function ItemCard({ detailOrder }: Props) {
           </IconButton>
         </Box>
         <Divider sx={{ width: "100%", marginTop: "10px" }} />
-        <ItemList items={items}/>
+        <ItemList items={products} />
         <Box sx={{ width: "90%" }}>
           <Box
             sx={{
@@ -53,14 +52,14 @@ export default function ItemCard({ detailOrder }: Props) {
               fontFamily="DM-sans"
               fontWeight={600}
             >
-              {note}
+              {comments}
             </Typography>
           </Box>
         </Box>
       </Box>
       <Box className={styles.payment_container}>
         <Divider sx={{ width: "100%", marginBottom: "20px" }} />
-            <ItemFooter/>
+        <ItemFooter />
       </Box>
     </Box>
   );

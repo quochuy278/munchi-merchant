@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./app/App";
@@ -9,7 +8,6 @@ import { store } from "./store";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "@mui/material";
 import theme from "./theme";
-import { fetchOrders } from "./store/OrderSlice";
 
 
 
@@ -19,7 +17,7 @@ const root = ReactDOM.createRoot(
   // store.dispatch(fetchOrders(['pending','processing','ready']))
 
 root.render(
-  <React.StrictMode>
+  
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Provider store={store}>
@@ -29,7 +27,7 @@ root.render(
         </Provider>
       </BrowserRouter>
     </ThemeProvider>
-  </React.StrictMode>
+  
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -2,6 +2,7 @@ import styles from "./index.module.css";
 
 import styled from "@emotion/styled";
 import { Box, Typography } from "@mui/material";
+import { Props } from "../../../shared/types/props.type";
 
 const CustomeTypography = styled(Typography)(({ theme }) => ({
   color: "black",
@@ -21,10 +22,7 @@ const CustomeBox = styled(Box)(({ theme }) => ({
   justifyContent: "center",
 }));
 
-type Props = {
-  orderTitle: string;
-  orderQuantity: number;
-};
+
 
 export default function OrderTitle({ orderTitle, orderQuantity }: Props) {
   return (

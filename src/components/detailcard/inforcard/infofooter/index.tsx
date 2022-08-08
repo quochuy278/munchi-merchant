@@ -1,13 +1,10 @@
 import { Box, Button, Input, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { Props } from "../../../../shared/types/props.type";
 import styles from "./index.module.css";
 
-type Props = {
-  timeStamp?: string;
-  status?: string;
-};
+const timeAvailable = [1, 5, 10, 15, 20, 30];
 const InfoReadyFooter = ({ status }: Props) => {
-  
   return (
     <Box
       display="flex"
@@ -106,17 +103,25 @@ const InfoReadyFooter = ({ status }: Props) => {
 
 const InfoPendingFooter = ({ status, timeStamp }: Props) => {
   const [inputVisible, setInputVisible] = useState(false);
+  const [prepTime, setPrepTime] = useState(10);
+  const [open, setOpen] = useState(false);
   const InputVisibleHandler = () => {
     setInputVisible(true);
-    console.log("clicked")
+    
   };
+  const setTimeHandler = (event: any, time: number) => {
+    event.preventDefault();
+    event.stopPropagation();
+    if (time) setPrepTime(time);
+    else setPrepTime(event.target.value);
+  };
+
   return (
     <>
       <Box className={styles.detail__time__info}>
         <Typography fontSize="10px" lineHeight="13px" fontWeight={500}>
           Created {timeStamp}
         </Typography>
-       
       </Box>
 
       <Box
@@ -150,6 +155,11 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
             {...(inputVisible
               ? { sx: { marginLeft: "20px" } }
               : { sx: { marginLeft: "20px", display: "none" } })}
+            type="number"
+            inputProps={{ maxLength: 3 }}
+            onChange={(e: any) => {
+              setPrepTime(e.target.value);
+            }}
           />
         </Box>
         {timeAvailable.map((time, index) => {
@@ -158,13 +168,51 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
               <Button
                 variant="contained"
                 className={styles.time__btn}
-                sx={{
-                  backgroundColor: "#F3F5F7",
-                  color: "black",
-                  padding: 0,
-                  borderRadius: "8px",
-                  boxShadow: "none",
-                }}
+                {...(time === prepTime
+                  ? {
+                      sx: {
+                        backgroundColor: "#F1F6ED",
+                        color: "black",
+                        padding: 0,
+                        borderRadius: "8px",
+                        boxShadow: "none",
+
+                        "&:focus": {
+                          backgroundColor: "#F1F6ED",
+                          color: "#74A047",
+                        },
+                        "&:active": {
+                          backgroundColor: "#5D8139",
+                          color: "white",
+                        },
+                        "&.MuiButton-selected": {
+                          backgroundColor: "#F1F6ED",
+                          color: "#74A047",
+                        },
+                      },
+                    }
+                  : {
+                      sx: {
+                        backgroundColor: "#F3F5F7",
+                        color: "black",
+                        padding: 0,
+                        borderRadius: "8px",
+                        boxShadow: "none",
+                        "&:focus": {
+                          backgroundColor: "#F1F6ED",
+                          color: "#74A047",
+                        },
+                        "&:active": {
+                          backgroundColor: "#5D8139",
+                          color: "white",
+                        },
+                        "&.MuiButton-selected": {
+                          backgroundColor: "#F1F6ED",
+                          color: "#74A047",
+                        },
+                      },
+                    })}
+                onClick={(event) => setTimeHandler(event, time)}
               >
                 <Box>
                   <Typography
@@ -208,18 +256,30 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
             variant="contained"
             className={styles.time__btn}
             sx={{
-              backgroundColor: "#F3F5F7",
+              backgroundColor: "#FDF4F3",
               color: "black",
               width: "100%",
               borderRadius: "8px",
               boxShadow: "none",
+              "&:active": {
+                backgroundColor: "#FF2828",
+                svg: {
+                  color: "white",
+                },
+              },
+              "&:focus": {
+                border: "none",
+              },
             }}
+            disableFocusRipple={true}
+            disableTouchRipple={true}
           >
             <Typography>Decline</Typography>
           </Button>
         </Box>
         <Box gridColumn="span 2">
           <Button
+            {...(prepTime ? { variant: "contained" } : { disabled: true })}
             variant="contained"
             className={styles.time__btn}
             sx={{
@@ -237,7 +297,7 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
     </>
   );
 };
-const timeAvailable = [1, 5, 10, 15, 20, 30];
+
 export default function InfoFooter({ timeStamp, status }: Props) {
   switch (status) {
     case "pending":

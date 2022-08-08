@@ -1,34 +1,68 @@
-import TakeoutDiningIcon from "@mui/icons-material/TakeoutDining";
-import { Card, IconButton, Typography, Link } from "@mui/material";
+import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
+import DiningIcon from "@mui/icons-material/Dining";
+import TakeoutDiningOutlinedIcon from "@mui/icons-material/TakeoutDiningOutlined";
+import { Card, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import { SyntheticEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { Props } from "../../../shared/types/props.type";
 import OrderFooter from "./footer";
 import styles from "./index.module.css";
+export type FactoryIcon = {
+  orderType: number;
+};
 
-type Props = {
-  children?: JSX.Element | JSX.Element[];
-  footer?: (id: string) => JSX.Element | JSX.Element[];
-  ordersData?: any;
+export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
+  switch (orderType) {
+    case 3:
+      return (
+        <Box>
+          <DiningIcon sx={{ width: "16px", height: "14px", marginX: 1 }} />
+          <Typography>Eat In</Typography>
+        </Box>
+      );
+    case 1:
+      return (
+        <Box>
+          <DeliveryDiningIcon
+            sx={{ width: "16px", height: "14px", marginX: 1 }}
+          />
+          <Typography>Delivery</Typography>
+        </Box>
+      );
+    case 2:
+      return (
+        <Box>
+          <DiningIcon sx={{ width: "16px", height: "14px", marginX: 1 }} />
+          <Typography>Eat In</Typography>
+        </Box>
+      );
+    case null:
+      return null;
+    default:
+      return (
+        <Box>
+          <TakeoutDiningOutlinedIcon
+            sx={{ width: "16px", height: "14px", marginX: 1 }}
+          />
+          <Typography>Take out</Typography>
+        </Box>
+      );
+  }
 };
 
 export default function OrderCard({ ordersData }: Props) {
   const navigate = useNavigate();
 
+  let noOrder = (
+    <>
+      <div>No Pending Order at the moment</div>
+    </>
+  );
   const clickHandler = (event: any, status: string, orderId: string) => {
-    console.log(
-      "🚀 ~ file: index.tsx ~ line 16 ~ clickHandler ~ orderId",
-      orderId
-    );
-    console.log(
-      "🚀 ~ file: index.tsx ~ line 16 ~ clickHandler ~ status",
-      status
-    );
-
-      navigate(`./detail/${orderId}`);
+    navigate(`./detail/${orderId}`);
     event.preventDefault();
   };
-
+  
   return (
     <>
       {ordersData.map((order: any) => {
@@ -50,7 +84,7 @@ export default function OrderCard({ ordersData }: Props) {
                   display="flex"
                   justifyContent="space-between"
                   alignItems="center"
-                  sx={{ width: "50%" }}
+                  sx={{ width: "40%" }}
                 >
                   <Typography
                     lineHeight="29px"
@@ -58,7 +92,7 @@ export default function OrderCard({ ordersData }: Props) {
                     fontWeight={600}
                     textAlign="left"
                   >
-                    {order.id}
+                    # {order.id}
                   </Typography>
                   <div className={styles.divider}></div>
                   <Typography
@@ -66,7 +100,7 @@ export default function OrderCard({ ordersData }: Props) {
                     fontSize="14px"
                     fontWeight={600}
                   >
-                    {order.name}
+                    {order.customer.name}
                   </Typography>
                 </Box>
                 <Box>
@@ -77,12 +111,7 @@ export default function OrderCard({ ordersData }: Props) {
                       opacity: 1,
                     }}
                   >
-                    <TakeoutDiningIcon
-                      sx={{ width: "16px", height: "14px", marginX: 1 }}
-                    />
-                    <Typography lineHeight="13px" fontSize="10px">
-                      Takeaway
-                    </Typography>
+                    <FactoryIconInfo orderType={ordersData.delivery_type} />
                   </IconButton>
                 </Box>
               </Box>
@@ -95,41 +124,69 @@ export default function OrderCard({ ordersData }: Props) {
                 Today at {order.timestamp}
               </Typography>
               <Box className={styles.card__item__container}>
-                {order.items.map((item: any) => {
+                {order.products.map((product: any) => {
                   return (
                     <Box
-                      sx={{
-                        padding: "3px",
-                        textAlign: "left",
-                        display: "flex",
-                      }}
-                      key={item.id}
+                      key={product.id}
+                      className={styles.product_item_container}
                     >
-                      <Typography
-                        sx={{ color: "#4D505A", display: "flex" }}
-                        fontSize="14px"
-                        lineHeight="16px"
-                        fontWeight={600}
-                        component="div"
-                      >
-                        {item.quantity}
+                      <Box display="flex" width="90%" textAlign="left">
                         <Typography
-                          sx={{ marginX: "10px", textTransform: "none" }}
                           fontSize="14px"
                           lineHeight="16px"
                           fontWeight={600}
+                        >
+                          {product.quantity}
+                        </Typography>
+                        <Typography
+                          fontSize="14px"
+                          lineHeight="16px"
+                          fontWeight={600}
+                          sx={{ marginX: "20px" }}
                         >
                           x
                         </Typography>
+
                         <Typography
                           fontSize="14px"
                           lineHeight="16px"
                           fontWeight={600}
-                          sx={{ marginX: "10px", width: "100%" }}
+                          sx={{ marginX: "20px" }}
                         >
-                          {item.name}
+                          {product.name}
                         </Typography>
-                      </Typography>
+                      </Box>
+                      {/* <Box
+                        display="flex"
+                        width="100%"
+                        sx={{ marginLeft: "15px" }}
+                      >
+                        <Typography
+                          fontSize="12px"
+                          lineHeight="16px"
+                          fontWeight={600}
+                        >
+                          1
+                        </Typography>
+                        <Typography
+                          fontSize="12px"
+                          lineHeight="16px"
+                          fontWeight={600}
+                          sx={{ marginX: "20px" }}
+                        >
+                          x
+                        </Typography>
+
+                        <Typography
+                          fontSize="12px"
+                          lineHeight="16px"
+                          fontWeight={600}
+                          sx={{ marginX: "20px" }}
+                        >
+                          BBQ SAuce
+                        </Typography>
+                      </Box> */}
+                      {/* here */}
                     </Box>
                   );
                 })}
@@ -143,7 +200,7 @@ export default function OrderCard({ ordersData }: Props) {
                 }}
               >
                 <Typography fontSize="10px" lineHeight="13px">
-                  {order.note}
+                  {order.comment}
                 </Typography>
               </Card>
             </Box>

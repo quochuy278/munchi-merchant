@@ -1,26 +1,14 @@
-import { Typography } from '@mui/material';
-import { Box } from '@mui/system';
-import styles from './index.module.css';
+import { Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import styles from "./index.module.css";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import DiningIcon from "@mui/icons-material/Dining";
 import TakeoutDiningOutlinedIcon from "@mui/icons-material/TakeoutDiningOutlined";
-type Props = {
-  name: string;
-  orderType? : string
-};
+import { Props } from "../../../../shared/types/props.type";
 
-const FactoryIcon = ({orderType}: Props) => {
-  switch (orderType) {
-    case "eatin":
-      return <DiningIcon />;
-    case "takeaway":
-      return <TakeoutDiningOutlinedIcon />;
-    case "delivery":
-      return <DeliveryDiningIcon />;
-  }
-}
 
-export default function InfoList({name} : Props) {
+
+export default function InfoList({ name }: Props) {
   return (
     <Box className={styles.detail__info}>
       <Box className={styles.detail__info__bar}>

@@ -1,22 +1,15 @@
 import { styled } from "@mui/system";
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-
 import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
 import DialogAlert from "../../../dialog";
-
-import { CustomAcceptedButton, CustomReadyButton } from "../../../customcomponents";
+import {
+  CustomAcceptedButton,
+  CustomReadyButton,
+} from "../../../customcomponents";
 import { useDispatch } from "react-redux";
-
-
-
-
-
-type Props = { 
-  orderStatus: string;
-  orderId: string;
-};
+import { Props } from "../../../../shared/types/props.type";
 
 export const ReadyFooter = ({ orderStatus, orderId }: Props) => {
   return (
@@ -67,25 +60,22 @@ export const AcceptedFooter = ({ orderStatus, orderId }: Props) => {
 };
 
 export const PendingFooter = ({ orderStatus, orderId }: Props) => {
-  const [prepTime, setPrepTime] = useState(0);
-  const [open,setOpen] = useState(false)
-  const dispatch = useDispatch()
-  const [selectedStyle, setSelectedStyle] = useState(false);
+  const [prepTime, setPrepTime] = useState(10);
+  const [open, setOpen] = useState(false);
   const presetPreparationTimes = [5, 10, 20];
   const setTimeHandler = (event: any, time: number) => {
     event.preventDefault();
     event.stopPropagation();
     setPrepTime(time);
   };
-   const acceptHandler = () => {
-     setOpen(true);
-   };
+  const acceptHandler = () => {
+    setOpen(true);
+  };
 
-   const acceptDialogCloseHandler = () => {
-     setOpen(false);
-   };
+  const acceptDialogCloseHandler = () => {
+    setOpen(false);
+  };
 
-    
   return (
     <Box
       display="grid"
@@ -212,21 +202,29 @@ export const PendingFooter = ({ orderStatus, orderId }: Props) => {
         open={open}
         prepTime={prepTime}
         onClose={acceptDialogCloseHandler}
+        orderId={orderId}
       />
     </Box>
   );
 };
 
 export default function OrderFooter({ orderStatus, orderId }: Props) {
+
   let orderFooter = <></>;
-  if (orderStatus === "pending") {
-    orderFooter = <PendingFooter orderStatus={orderStatus} orderId={orderId} />;
-  } else if (orderStatus === "accepted") {
-    orderFooter = (
-      <AcceptedFooter orderStatus={orderStatus} orderId={orderId} />
-    );
-  } else {
-    orderFooter = <ReadyFooter orderStatus={orderStatus} orderId={orderId} />;
+  switch(orderStatus){
+    case 0 :
+      return (orderFooter = (
+        <PendingFooter orderStatus={orderStatus} orderId={orderId} />
+      ));
+      case 1 : 
+      return (orderFooter = (
+        <AcceptedFooter orderStatus={orderStatus} orderId={orderId} />
+      ));
+      default :
+      return (orderFooter = (
+        <ReadyFooter orderStatus={orderStatus} orderId={orderId} />
+      ));
+
   }
-  return orderFooter;
+
 }
