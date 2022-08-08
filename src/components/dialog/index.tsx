@@ -26,6 +26,7 @@ type Props = {
   open: boolean;
   prepTime: any;
   onClose: () => void;
+ 
 };
 
 export default function DialogAlert({ open, prepTime, onClose }: Props) {
@@ -44,7 +45,7 @@ export default function DialogAlert({ open, prepTime, onClose }: Props) {
       </DialogContent>
       <DialogActions sx={{ display: "flex", justifyContent: "space-between" }}>
         <CustomDeclineButton variant="contained" onClick={onClose}>
-         Go Back
+          Go Back
         </CustomDeclineButton>
         <CustomAcceptButton onClick={onClose} variant="contained">
           Confirm

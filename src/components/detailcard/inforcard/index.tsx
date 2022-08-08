@@ -1,12 +1,8 @@
-import { Box, Button, IconButton, Typography } from '@mui/material';
-import React from 'react'
-import styles from './index.module.css'
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
-import TakeoutDiningOutlinedIcon from "@mui/icons-material/TakeoutDiningOutlined";
-import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
-import { OrderInfo } from '../../../store/OrderSlice';
-import InfoList from './infolist';
+import { Box } from '@mui/material';
+import styles from './index.module.css';
+
 import InfoFooter from './infofooter';
+import InfoList from './infolist';
 type Props = {
   detailOrder: any;
 };

@@ -5,7 +5,7 @@ import CloseIcon from "@mui/icons-material/Close";
 export default function ItemFooter() {
   return (
     <Box className={styles.payment_content}>
-      <Box>
+      {/* <Box>
         <IconButton
           sx={{
             backgroundColor: "#FDF4F3",
@@ -30,8 +30,8 @@ export default function ItemFooter() {
             Reject
           </Typography>
         </IconButton>
-      </Box>
-      <Box sx={{ width: "45%" }}>
+      </Box> */}
+      <Box sx={{ width: "100%" }}>
         <Box className={styles.payment_title}>
           <Box>
             <Typography

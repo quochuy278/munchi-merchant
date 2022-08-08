@@ -1,13 +1,23 @@
-import { IconButton, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Box } from '@mui/system';
-import React from 'react'
-import styles from './index.module.css'
-import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
+import styles from './index.module.css';
+import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
+import DiningIcon from "@mui/icons-material/Dining";
 import TakeoutDiningOutlinedIcon from "@mui/icons-material/TakeoutDiningOutlined";
-import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
-
 type Props = {
-    name: string
+  name: string;
+  orderType? : string
+};
+
+const FactoryIcon = ({orderType}: Props) => {
+  switch (orderType) {
+    case "eatin":
+      return <DiningIcon />;
+    case "takeaway":
+      return <TakeoutDiningOutlinedIcon />;
+    case "delivery":
+      return <DeliveryDiningIcon />;
+  }
 }
 
 export default function InfoList({name} : Props) {

@@ -7,11 +7,13 @@ import { useState } from "react";
 import DialogAlert from "../../../dialog";
 
 import { CustomAcceptedButton, CustomReadyButton } from "../../../customcomponents";
+import { useDispatch } from "react-redux";
 
 
 
 
-type Props = {
+
+type Props = { 
   orderStatus: string;
   orderId: string;
 };
@@ -67,6 +69,7 @@ export const AcceptedFooter = ({ orderStatus, orderId }: Props) => {
 export const PendingFooter = ({ orderStatus, orderId }: Props) => {
   const [prepTime, setPrepTime] = useState(0);
   const [open,setOpen] = useState(false)
+  const dispatch = useDispatch()
   const [selectedStyle, setSelectedStyle] = useState(false);
   const presetPreparationTimes = [5, 10, 20];
   const setTimeHandler = (event: any, time: number) => {
@@ -81,6 +84,8 @@ export const PendingFooter = ({ orderStatus, orderId }: Props) => {
    const acceptDialogCloseHandler = () => {
      setOpen(false);
    };
+
+    
   return (
     <Box
       display="grid"

@@ -1,5 +1,5 @@
-import { Box, Button, Typography } from "@mui/material";
-import React from "react";
+import { Box, Button, Input, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
 import styles from "./index.module.css";
 
 type Props = {
@@ -7,6 +7,7 @@ type Props = {
   status?: string;
 };
 const InfoReadyFooter = ({ status }: Props) => {
+  
   return (
     <Box
       display="flex"
@@ -104,15 +105,18 @@ const InfoReadyFooter = ({ status }: Props) => {
 };
 
 const InfoPendingFooter = ({ status, timeStamp }: Props) => {
+  const [inputVisible, setInputVisible] = useState(false);
+  const InputVisibleHandler = () => {
+    setInputVisible(true);
+    console.log("clicked")
+  };
   return (
     <>
       <Box className={styles.detail__time__info}>
         <Typography fontSize="10px" lineHeight="13px" fontWeight={500}>
-          Created
+          Created {timeStamp}
         </Typography>
-        <Typography fontSize="10px" lineHeight="13px">
-          {timeStamp}
-        </Typography>
+       
       </Box>
 
       <Box
@@ -125,7 +129,12 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
         gap={1}
         rowGap={1}
       >
-        <Box gridColumn="span 4" sx={{ padding: 0 }}>
+        <Box
+          gridColumn="span 4"
+          sx={{ padding: 0 }}
+          display="flex"
+          alignItems="center"
+        >
           <Typography
             fontSize="20px"
             lineHeight="26px"
@@ -134,6 +143,14 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
           >
             Ready in
           </Typography>
+          <TextField
+            id="outlined-basic"
+            label="Time"
+            variant="outlined"
+            {...(inputVisible
+              ? { sx: { marginLeft: "20px" } }
+              : { sx: { marginLeft: "20px", display: "none" } })}
+          />
         </Box>
         {timeAvailable.map((time, index) => {
           return (
@@ -181,11 +198,27 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
               borderRadius: "8px",
               boxShadow: "none",
             }}
+            onClick={InputVisibleHandler}
           >
             <Typography>Custom</Typography>
           </Button>
         </Box>
-        <Box gridColumn="span 4">
+        <Box gridColumn="span 2">
+          <Button
+            variant="contained"
+            className={styles.time__btn}
+            sx={{
+              backgroundColor: "#F3F5F7",
+              color: "black",
+              width: "100%",
+              borderRadius: "8px",
+              boxShadow: "none",
+            }}
+          >
+            <Typography>Decline</Typography>
+          </Button>
+        </Box>
+        <Box gridColumn="span 2">
           <Button
             variant="contained"
             className={styles.time__btn}
@@ -219,11 +252,11 @@ export default function InfoFooter({ timeStamp, status }: Props) {
           <InfoReadyFooter timeStamp={timeStamp} />
         </Box>
       );
-      default :
-       return (
-         <Box className={styles.detail_footer_container}>
-           <InfoPendingFooter timeStamp={timeStamp} />
-         </Box>
-       );
+    default:
+      return (
+        <Box className={styles.detail_footer_container}>
+          <InfoPendingFooter timeStamp={timeStamp} />
+        </Box>
+      );
   }
 }

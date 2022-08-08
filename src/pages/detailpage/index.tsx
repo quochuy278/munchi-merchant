@@ -12,22 +12,22 @@ import styles from "./index.module.css";
 
 
 export default function DetailPage() {
-  const param = useParams();
-  const detailId = param.detailId as string;
-  const orders = useSelector((state: RootState) => state.order.orders);
-  const detailOrderArray = orders.filter((order) => {
-    return order.id === detailId;
-  });
-  const detailOrder = detailOrderArray[0];
-  console.log(
-    "🚀 ~ file: index.tsx ~ line 26 ~ DetailPage ~ detailOrder",
-    detailOrder
-  );
-  const { id, items, name, note, status, timeReady, timeStamp } = detailOrder;
-  console.log("🚀 ~ file: index.tsx ~ line 28 ~ DetailPage ~ items", items);
+  // const param = useParams();
+  // const detailId = param.detailId as string;
+  // const orders = useSelector((state: RootState) => state.order.orders);
+  // const detailOrderArray = orders.filter((order) => {
+  //   return order.id === detailId;
+  // });
+  // const detailOrder = detailOrderArray[0];
+  // console.log(
+  //   "🚀 ~ file: index.tsx ~ line 26 ~ DetailPage ~ detailOrder",
+  //   detailOrder
+  // );
+  // const { id, items, name, note, status, timeReady, timeStamp } = detailOrder;
+ 
   return (
     <DetailContent>
-      <DetailTitle orderId={id} />
+      {/* <DetailTitle orderId={id} />
       <Box
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
@@ -36,7 +36,7 @@ export default function DetailPage() {
       >
         <ItemCard detailOrder={detailOrder} />
         <InfoCard detailOrder={detailOrder} />
-      </Box>
+      </Box> */}
     </DetailContent>
   );
 }

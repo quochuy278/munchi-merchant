@@ -9,11 +9,15 @@ import { store } from "./store";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "@mui/material";
 import theme from "./theme";
+import { fetchOrders } from "./store/OrderSlice";
+
 
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+  // store.dispatch(fetchOrders(['pending','processing','ready']))
+
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>

@@ -38,19 +38,6 @@
   justify-content: center;
   flex-direction: column;
 }
-.payment_content {
-  display: flex;
-  width: 90%;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.payment_title {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
 
 @media only screen and (min-width: 768px) and (max-width: 1184px) {
   .detail__content::-webkit-scrollbar {
