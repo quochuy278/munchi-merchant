@@ -85,5 +85,6 @@ export type Order = {
   products: ProductItem[];
   business: OrderBusiness;
   comment: string;
-  prepTime: string
+  prepTime: string;
+  delivery_type:number
 };

@@ -4,7 +4,67 @@ import { Props } from "../../../../shared/types/props.type";
 import styles from "./index.module.css";
 
 const timeAvailable = [1, 5, 10, 15, 20, 30];
-const InfoReadyFooter = ({ status }: Props) => {
+const FactoryButton = ({delivery_type}: Props) => {
+  const deliveryReadyHandler = () => {
+
+  }
+  const pickupReadyHandler = () => {};
+const readyReadyHandler = () => {};
+    switch (delivery_type) {
+      case 1 : 
+      return (
+        // delivery
+         <Button
+            variant="contained"
+            sx={{ width: "100%", height: "100%", borderRadius: "8px" }}
+            onClick={deliveryReadyHandler}
+          >
+            <Typography fontSize="12px" lineHeight="16px" textTransform="none">
+              Ready to pick up
+            </Typography>
+          </Button>
+      )
+      case 2 : 
+      return (
+        // pickup
+        <Button
+          variant="contained"
+          sx={{ width: "100%", height: "100%", borderRadius: "8px" }}
+          onClick={pickupReadyHandler}
+        >
+          <Typography fontSize="12px" lineHeight="16px" textTransform="none">
+            Ready to pick up
+          </Typography>
+        </Button>
+      );
+      case 3 : 
+      return (
+        // eatin
+        <Button
+          variant="contained"
+          sx={{ width: "100%", height: "100%", borderRadius: "8px" }}
+          onClick={readyReadyHandler}
+        >
+          <Typography fontSize="12px" lineHeight="16px" textTransform="none">
+            Ready to pick up
+          </Typography>
+        </Button>
+      );
+      default: 
+     
+      return (
+        <Button
+          variant="contained"
+          sx={{ width: "100%", height: "100%", borderRadius: "8px" }}
+        >
+          <Typography fontSize="12px" lineHeight="16px" textTransform="none">
+            Ready to pick up
+          </Typography>
+        </Button>
+      );
+    }
+}
+const InfoReadyFooter = ({ delivery_type }: Props) => {
   return (
     <Box
       display="flex"
@@ -87,14 +147,7 @@ const InfoReadyFooter = ({ status }: Props) => {
           </Typography>
         </Box>
         <Box width="100%" height="30%">
-          <Button
-            variant="contained"
-            sx={{ width: "100%", height: "100%", borderRadius: "8px" }}
-          >
-            <Typography fontSize="12px" lineHeight="16px" textTransform="none">
-              Ready to pick up
-            </Typography>
-          </Button>
+         <FactoryButton delivery_type={delivery_type} />
         </Box>
       </Box>
     </Box>
@@ -164,7 +217,7 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
         </Box>
         {timeAvailable.map((time, index) => {
           return (
-            <Box gridColumn="span 1" id={`${index}`}>
+            <Box gridColumn="span 1" key={`${index}`}>
               <Button
                 variant="contained"
                 className={styles.time__btn}

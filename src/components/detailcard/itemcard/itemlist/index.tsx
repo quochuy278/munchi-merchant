@@ -9,9 +9,9 @@ type Props = {
 export default function ItemList( {items}: Props) {
   return (
     <Box display="flex" flexDirection="column" alignItems="center" width="100%" sx={{overflowX:"hidden", overflowY:"scroll"}}>
-      {items.map((item: Item) => {
+      {items.map((item: Item, index) => {
         return (
-          <Box className={styles.detail__item}>
+          <Box className={styles.detail__item} key={index}>
             <Box display="flex" justifyContent="space-between" width="100%">
               <Box display="flex" alignItems="center">
                 <Typography>{item.quantity}</Typography>

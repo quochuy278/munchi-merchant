@@ -11,31 +11,32 @@ export type Item = {
 
 const initialState = {
   orders: [
-    // {
-    //   id: 1234,
-    //   uuid: "fsdf1343124134141",
-    //   status: 0,
-    //   summary: {
-    //     total: 32,
-    //   },
-    //   customer: {
-    //     id: 213124,
-    //     name: "Huy",
-    //     email: "test@test.com",
-    //   },
-    //   products: [
-    //     {
-    //       id: 213124,
-    //       name: "Chicken Nuggets",
-    //       quantity: 1,
-    //     },
-    //   ],
-    //   business: {
-    //     id: 123123,
-    //     name: "munchi",
-    //   },
-    //   comment: "No potatoe please",
-    // },
+    {
+      id: 1234,
+      uuid: "fsdf1343124134141",
+      status: 2,
+      summary: {
+        total: 32,
+      },
+      customer: {
+        id: 213124,
+        name: "Huy",
+        email: "test@test.com",
+      },
+      products: [
+        {
+          id: 213124,
+          name: "Chicken Nuggets",
+          quantity: 1,
+        },
+      ],
+      business: {
+        id: 123123,
+        name: "munchi",
+      },
+      comment: "No potatoe please",
+      delivery_type: 1,
+    },
   ],
   init: false,
   loading: false,

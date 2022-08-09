@@ -15,42 +15,54 @@ export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
   switch (orderType) {
     case 3:
       return (
-        <Box>
+        <Box display="flex">
           <DiningIcon sx={{ width: "16px", height: "14px", marginX: 1 }} />
-          <Typography>Eat In</Typography>
+          <Typography fontSize="10px" lineHeight="13px">
+            Eat In
+          </Typography>
         </Box>
       );
     case 1:
       return (
-        <Box>
+        <Box display="flex">
           <DeliveryDiningIcon
             sx={{ width: "16px", height: "14px", marginX: 1 }}
           />
-          <Typography>Delivery</Typography>
+          <Typography fontSize="10px" lineHeight="13px">
+            Delivery
+          </Typography>
         </Box>
       );
     case 2:
       return (
-        <Box>
+        <Box display="flex">
           <DiningIcon sx={{ width: "16px", height: "14px", marginX: 1 }} />
-          <Typography>Eat In</Typography>
+          <Typography fontSize="10px" lineHeight="13px">
+            Eat In
+          </Typography>
         </Box>
       );
     case null:
       return null;
     default:
       return (
-        <Box>
+        <Box display="flex">
           <TakeoutDiningOutlinedIcon
             sx={{ width: "16px", height: "14px", marginX: 1 }}
           />
-          <Typography>Take out</Typography>
+          <Typography fontSize="10px" lineHeight="13px">
+            Take out
+          </Typography>
         </Box>
       );
   }
 };
 
 export default function OrderCard({ ordersData }: Props) {
+  console.log(
+    "🚀 ~ file: index.tsx ~ line 54 ~ OrderCard ~ ordersData",
+    ordersData
+  );
   const navigate = useNavigate();
 
   let noOrder = (
@@ -62,10 +74,11 @@ export default function OrderCard({ ordersData }: Props) {
     navigate(`./detail/${orderId}`);
     event.preventDefault();
   };
-  
+
   return (
     <>
       {ordersData.map((order: any) => {
+        console.log(order.delivery_type);
         return (
           <Box className={styles.main__card__container} key={order.id}>
             <Box
@@ -111,7 +124,7 @@ export default function OrderCard({ ordersData }: Props) {
                       opacity: 1,
                     }}
                   >
-                    <FactoryIconInfo orderType={ordersData.delivery_type} />
+                    <FactoryIconInfo orderType={order.delivery_type} />
                   </IconButton>
                 </Box>
               </Box>

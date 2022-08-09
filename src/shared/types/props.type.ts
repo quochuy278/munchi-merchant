@@ -4,12 +4,12 @@ export type Props = {
   timeStamp?: string;
   status?: string;
   name?: string;
-  orderType?:  number;
+  orderType?: number;
   items?: [];
   orderId?: string | number;
   ordersData?: any;
   orderStatus?: number;
   orderTitle?: string;
   orderQuantity?: number;
-
+  delivery_type?: number
 };
