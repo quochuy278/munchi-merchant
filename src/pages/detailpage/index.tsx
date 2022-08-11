@@ -8,7 +8,7 @@ import ItemCard from "../../components/detailcard/itemcard";
 import DetailTitle from "../../components/detailcard/title";
 import { RootState, useTypedSelector } from "../../store";
 import styles from "./index.module.css";
-import { selectOrders } from "../../store/OrderSlice";
+import { selectOrders } from "../../store/order-slice";
 
 export default function DetailPage() {
   const param = useParams();

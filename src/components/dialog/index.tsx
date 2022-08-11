@@ -13,7 +13,7 @@ import styles from "./index.module.css";
 import { CustomAcceptButton, CustomDeclineButton } from "../customcomponents";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
-import { updateState } from "../../store/OrderSlice";
+import { updateState } from "../../store/order-slice";
 
 
 const Transition = React.forwardRef(function Transition(

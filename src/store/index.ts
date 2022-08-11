@@ -1,11 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
-import OrderSlice from "./OrderSlice";
-
-import thunk from "redux-logger";
+import OrderSlice from "./order-slice";
+import AuthSlice from "./auth-slice";
 
 export const store = configureStore({
-  reducer: { order: OrderSlice },
+  reducer: { order: OrderSlice, auth: AuthSlice },
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

@@ -12,6 +12,7 @@ import OrderFooter from "./footer";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import styles from "./index.module.css";
 import { useTranslation } from "react-i18next";
+import OrderEnum from "../../../shared/enum/enum";
 export type FactoryIcon = {
   orderType: number;
 };
@@ -19,7 +20,7 @@ export type FactoryIcon = {
 export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
   const {t} = useTranslation('common')
   switch (orderType) {
-    case 3:
+    case OrderEnum.Pickup:
       return (
         <Box display="flex">
           <DiningIcon sx={{ width: "16px", height: "14px", marginX: 1 }} />
@@ -28,7 +29,7 @@ export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
           </Typography>
         </Box>
       );
-    case 1:
+    case OrderEnum.Delivery:
       return (
         <Box display="flex">
           <DeliveryDiningIcon
@@ -39,10 +40,12 @@ export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
           </Typography>
         </Box>
       );
-    case 2:
+    case OrderEnum.Eatin:
       return (
         <Box display="flex">
-          <DiningIcon sx={{ width: "16px", height: "14px", marginX: 1 }} />
+          <TakeoutDiningOutlinedIcon
+            sx={{ width: "16px", height: "14px", marginX: 1 }}
+          />
           <Typography fontSize="10px" lineHeight="13px">
             {t("delivery_type.3")}
           </Typography>

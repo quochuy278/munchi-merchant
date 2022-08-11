@@ -4,7 +4,7 @@ import React from "react";
 import styles from "./index.module.css";
 import PrintIcon from "@mui/icons-material/Print";
 import CloseIcon from "@mui/icons-material/Close";
-import { Item } from "../../../store/OrderSlice";
+import { Item } from "../../../store/order-slice";
 import ItemList from "./itemlist";
 import ItemFooter from "./itemfooter";
 import { Props } from "../../../shared/types/props.type";

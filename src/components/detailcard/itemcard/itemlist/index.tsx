@@ -1,6 +1,6 @@
 import CloseIcon from "@mui/icons-material/Close";
 import { Box, Divider, Typography } from '@mui/material';
-import { Item } from '../../../../store/OrderSlice';
+import { Item } from '../../../../store/order-slice';
 import styles from './index.module.css';
 type Props = {
     items: []

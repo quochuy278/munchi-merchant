@@ -12,7 +12,7 @@ const FactoryButton = ({ delivery_type }: Props) => {
   const readyReadyHandler = () => {};
   const { t } = useTranslation("common");
   switch (delivery_type) {
-    case 1:
+    case OrderEnum.Delivery:
       return (
         // delivery
         <Button
@@ -25,7 +25,7 @@ const FactoryButton = ({ delivery_type }: Props) => {
           </Typography>
         </Button>
       );
-    case 2:
+    case OrderEnum.Pickup:
       return (
         // pickup
         <Button
@@ -38,7 +38,7 @@ const FactoryButton = ({ delivery_type }: Props) => {
           </Typography>
         </Button>
       );
-    case 3:
+    case OrderEnum.Eatin:
       return (
         // eatin
         <Button
@@ -243,6 +243,10 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
                           backgroundColor: "#F1F6ED",
                           color: "#74A047",
                         },
+                        "&:hover": {
+                          backgroundColor: "#759F47",
+                          color: "#F1F6ED",
+                        },
                       },
                     }
                   : {
@@ -263,6 +267,10 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
                         "&.MuiButton-selected": {
                           backgroundColor: "#F1F6ED",
                           color: "#74A047",
+                        },
+                        "&:hover": {
+                          backgroundColor: "#759F47",
+                          color: "#F1F6ED",
                         },
                       },
                     })}
@@ -299,6 +307,9 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
               width: "100%",
               borderRadius: "8px",
               boxShadow: "none",
+              "&:hover": {
+                color: "white",
+              },
             }}
             onClick={InputVisibleHandler}
           >
@@ -324,6 +335,10 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
               "&:focus": {
                 border: "none",
               },
+              "&:hover": {
+                backgroundColor: "#FF2828",
+                color: "white",
+              },
             }}
             disableFocusRipple={true}
             disableTouchRipple={true}
@@ -342,6 +357,9 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
               width: "100%",
               borderRadius: "8px",
               boxShadow: "none",
+              "&:hover": {
+                color: "white",
+              },
             }}
           >
             <Typography>{t("buttonContent.6")}</Typography>
@@ -366,7 +384,19 @@ export default function InfoFooter({
     case OrderEnum.processing:
       return (
         <Box className={styles.detail_footer_container}>
-          <InfoPendingFooter timeStamp={timeStamp} />
+          <InfoReadyFooter
+            timeStamp={timeStamp}
+            delivery_type={delivery_type}
+          />
+        </Box>
+      );
+    case OrderEnum.pending:
+      return (
+        <Box className={styles.detail_footer_container}>
+          <InfoPendingFooter
+            timeStamp={timeStamp}
+            delivery_type={delivery_type}
+          />
         </Box>
       );
     case OrderEnum.ready:
@@ -381,7 +411,7 @@ export default function InfoFooter({
     default:
       return (
         <Box className={styles.detail_footer_container}>
-          <InfoPendingFooter timeStamp={timeStamp} />
+          <div>No footer</div>
         </Box>
       );
   }
