@@ -2,7 +2,9 @@ import { Box, IconButton, Typography } from '@mui/material';
 import React from 'react'
 import styles from './index.module.css'
 import CloseIcon from "@mui/icons-material/Close";
+import { useTranslation } from 'react-i18next';
 export default function ItemFooter() {
+  const {t} = useTranslation('common')
   return (
     <Box className={styles.payment_content}>
       {/* <Box>
@@ -39,7 +41,7 @@ export default function ItemFooter() {
               lineHeight="16px"
               sx={{ color: "#51545E" }}
             >
-              Tax
+              {t("tax")}
             </Typography>
           </Box>
           <Box>
@@ -59,7 +61,7 @@ export default function ItemFooter() {
               lineHeight="16px"
               sx={{ color: "#000000" }}
             >
-              Order Total
+              {t("total")}
             </Typography>
           </Box>
           <Box>

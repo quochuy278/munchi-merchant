@@ -1,30 +1,31 @@
 import { Box, Button, Input, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
+import OrderEnum from "../../../../shared/enum/enum";
 import { Props } from "../../../../shared/types/props.type";
 import styles from "./index.module.css";
 
 const timeAvailable = [1, 5, 10, 15, 20, 30];
-const FactoryButton = ({delivery_type}: Props) => {
-  const deliveryReadyHandler = () => {
-
-  }
+const FactoryButton = ({ delivery_type }: Props) => {
+  const deliveryReadyHandler = () => {};
   const pickupReadyHandler = () => {};
-const readyReadyHandler = () => {};
-    switch (delivery_type) {
-      case 1 : 
+  const readyReadyHandler = () => {};
+  const { t } = useTranslation("common");
+  switch (delivery_type) {
+    case 1:
       return (
         // delivery
-         <Button
-            variant="contained"
-            sx={{ width: "100%", height: "100%", borderRadius: "8px" }}
-            onClick={deliveryReadyHandler}
-          >
-            <Typography fontSize="12px" lineHeight="16px" textTransform="none">
-              Ready to pick up
-            </Typography>
-          </Button>
-      )
-      case 2 : 
+        <Button
+          variant="contained"
+          sx={{ width: "100%", height: "100%", borderRadius: "8px" }}
+          onClick={deliveryReadyHandler}
+        >
+          <Typography fontSize="12px" lineHeight="16px" textTransform="none">
+            {t("buttonContent.1")}
+          </Typography>
+        </Button>
+      );
+    case 2:
       return (
         // pickup
         <Button
@@ -33,11 +34,11 @@ const readyReadyHandler = () => {};
           onClick={pickupReadyHandler}
         >
           <Typography fontSize="12px" lineHeight="16px" textTransform="none">
-            Ready to pick up
+            {t("buttonContent.2")}
           </Typography>
         </Button>
       );
-      case 3 : 
+    case 3:
       return (
         // eatin
         <Button
@@ -46,25 +47,25 @@ const readyReadyHandler = () => {};
           onClick={readyReadyHandler}
         >
           <Typography fontSize="12px" lineHeight="16px" textTransform="none">
-            Ready to pick up
+            {t("buttonContent.3")}
           </Typography>
         </Button>
       );
-      default: 
-     
+    default:
       return (
         <Button
           variant="contained"
           sx={{ width: "100%", height: "100%", borderRadius: "8px" }}
         >
           <Typography fontSize="12px" lineHeight="16px" textTransform="none">
-            Ready to pick up
+            {t("buttonContent.3")}
           </Typography>
         </Button>
       );
-    }
-}
-const InfoReadyFooter = ({ delivery_type }: Props) => {
+  }
+};
+const InfoReadyFooter = ({ delivery_type, timeStamp }: Props) => {
+  const { t } = useTranslation("common");
   return (
     <Box
       display="flex"
@@ -77,7 +78,7 @@ const InfoReadyFooter = ({ delivery_type }: Props) => {
       <Box height="50%" textAlign="left">
         <Box sx={{ marginY: "20px" }}>
           <Typography fontSize="10px" lineHeight="13px" fontWeight={500}>
-            Created
+            {t("timeStamp.create")}
           </Typography>
           <Typography fontSize="10px" lineHeight="13px">
             15:41
@@ -85,7 +86,7 @@ const InfoReadyFooter = ({ delivery_type }: Props) => {
         </Box>
         <Box sx={{ marginY: "20px" }}>
           <Typography fontSize="10px" lineHeight="13px" fontWeight={500}>
-            Accepted
+            {t("timeStamp.accepted")}
           </Typography>
           <Typography fontSize="10px" lineHeight="13px">
             15:41
@@ -93,7 +94,7 @@ const InfoReadyFooter = ({ delivery_type }: Props) => {
         </Box>
         <Box sx={{ marginY: "20px" }}>
           <Typography fontSize="10px" lineHeight="13px" fontWeight={500}>
-            Marked ready
+            {t("timeStamp.marked__ready")}
           </Typography>
           <Typography fontSize="10px" lineHeight="13px">
             15:41
@@ -114,7 +115,7 @@ const InfoReadyFooter = ({ delivery_type }: Props) => {
             fontWeight={800}
             fontFamily="DM-sans-bold"
           >
-            Ready in
+            {t("buttonContent.4")}
           </Typography>
         </Box>
         <Box
@@ -147,7 +148,7 @@ const InfoReadyFooter = ({ delivery_type }: Props) => {
           </Typography>
         </Box>
         <Box width="100%" height="30%">
-         <FactoryButton delivery_type={delivery_type} />
+          <FactoryButton delivery_type={delivery_type} />
         </Box>
       </Box>
     </Box>
@@ -158,9 +159,9 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
   const [inputVisible, setInputVisible] = useState(false);
   const [prepTime, setPrepTime] = useState(10);
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation("common");
   const InputVisibleHandler = () => {
     setInputVisible(true);
-    
   };
   const setTimeHandler = (event: any, time: number) => {
     event.preventDefault();
@@ -173,7 +174,7 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
     <>
       <Box className={styles.detail__time__info}>
         <Typography fontSize="10px" lineHeight="13px" fontWeight={500}>
-          Created {timeStamp}
+          {t("timeStamp.create")} {timeStamp}
         </Typography>
       </Box>
 
@@ -199,7 +200,7 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
             fontWeight={800}
             fontFamily="DM-sans-bold"
           >
-            Ready in
+            {t("buttonContent.4")}
           </Typography>
           <TextField
             id="outlined-basic"
@@ -301,7 +302,7 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
             }}
             onClick={InputVisibleHandler}
           >
-            <Typography>Custom</Typography>
+            <Typography>{t("buttonContent.5")}</Typography>
           </Button>
         </Box>
         <Box gridColumn="span 2">
@@ -327,7 +328,7 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
             disableFocusRipple={true}
             disableTouchRipple={true}
           >
-            <Typography>Decline</Typography>
+            <Typography>{t("buttonContent.0")}</Typography>
           </Button>
         </Box>
         <Box gridColumn="span 2">
@@ -343,7 +344,7 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
               boxShadow: "none",
             }}
           >
-            <Typography>Accept</Typography>
+            <Typography>{t("buttonContent.6")}</Typography>
           </Button>
         </Box>
       </Box>
@@ -351,18 +352,30 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
   );
 };
 
-export default function InfoFooter({ timeStamp, status }: Props) {
+export default function InfoFooter({
+  timeStamp,
+  status,
+  delivery_type,
+}: Props) {
+  console.log(
+    "🚀 ~ file: index.tsx ~ line 355 ~ InfoFooter ~ delivery_type",
+    delivery_type
+  );
+  console.log(status);
   switch (status) {
-    case "pending":
+    case OrderEnum.processing:
       return (
         <Box className={styles.detail_footer_container}>
           <InfoPendingFooter timeStamp={timeStamp} />
         </Box>
       );
-    case "accepted":
+    case OrderEnum.ready:
       return (
         <Box className={styles.detail_footer_container}>
-          <InfoReadyFooter timeStamp={timeStamp} />
+          <InfoReadyFooter
+            timeStamp={timeStamp}
+            delivery_type={delivery_type}
+          />
         </Box>
       );
     default:

@@ -7,8 +7,10 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 import Switch from "@mui/material/Switch";
 import CircleIcon from "@mui/icons-material/Circle";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 export default function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const { t } = useTranslation("common");
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "#F3F5F7" }}>
@@ -47,7 +49,7 @@ export default function Header() {
                   sx={{ height: "15px", width: "15px", marginRight: "5px" }}
                 />
                 <Typography color={"#5191D9"} fontSize="10px" lineHeight="13px">
-                  Orders manager
+                  {t("header.title")}
                 </Typography>
               </Box>
             </IconButton>
@@ -59,10 +61,13 @@ export default function Header() {
                   height: "10px",
                   marginRight: "10px",
                 }}
-               {...isOpen ? {color: "success"} : {color: "warning"}}
+                {...(isOpen ? { color: "success" } : { color: "warning" })}
               />
               <Typography color={"#000000"} fontSize="12px" lineHeight="16px">
-                Restaurant {isOpen ? "open" : "close"}
+                Restaurant{" "}
+                {isOpen
+                  ? t("restaurantStatus.open")
+                  : t("restaurantStatus.close")}
               </Typography>
             </Box>
           </Box>

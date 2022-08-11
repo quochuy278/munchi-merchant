@@ -19,15 +19,35 @@ const initialState = {
         total: 32,
       },
       customer: {
-        id: 213124,
+        id: 213121324,
         name: "Huy",
         email: "test@test.com",
       },
       products: [
         {
-          id: 213124,
-          name: "Chicken Nuggets",
+          id: 21366124,
+          name: "Veggie burger with margarita on top of The burger double patty.",
           quantity: 1,
+        },
+        {
+          id: 2131524,
+          name: "Nugget",
+          quantity: 1,
+        },
+        {
+          id: 2131244,
+          name: "Oninon ring",
+          quantity: 1,
+        },
+        {
+          id: 21315224,
+          name: "Somthing",
+          quantity: 1,
+        },
+        {
+          id: 2133124,
+          name: "Fried Fry",
+          quantity: 3,
         },
       ],
       business: {
@@ -36,6 +56,7 @@ const initialState = {
       },
       comment: "No potatoe please",
       delivery_type: 1,
+      timeStamp: "15:43",
     },
   ],
   init: false,

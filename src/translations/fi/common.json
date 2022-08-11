@@ -1,0 +1,49 @@
+{
+  "header": {
+    "title": "Orders manager"
+  },
+  "section": {
+    "sectiontitle": {
+      "0": "Pending",
+      "1": "Ready",
+      "2": "Accepted"
+    },
+    "detailTitle": {
+        "0": "Order"
+    }
+  },
+  "restaurantStatus": {
+    "close": "close",
+    "open": "open"
+  },
+  "delivery_type": {
+    "0": "Take Out",
+    "1": "Delivery",
+    "2": "Pick Up",
+    "3": "Eat In"
+  },
+  "timeStamp": {
+    "day": {
+      "0": "Today",
+      "1": "Yesterday"
+    },
+    "create": "Created",
+    "accepted": "Accepted",
+    "marked__ready": "Marked ready"
+  },
+  "buttonContent": {
+    "0": "Decline",
+    "1": "Ready to delivery",
+    "2": "Ready to pick up",
+    "3": "Ready to serve",
+    "4": "Ready in",
+    "5":"Custom",
+    "6":"Accept"
+  },
+  "tax": "Tax",
+  "total": "Order Total",
+  "items": "Items",
+  "error": "Something wrong happened",
+
+   "note": "Please translate all the english phase here into Finnish and delete this line only"
+}

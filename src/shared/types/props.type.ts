@@ -1,8 +1,10 @@
+import { ProductItem } from "./order.type";
+
 export type Props = {
   children?: JSX.Element | JSX.Element[];
   detailOrder?: any;
   timeStamp?: string;
-  status?: string;
+  status?: number;
   name?: string;
   orderType?: number;
   items?: [];
@@ -11,5 +13,6 @@ export type Props = {
   orderStatus?: number;
   orderTitle?: string;
   orderQuantity?: number;
-  delivery_type?: number
+  delivery_type?: any;
+  productList?: ProductItem[];
 };

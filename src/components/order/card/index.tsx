@@ -1,24 +1,30 @@
+import { Expand } from "@mui/icons-material";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import DiningIcon from "@mui/icons-material/Dining";
 import TakeoutDiningOutlinedIcon from "@mui/icons-material/TakeoutDiningOutlined";
-import { Card, IconButton, Typography } from "@mui/material";
+import { Card, Collapse, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Props } from "../../../shared/types/props.type";
+import { ExpandMore } from "../../customcomponents";
 import OrderFooter from "./footer";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import styles from "./index.module.css";
+import { useTranslation } from "react-i18next";
 export type FactoryIcon = {
   orderType: number;
 };
 
 export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
+  const {t} = useTranslation('common')
   switch (orderType) {
     case 3:
       return (
         <Box display="flex">
           <DiningIcon sx={{ width: "16px", height: "14px", marginX: 1 }} />
           <Typography fontSize="10px" lineHeight="13px">
-            Eat In
+            {t("delivery_type.2")}
           </Typography>
         </Box>
       );
@@ -29,7 +35,7 @@ export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
             sx={{ width: "16px", height: "14px", marginX: 1 }}
           />
           <Typography fontSize="10px" lineHeight="13px">
-            Delivery
+            {t("delivery_type.1")}
           </Typography>
         </Box>
       );
@@ -38,7 +44,7 @@ export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
         <Box display="flex">
           <DiningIcon sx={{ width: "16px", height: "14px", marginX: 1 }} />
           <Typography fontSize="10px" lineHeight="13px">
-            Eat In
+            {t("delivery_type.3")}
           </Typography>
         </Box>
       );
@@ -51,7 +57,7 @@ export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
             sx={{ width: "16px", height: "14px", marginX: 1 }}
           />
           <Typography fontSize="10px" lineHeight="13px">
-            Take out
+            {t("delivery_type.0")}
           </Typography>
         </Box>
       );
@@ -59,22 +65,163 @@ export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
 };
 
 export default function OrderCard({ ordersData }: Props) {
+  const [expanded, setExpanded] = useState(false);
+   const { t } = useTranslation("common");
   console.log(
     "🚀 ~ file: index.tsx ~ line 54 ~ OrderCard ~ ordersData",
     ordersData
   );
   const navigate = useNavigate();
-
-  let noOrder = (
-    <>
-      <div>No Pending Order at the moment</div>
-    </>
-  );
   const clickHandler = (event: any, status: string, orderId: string) => {
-    navigate(`./detail/${orderId}`);
+    switch (expanded) {
+      case true: {
+        navigate(`./detail/${orderId}`);
+        break;
+      }
+      case false: {
+        console.log("show expanded");
+        break;
+      }
+    }
+
     event.preventDefault();
   };
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
+  const RenderProductList = ({ productList }: Props) => {
+    console.log(productList?.length);
+    if (productList!.length <= 3) {
+      return (
+        <>
+          {productList?.map((product) => {
+            return (
+              <Box key={product.id} className={styles.product_item_container}>
+                <Box display="flex" width="90%" textAlign="left">
+                  <Typography
+                    fontSize="14px"
+                    lineHeight="16px"
+                    fontWeight={600}
+                  >
+                    {product.quantity}
+                  </Typography>
+                  <Typography
+                    fontSize="14px"
+                    lineHeight="16px"
+                    fontWeight={600}
+                    sx={{ marginX: "20px" }}
+                  >
+                    x
+                  </Typography>
 
+                  <Typography
+                    fontSize="14px"
+                    lineHeight="16px"
+                    fontWeight={600}
+                    sx={{ marginX: "20px" }}
+                  >
+                    {product.name}
+                  </Typography>
+                </Box>
+              </Box>
+            );
+          })}
+        </>
+      );
+    } else if (productList!.length > 3) {
+      const renderProduct = productList!.slice(0, 2);
+      const filterProduct = productList!.filter((item, index) => index >= 2);
+      console.log(renderProduct);
+      return (
+        <Box className={styles.product_item_container}>
+          <Box
+            display="flex"
+            width="90%"
+            textAlign="left"
+            flexDirection={"column"}
+            justifyContent="center"
+          >
+            {renderProduct.map((product) => {
+              return (
+                <Box display={"flex"} key={product.id} sx={{padding:'5px'}} width="100%">
+                  <Typography
+                    fontSize="14px"
+                    lineHeight="16px"
+                    fontWeight={600}
+                  >
+                    {product.quantity}
+                  </Typography>
+                  <Typography
+                    fontSize="14px"
+                    lineHeight="16px"
+                    fontWeight={600}
+                    sx={{ marginX: "20px" }}
+                  >
+                    x
+                  </Typography>
+
+                  <Typography
+                    fontSize="14px"
+                    lineHeight="16px"
+                    fontWeight={600}
+                    sx={{ marginX: "20px" }}
+                  >
+                    {product.name}
+                  </Typography>
+
+                  {/* <Collapse in={expanded} timeout="auto" unmountOnExit> */}
+                  {/* <Box display={"flex"} flexDirection="column">*/}
+
+                  {/* </Box> */}
+
+                  {/* </Collapse> */}
+                </Box>
+              );
+            })}
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+              {filterProduct.map((product: any) => {
+                return (
+                  <Box
+                    display={"flex"}
+                    key={product.id}
+                    sx={{ padding: "5px" }}
+                    width="100%"
+                  >
+                    <Typography
+                      fontSize="14px"
+                      lineHeight="16px"
+                      fontWeight={600}
+                    >
+                      {product.quantity}
+                    </Typography>
+                    <Typography
+                      fontSize="14px"
+                      lineHeight="16px"
+                      fontWeight={600}
+                      sx={{ marginX: "20px" }}
+                    >
+                      x
+                    </Typography>
+
+                    <Typography
+                      fontSize="14px"
+                      lineHeight="16px"
+                      fontWeight={600}
+                      sx={{ marginX: "20px", opacity: "0.98px" }}
+                    >
+                      {product.name}
+                    </Typography>
+                  </Box>
+                );
+              })}
+            </Collapse>
+          </Box>
+        </Box>
+      );
+    } else {
+      return <>{t('error')}</>;
+    }
+  };
   return (
     <>
       {ordersData.map((order: any) => {
@@ -134,10 +281,11 @@ export default function OrderCard({ ordersData }: Props) {
                 fontSize="8px"
                 lineHeight="10px"
               >
-                Today at {order.timestamp}
+                {t('timeStamp.day.0')} at {order.timeStamp}
               </Typography>
               <Box className={styles.card__item__container}>
-                {order.products.map((product: any) => {
+                {/* {order.products.map((product: any) => {
+                  console.log(product)
                   return (
                     <Box
                       key={product.id}
@@ -169,7 +317,7 @@ export default function OrderCard({ ordersData }: Props) {
                           {product.name}
                         </Typography>
                       </Box>
-                      {/* <Box
+                      <Box
                         display="flex"
                         width="100%"
                         sx={{ marginLeft: "15px" }}
@@ -198,11 +346,31 @@ export default function OrderCard({ ordersData }: Props) {
                         >
                           BBQ SAuce
                         </Typography>
-                      </Box> */}
-                      {/* here */}
+                      </Box>
+                      
                     </Box>
                   );
-                })}
+                })} */}
+                <RenderProductList productList={order.products} />
+              </Box>
+              <Box
+                component={"div"}
+                display="flex"
+                alignItems={"center"}
+                width="100%"
+                justifyContent={"center"}
+              >
+                <Typography>see more</Typography>
+                <IconButton>
+                  <ExpandMore
+                    expand={expanded}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                  >
+                    <ExpandMoreIcon />
+                  </ExpandMore>
+                </IconButton>
               </Box>
               <Card
                 sx={{

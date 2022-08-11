@@ -5,16 +5,71 @@ import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import DiningIcon from "@mui/icons-material/Dining";
 import TakeoutDiningOutlinedIcon from "@mui/icons-material/TakeoutDiningOutlined";
 import { Props } from "../../../../shared/types/props.type";
+import OrderEnum from "../../../../shared/enum/enum";
+import { useTranslation } from "react-i18next";
 
+export type FactoryType = {
+  orderType: number;
+};
 
+const FactoryIcon = ({ orderType }: FactoryType): JSX.Element => {
+   const {t} = useTranslation('common')
+  switch (orderType) {
+    case OrderEnum.Delivery: {
+      return (
+        <Box className={styles.detail__icon__container}>
+          <DeliveryDiningIcon sx={{ color: "#707070" }} />
+          <Typography fontSize="8px" lineHeight="10px">
+            {t('delivery_type.1')}
+          </Typography>
+        </Box>
+      );
+    }
+    case OrderEnum.Eatin: {
+      return (
+        <Box className={styles.detail__icon__container}>
+          <DiningIcon sx={{ color: "#707070" }} />
+          <Typography fontSize="8px" lineHeight="10px">
+            {t("delivery_type.3")}
+          </Typography>
+        </Box>
+      );
+    }
+    case OrderEnum.Pickup: {
+      return (
+        <Box className={styles.detail__icon__container}>
+          <TakeoutDiningOutlinedIcon sx={{ color: "#707070" }} />
+          <Typography fontSize="8px" lineHeight="10px">
+            {t("delivery_type.2")}
+          </Typography>
+        </Box>
+      );
+    }
+    case undefined: {
+      return <div>{null}</div>
+    }
+    default: {
+       return (
+         <Box className={styles.detail__icon__container}>
+           <TakeoutDiningOutlinedIcon sx={{ color: "#707070" }} />
+           <Typography fontSize="8px" lineHeight="10px">
+             {t("delivery_type.0")}
+           </Typography>
+         </Box>
+       );
+    }
+  }
+};
 
-export default function InfoList({ name }: Props) {
+export default function InfoList({ name, delivery_type}: Props) {
+console.log("🚀 ~ file: index.tsx ~ line 64 ~ InfoList ~ delivery_type", delivery_type)
+  const {t} = useTranslation('common')
   return (
     <Box className={styles.detail__info}>
       <Box className={styles.detail__info__bar}>
         <Box sx={{ marginX: "10px" }}>
           <Typography fontSize="10px" lineHeight="13px">
-            Customer
+           {t('customer')}
           </Typography>
           <Typography fontSize="18px" lineHeight="24px">
             {name}
@@ -49,12 +104,7 @@ export default function InfoList({ name }: Props) {
       </Box>
 
       <Box sx={{ padding: "20px" }}>
-        <Box className={styles.detail__icon__container}>
-          <TakeoutDiningOutlinedIcon sx={{ color: "#707070" }} />
-          <Typography fontSize="8px" lineHeight="10px">
-            Take away
-          </Typography>
-        </Box>
+       <FactoryIcon orderType={delivery_type} />
       </Box>
     </Box>
   );

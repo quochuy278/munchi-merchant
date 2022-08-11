@@ -7,6 +7,10 @@ export type UpdateParameter = {
   prepTime: string;
 };
 
+export type RejectObject = {
+  orderId: number;
+};
+
 export const fetchOrders = createAsyncThunk<
   Order[],
   any,
@@ -25,25 +29,150 @@ export const fetchOrders = createAsyncThunk<
     return thunkApi.rejectWithValue({
       message: "Failed to fetch orders.",
     });
-  }  
+  }
   return result;
 });
 
-export const updateOrders = createAsyncThunk<
-  Order[],
-  UpdateParameter,
-  { rejectValue: FetchOrderError }
->("orders/update", async (updateData, thunkApi) => {
-  const  {orderId, prepTime} = updateData
-  const response = await fetch(
-    `http://gomunchi.pagekite.me/orders?status=ready&&status=pending`
-  );
-  const data: Order[] = await response.json();
-  if (response.status !== 200) {
-    // Return the error message:
-    return thunkApi.rejectWithValue({
-      message: "Failed to fetch todos.",
-    });
-  }
-  return data;
-});
+//change state to processing
+
+// export const updateOrders = createAsyncThunk<
+//   Order[],
+//   UpdateParameter,
+//   { rejectValue: FetchOrderError }
+// >("orders/update", async (updateData, thunkApi) => {
+//   const { orderId, prepTime } = updateData;
+//   const response = await fetch(
+//     `http://gomunchi.pagekite.me/orders?status=ready&&status=pending`,
+//     {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(updateData),
+//     }
+//   );
+//   const data: Order[] = await response.json();
+//   if (response.status !== 200) {
+//     // Return the error message:
+//     return thunkApi.rejectWithValue({
+//       message: "Failed to fetch todos.",
+//     });
+//   }
+//   return data;
+// });
+
+//decline order
+
+// export const updateOrders = createAsyncThunk<
+//   Order[],
+//   RejectObject,
+//   { rejectValue: FetchOrderError }
+// >("orders/update", async (orderId, thunkApi) => {
+
+//   const response = await fetch(
+//     `http://gomunchi.pagekite.me/orders?status=ready&&status=pending`,
+//     {
+//       method: "DELETE",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(orderId),
+//     }
+//   );
+//   const data: Order[] = await response.json();
+//   if (response.status !== 200) {
+//     // Return the error message:
+//     return thunkApi.rejectWithValue({
+//       message: "Failed to fetch todos.",
+//     });
+//   }
+//   return data;
+// });
+
+//processing to delivery
+
+// export const updateOrders = createAsyncThunk<
+//   Order[],
+//   RejectObject,
+//   { rejectValue: FetchOrderError }
+// >("orders/update", async (orderId, thunkApi) => {
+
+//   const response = await fetch(
+//     `http://gomunchi.pagekite.me/orders?status=ready&&status=pending`,
+//     {
+//       method: "DELETE",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(orderId),
+//     }
+//   );
+//   const data: Order[] = await response.json();
+//   if (response.status !== 200) {
+//     // Return the error message:
+//     return thunkApi.rejectWithValue({
+//       message: "Failed to fetch todos.",
+//     });
+//   }
+//   return data;
+// });
+
+
+
+//processing to pickup
+
+// export const updateOrders = createAsyncThunk<
+//   Order[],
+//   RejectObject,
+//   { rejectValue: FetchOrderError }
+// >("orders/update", async (orderId, thunkApi) => {
+
+//   const response = await fetch(
+//     `http://gomunchi.pagekite.me/orders?status=ready&&status=pending`,
+//     {
+//       method: "DELETE",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(orderId),
+//     }
+//   );
+//   const data: Order[] = await response.json();
+//   if (response.status !== 200) {
+//     // Return the error message:
+//     return thunkApi.rejectWithValue({
+//       message: "Failed to fetch todos.",
+//     });
+//   }
+//   return data;
+// });
+
+
+
+//processing to eatin
+
+// export const updateOrders = createAsyncThunk<
+//   Order[],
+//   RejectObject,
+//   { rejectValue: FetchOrderError }
+// >("orders/update", async (orderId, thunkApi) => {
+
+//   const response = await fetch(
+//     `http://gomunchi.pagekite.me/orders?status=ready&&status=pending`,
+//     {
+//       method: "DELETE",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(orderId),
+//     }
+//   );
+//   const data: Order[] = await response.json();
+//   if (response.status !== 200) {
+//     // Return the error message:
+//     return thunkApi.rejectWithValue({
+//       message: "Failed to fetch todos.",
+//     });
+//   }
+//   return data;
+// });

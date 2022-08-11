@@ -8,9 +8,11 @@ import { Item } from "../../../store/OrderSlice";
 import ItemList from "./itemlist";
 import ItemFooter from "./itemfooter";
 import { Props } from "../../../shared/types/props.type";
+import { useTranslation } from "react-i18next";
 
 
 export default function ItemCard({ detailOrder }: Props) {
+  const {t} = useTranslation('common')
   const { products, comments } = detailOrder;
   return (
     <Box gridColumn="span 6" className={styles.detail__content}>
@@ -22,7 +24,7 @@ export default function ItemCard({ detailOrder }: Props) {
           className={styles.detail__title}
         >
           <Typography fontSize="18px" lineHeight="24px" fontWeight={600}>
-            {products.length} items
+            {products.length} {t('Items')}
           </Typography>
           <IconButton sx={{ backgroundColor: "#F2F9FE", borderRadius: "8px" }}>
             <PrintIcon

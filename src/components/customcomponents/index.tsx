@@ -1,5 +1,5 @@
-import { Button } from "@mui/material";
-import { styled } from "@mui/system";
+import { Button, IconButton, IconButtonProps } from "@mui/material";
+import { styled } from "@mui/material/styles";
 
 // order footer buttons
 export const CustomReadyButton = styled(Button)(({ theme }) => ({
@@ -77,4 +77,19 @@ export const CustomAcceptButton = styled(Button)(({ theme }) => ({
 //     backgroundColor: "#5D8139",
 //     border: "none",
 //   },
+}));
+
+interface ExpandMoreProps extends IconButtonProps {
+  expand: boolean;
+}
+
+export const ExpandMore = styled((props: ExpandMoreProps) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
+  marginLeft: "auto",
+  transition: theme.transitions.create("transform", {
+    duration: theme.transitions.duration.shortest,
+  }),
 }));

@@ -10,16 +10,14 @@ import { RootState, useTypedSelector } from "../../store";
 import styles from "./index.module.css";
 import { selectOrders } from "../../store/OrderSlice";
 
-
-
 export default function DetailPage() {
   const param = useParams();
- 
+
   const orderId = param.detailId as string; //string
- 
-   const orders = useTypedSelector(selectOrders);
+
+  const orders = useTypedSelector(selectOrders);
   const detailOrderArray = orders.filter((order) => {
-   const numberOrderId =  parseInt(orderId)
+    const numberOrderId = parseInt(orderId);
     return order.id === numberOrderId;
   });
 
@@ -28,8 +26,8 @@ export default function DetailPage() {
     "🚀 ~ file: index.tsx ~ line 26 ~ DetailPage ~ detailOrder",
     detailOrder
   );
-  const {id} = detailOrder;
- 
+  const { id } = detailOrder;
+
   return (
     <DetailContent>
       <DetailTitle orderId={id} />

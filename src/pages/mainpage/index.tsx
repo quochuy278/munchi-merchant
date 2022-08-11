@@ -10,18 +10,19 @@ import { AppDispatch, useTypedSelector } from "../../store";
 import { selectOrders, selectStatus } from "../../store/OrderSlice";
 import { fetchOrders } from "../../services/services";
 import OrderEnum from "../../shared/enum/enum";
+import { useTranslation } from "react-i18next";
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const orders = useTypedSelector(selectOrders);
   const statusLoaded = useSelector(selectStatus);
-
+  const { t } = useTranslation("common");
   useEffect(() => {
     dispatch(fetchOrders({ status: ["pending", "processing", "ready"] }));
   }, []);
 
   const pendingOrders = orders.filter((order) => {
-    return order.status ===  OrderEnum.pending;
+    return order.status === OrderEnum.pending;
   });
 
   const acceptedOrders = orders.filter((order) => {
@@ -51,7 +52,7 @@ const MainPage = () => {
         >
           <Box gridColumn="span 4" className={styles.section__container}>
             <OrderTitle
-              orderTitle="Pending"
+              orderTitle={t("section.sectiontitle.0")}
               orderQuantity={pendingOrders.length}
             />
             <OrderCardList ordersData={pendingOrders} />
@@ -61,16 +62,18 @@ const MainPage = () => {
 
           <Box gridColumn="span 4" className={styles.section__container}>
             <OrderTitle
-              orderTitle="Accepted"
+              orderTitle={t("section.sectiontitle.1")}
               orderQuantity={acceptedOrders.length}
             />
             <OrderCardList ordersData={acceptedOrders} />
           </Box>
-
           {/* Ready */}
 
           <Box gridColumn="span 4" className={styles.section__container}>
-            <OrderTitle orderTitle="Ready" orderQuantity={readyOrders.length} />
+            <OrderTitle
+              orderTitle={t("section.sectiontitle.2")}
+              orderQuantity={readyOrders.length}
+            />
             <OrderCardList ordersData={readyOrders} />
           </Box>
         </Box>
