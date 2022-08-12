@@ -2,14 +2,14 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
-import { Props } from "../../../../shared/types/props.type";
+import { FooterProps, Props } from "../../../../shared/types/props.type";
 import {
   CustomAcceptedButton,
   CustomReadyButton
 } from "../../../customcomponents";
 import DialogAlert from "../../../dialog";
 
-export const ReadyFooter = ({ orderStatus, orderId }: Props) => {
+export const ReadyFooter = ({ orderStatus, orderId }: FooterProps) => {
   return (
     <CustomReadyButton variant="contained">
       <Typography sx={{ color: "white", opacity: 0.98 }} fontSize="13px">
@@ -19,7 +19,7 @@ export const ReadyFooter = ({ orderStatus, orderId }: Props) => {
   );
 };
 
-export const AcceptedFooter = ({ orderStatus, orderId }: Props) => {
+export const AcceptedFooter = ({ orderStatus, orderId, prepTime }: FooterProps) => {
   return (
     <Box
       display="flex"
@@ -57,7 +57,7 @@ export const AcceptedFooter = ({ orderStatus, orderId }: Props) => {
   );
 };
 
-export const PendingFooter = ({ orderIndex, orderId }: Props) => {
+export const PendingFooter = ({ orderIndex, orderId , delivery_type}: Props) => {
   const [prepTime, setPrepTime] = useState(10);
   const [open, setOpen] = useState(false);
   const presetPreparationTimes = [5, 10, 20];
@@ -201,7 +201,7 @@ export const PendingFooter = ({ orderIndex, orderId }: Props) => {
         prepTime={prepTime}
         onClose={acceptDialogCloseHandler}
         orderId={orderId}
-        orderIndex= {orderIndex}
+        delivery_type={delivery_type}
       />
     </Box>
   );

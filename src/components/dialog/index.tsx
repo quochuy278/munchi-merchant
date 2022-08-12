@@ -16,6 +16,7 @@ import { AppDispatch } from "../../store";
 import { updateState } from "../../store/order-slice";
 
 
+
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
@@ -31,10 +32,19 @@ type Props = {
   prepTime: any;
   onClose: () => void;
   orderId?: string | number;
-  orderIndex?: number
+  delivery_type: number
 };
 
-export default function DialogAlert({ open, prepTime, onClose, orderId,  }: Props) {
+
+
+const DialogFactory = ({
+  prepTime,
+  onClose,
+  orderId,
+  delivery_type,
+}: Props) => {};
+
+export default function DialogAlert({ open, prepTime, onClose, orderId, delivery_type  }: Props) {
   const dispatch = useDispatch<AppDispatch>();
   // const clickHandler = () => {
   //   dispatch(updateState(orderId));
@@ -56,7 +66,7 @@ export default function DialogAlert({ open, prepTime, onClose, orderId,  }: Prop
         <CustomDeclineButton variant="contained" onClick={onClose}>
           Go Back
         </CustomDeclineButton>
-        <CustomAcceptButton onClick={() => dispatch(updateState(orderId))} variant="contained">
+        <CustomAcceptButton onClick={() => dispatch(updateState({orderId,prepTime}))} variant="contained">
           Confirm
         </CustomAcceptButton>
       </DialogActions>

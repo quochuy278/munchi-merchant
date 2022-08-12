@@ -8,7 +8,7 @@ export type Props = {
   name?: string;
   orderType?: number;
   items?: [];
-  orderId?: string | number;
+  orderId?: number;
   ordersData?: any;
   orderStatus?: number;
   orderTitle?: string;
@@ -16,4 +16,10 @@ export type Props = {
   delivery_type?: any;
   productList?: ProductItem[];
   orderIndex?: number 
+};
+
+export type FooterProps = {
+  prepTime?: number;
+  orderId?: number;
+  orderStatus?: number
 };

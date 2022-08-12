@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from ".";
 import { fetchOrders } from "../services/services";
 import { Order, OrderState } from "../shared/types/order.type";

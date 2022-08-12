@@ -393,6 +393,7 @@ export default function OrderCard({ ordersData }: Props) {
               orderStatus={order.status}
               orderId={order.id}
               orderIndex={index}
+              delivery_type={order.delivery_type}
             />
           </Box>
         );
