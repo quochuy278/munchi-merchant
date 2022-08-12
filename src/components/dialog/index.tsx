@@ -31,13 +31,14 @@ type Props = {
   prepTime: any;
   onClose: () => void;
   orderId?: string | number;
+  orderIndex?: number
 };
 
-export default function DialogAlert({ open, prepTime, onClose, orderId }: Props) {
+export default function DialogAlert({ open, prepTime, onClose, orderId, orderIndex }: Props) {
   const dispatch = useDispatch<AppDispatch>();
-  const clickHandler = () => {
-    dispatch(updateState(orderId));
-  }
+  // const clickHandler = () => {
+  //   dispatch(updateState(orderId));
+  // }
   return (
     <Dialog
       open={open}
@@ -55,7 +56,7 @@ export default function DialogAlert({ open, prepTime, onClose, orderId }: Props)
         <CustomDeclineButton variant="contained" onClick={onClose}>
           Go Back
         </CustomDeclineButton>
-        <CustomAcceptButton onClick={clickHandler} variant="contained">
+        <CustomAcceptButton onClick={() => dispatch(updateState(orderId))} variant="contained">
           Confirm
         </CustomAcceptButton>
       </DialogActions>

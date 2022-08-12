@@ -11,6 +11,7 @@ import { selectOrders, selectStatus } from "../../store/order-slice";
 import { fetchOrders } from "../../services/services";
 import OrderEnum from "../../shared/enum/enum";
 import { useTranslation } from "react-i18next";
+import { Order } from "../../shared/types/order.type";
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -21,14 +22,14 @@ const MainPage = () => {
     dispatch(fetchOrders({ status: ["pending", "processing", "ready"] }));
   }, []);
 
-  const pendingOrders = orders.filter((order) => {
+  const pendingOrders = orders.filter((order: Order) => {
     return order.status === OrderEnum.pending;
   });
 
-  const acceptedOrders = orders.filter((order) => {
+  const acceptedOrders = orders.filter((order: Order) => {
     return order.status === OrderEnum.processing;
   });
-  const readyOrders = orders.filter((order) => {
+  const readyOrders = orders.filter((order: Order) => {
     return order.status === OrderEnum.ready;
   });
 

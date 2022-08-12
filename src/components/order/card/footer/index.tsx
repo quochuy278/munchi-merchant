@@ -1,15 +1,13 @@
-import { styled } from "@mui/system";
+import CloseIcon from "@mui/icons-material/Close";
 import { Button, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import CloseIcon from "@mui/icons-material/Close";
 import { useState } from "react";
-import DialogAlert from "../../../dialog";
+import { Props } from "../../../../shared/types/props.type";
 import {
   CustomAcceptedButton,
-  CustomReadyButton,
+  CustomReadyButton
 } from "../../../customcomponents";
-import { useDispatch } from "react-redux";
-import { Props } from "../../../../shared/types/props.type";
+import DialogAlert from "../../../dialog";
 
 export const ReadyFooter = ({ orderStatus, orderId }: Props) => {
   return (
@@ -59,7 +57,7 @@ export const AcceptedFooter = ({ orderStatus, orderId }: Props) => {
   );
 };
 
-export const PendingFooter = ({ orderStatus, orderId }: Props) => {
+export const PendingFooter = ({ orderIndex, orderId }: Props) => {
   const [prepTime, setPrepTime] = useState(10);
   const [open, setOpen] = useState(false);
   const presetPreparationTimes = [5, 10, 20];
@@ -203,18 +201,19 @@ export const PendingFooter = ({ orderStatus, orderId }: Props) => {
         prepTime={prepTime}
         onClose={acceptDialogCloseHandler}
         orderId={orderId}
+        orderIndex= {orderIndex}
       />
     </Box>
   );
 };
 
-export default function OrderFooter({ orderStatus, orderId }: Props) {
+export default function OrderFooter({ orderStatus, orderId, orderIndex }: Props) {
 
   let orderFooter = <></>;
   switch(orderStatus){
     case 0 :
       return (orderFooter = (
-        <PendingFooter orderStatus={orderStatus} orderId={orderId} />
+        <PendingFooter orderStatus={orderStatus} orderId={orderId} orderIndex={orderIndex}/>
       ));
       case 1 : 
       return (orderFooter = (

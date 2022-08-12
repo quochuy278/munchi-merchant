@@ -1,7 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import { RootState } from ".";
 import { fetchOrders } from "../services/services";
-import { OrderState } from "../shared/types/order.type";
+import { Order, OrderState } from "../shared/types/order.type";
 
 export type Item = {
   id: number;
@@ -14,7 +14,7 @@ const initialState = {
     {
       id: 1234,
       uuid: "fsdf1343124134141",
-      status: 2,
+      status: 1,
       summary: {
         total: 32,
       },
@@ -58,6 +58,53 @@ const initialState = {
       delivery_type: 1,
       timeStamp: "15:43",
     },
+    {
+      id: 12434,
+      uuid: "fsdf1343124134141",
+      status: 0,
+      summary: {
+        total: 32,
+      },
+      customer: {
+        id: 213121324,
+        name: "Huy",
+        email: "test@test.com",
+      },
+      products: [
+        {
+          id: 216124,
+          name: "Veggie burger with margarita on top of The burger double patty.",
+          quantity: 1,
+        },
+        {
+          id: 2131524,
+          name: "Nugget",
+          quantity: 1,
+        },
+        {
+          id: 213124,
+          name: "Oninon ring",
+          quantity: 1,
+        },
+        {
+          id: 2315224,
+          name: "Somthing",
+          quantity: 1,
+        },
+        {
+          id: 213124,
+          name: "Fried Fry",
+          quantity: 3,
+        },
+      ],
+      business: {
+        id: 1223,
+        name: "munchi",
+      },
+      comment: "No potatoe please",
+      delivery_type: 1,
+      timeStamp: "15:43",
+    },
   ],
   init: false,
   loading: false,
@@ -90,13 +137,26 @@ export const orderSlice = createSlice({
   name: "order",
   initialState,
   reducers: {
-    updateState: (state, action) => {
-      //  const filterOrder =  state.orders.filter( (order) => {
-      //    return order.id === action.payload
-      //   })
-      //   return {
-      //     filterOrder.status == 1
-      //   };
+    updateState:(state, {payload}): any=> {
+      console.log(payload)
+        console.log(current(state.orders))
+        const currentState = current(state.orders)
+      // if (state.orders[payload].status >=  3) state.orders[payload].status =  state.orders[payload].status
+      // else state.orders[payload].status = state.orders[payload].status + 1
+     const updateOrderArray =  currentState.filter((order:Order) => order.id === payload)
+     const updateOrderObject =  updateOrderArray[0]
+    //  console.log(updateOrderArray)
+    const updateOrderStatus = updateOrderArray[0].status + 1;
+    console.log(updateOrderStatus)
+    const mergeUpdateOrder={...updateOrderObject, status:updateOrderStatus }
+    console.log(mergeUpdateOrder)
+    //  state.orders.push(mergeUpdateOrder)
+    state.orders = state.orders.map((order) => {
+      if (order.id === mergeUpdateOrder.id){
+         return mergeUpdateOrder
+      }
+      else return {...order}
+    })
     },
   },
   extraReducers: (builder) => {
@@ -105,8 +165,8 @@ export const orderSlice = createSlice({
     });
     builder.addCase(fetchOrders.fulfilled, (state, action) => {
       if (action.payload.length === 0) {
-        console.log("No Order");
-         console.log(action);
+        // console.log("No Order");
+        //  console.log(action);
          state.loading = false;
       } else {
         state.orders.push(...action.payload);

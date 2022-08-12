@@ -15,4 +15,5 @@ export type Props = {
   orderQuantity?: number;
   delivery_type?: any;
   productList?: ProductItem[];
+  orderIndex?: number 
 };
