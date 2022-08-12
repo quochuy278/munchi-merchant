@@ -10,7 +10,7 @@ export const AuthSlice = createSlice({
   reducers: {
     login: (state) => {
         state.isAuthenticated = true
-        console.log(current(state))
+        // console.log(current(state))
     }
   }
 });

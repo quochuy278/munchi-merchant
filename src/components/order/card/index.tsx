@@ -1,24 +1,24 @@
-import { Expand } from "@mui/icons-material";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import DiningIcon from "@mui/icons-material/Dining";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import TakeoutDiningOutlinedIcon from "@mui/icons-material/TakeoutDiningOutlined";
 import { Card, Collapse, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import OrderEnum from "../../../shared/enum/enum";
 import { Props } from "../../../shared/types/props.type";
 import { ExpandMore } from "../../customcomponents";
 import OrderFooter from "./footer";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import styles from "./index.module.css";
-import { useTranslation } from "react-i18next";
-import OrderEnum from "../../../shared/enum/enum";
+
 export type FactoryIcon = {
   orderType: number;
 };
 
 export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
-  const {t} = useTranslation('common')
+  const { t } = useTranslation("common");
   switch (orderType) {
     case OrderEnum.Pickup:
       return (
@@ -69,16 +69,12 @@ export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
 
 export default function OrderCard({ ordersData }: Props) {
   const [expanded, setExpanded] = useState(false);
-   const { t } = useTranslation("common");
-  console.log(
-    "🚀 ~ file: index.tsx ~ line 54 ~ OrderCard ~ ordersData",
-    ordersData
-  );
+  const { t } = useTranslation("common");
   const navigate = useNavigate();
   const clickHandler = (event: any, status: string, orderId: string) => {
     switch (expanded) {
       case true: {
-        navigate(`./detail/${orderId}`);
+        navigate(`/detail/${orderId}`);
         break;
       }
       case false: {
@@ -93,7 +89,7 @@ export default function OrderCard({ ordersData }: Props) {
     setExpanded(!expanded);
   };
   const RenderProductList = ({ productList }: Props) => {
-    console.log(productList?.length);
+    // console.log(productList?.length);
     if (productList!.length <= 3) {
       return (
         <>
@@ -134,7 +130,7 @@ export default function OrderCard({ ordersData }: Props) {
     } else if (productList!.length > 3) {
       const renderProduct = productList!.slice(0, 2);
       const filterProduct = productList!.filter((item, index) => index >= 2);
-      console.log(renderProduct);
+      // console.log(renderProduct);
       return (
         <Box className={styles.product_item_container}>
           <Box
@@ -146,7 +142,12 @@ export default function OrderCard({ ordersData }: Props) {
           >
             {renderProduct.map((product) => {
               return (
-                <Box display={"flex"} key={product.id} sx={{padding:'5px'}} width="100%">
+                <Box
+                  display={"flex"}
+                  key={product.id}
+                  sx={{ padding: "5px" }}
+                  width="100%"
+                >
                   <Typography
                     fontSize="14px"
                     lineHeight="16px"
@@ -222,13 +223,13 @@ export default function OrderCard({ ordersData }: Props) {
         </Box>
       );
     } else {
-      return <>{t('error')}</>;
+      return <>{t("error")}</>;
     }
   };
   return (
     <>
-      {ordersData.map((order: any) => {
-        console.log(order.delivery_type);
+      {ordersData.map((order: any, index: number) => {
+        // console.log(order.delivery_type);
         return (
           <Box className={styles.main__card__container} key={order.id}>
             <Box
@@ -284,7 +285,7 @@ export default function OrderCard({ ordersData }: Props) {
                 fontSize="8px"
                 lineHeight="10px"
               >
-                {t('timeStamp.day.0')} at {order.timeStamp}
+                {t("timeStamp.day.0")} at {order.timeStamp}
               </Typography>
               <Box className={styles.card__item__container}>
                 {/* {order.products.map((product: any) => {
@@ -364,16 +365,16 @@ export default function OrderCard({ ordersData }: Props) {
                 justifyContent={"center"}
               >
                 <Typography>see more</Typography>
-                <IconButton>
-                  <ExpandMore
-                    expand={expanded}
-                    onClick={handleExpandClick}
-                    aria-expanded={expanded}
-                    aria-label="show more"
-                  >
-                    <ExpandMoreIcon />
-                  </ExpandMore>
-                </IconButton>
+                <Box>
+                <ExpandMore
+                  expand={expanded}
+                  onClick={handleExpandClick}
+                  aria-expanded={expanded}
+                  aria-label="show more"
+                >
+                  <ExpandMoreIcon />
+                </ExpandMore>
+                </Box>
               </Box>
               <Card
                 sx={{
@@ -388,7 +389,7 @@ export default function OrderCard({ ordersData }: Props) {
                 </Typography>
               </Card>
             </Box>
-            <OrderFooter orderStatus={order.status} orderId={order.id} />
+            <OrderFooter orderStatus={order.status} orderId={order.id} orderIndex={index}/>
           </Box>
         );
       })}

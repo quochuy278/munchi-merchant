@@ -1,14 +1,14 @@
 import { Box } from "@mui/material";
-import DetailContent from "../../components/container/DetailContent";
-
-import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import DetailContent from "../../components/container/DetailContent";
 import InfoCard from "../../components/detailcard/inforcard";
 import ItemCard from "../../components/detailcard/itemcard";
 import DetailTitle from "../../components/detailcard/title";
-import { RootState, useTypedSelector } from "../../store";
-import styles from "./index.module.css";
+import { Order } from "../../shared/types/order.type";
+import { useTypedSelector } from "../../store";
 import { selectOrders } from "../../store/order-slice";
+import styles from "./index.module.css";
+
 
 export default function DetailPage() {
   const param = useParams();
@@ -16,16 +16,16 @@ export default function DetailPage() {
   const orderId = param.detailId as string; //string
 
   const orders = useTypedSelector(selectOrders);
-  const detailOrderArray = orders.filter((order) => {
+  const detailOrderArray = orders.filter((order: Order) => {
     const numberOrderId = parseInt(orderId);
     return order.id === numberOrderId;
   });
 
   const detailOrder = detailOrderArray[0];
-  console.log(
-    "🚀 ~ file: index.tsx ~ line 26 ~ DetailPage ~ detailOrder",
-    detailOrder
-  );
+  // console.log(
+  //   "🚀 ~ file: index.tsx ~ line 26 ~ DetailPage ~ detailOrder",
+  //   detailOrder
+  // );
   const { id } = detailOrder;
 
   return (

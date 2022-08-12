@@ -1,12 +1,12 @@
-import { Typography } from "@mui/material";
-import { Box } from "@mui/system";
-import styles from "./index.module.css";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import DiningIcon from "@mui/icons-material/Dining";
 import TakeoutDiningOutlinedIcon from "@mui/icons-material/TakeoutDiningOutlined";
-import { Props } from "../../../../shared/types/props.type";
-import OrderEnum from "../../../../shared/enum/enum";
+import { Typography } from "@mui/material";
+import { Box } from "@mui/system";
 import { useTranslation } from "react-i18next";
+import OrderEnum from "../../../../shared/enum/enum";
+import { Props } from "../../../../shared/types/props.type";
+import styles from "./index.module.css";
 
 export type FactoryType = {
   orderType: number;
@@ -62,7 +62,7 @@ const FactoryIcon = ({ orderType }: FactoryType): JSX.Element => {
 };
 
 export default function InfoList({ name, delivery_type}: Props) {
-console.log("🚀 ~ file: index.tsx ~ line 64 ~ InfoList ~ delivery_type", delivery_type)
+// console.log("🚀 ~ file: index.tsx ~ line 64 ~ InfoList ~ delivery_type", delivery_type)
   const {t} = useTranslation('common')
   return (
     <Box className={styles.detail__info}>
