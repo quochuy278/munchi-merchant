@@ -1,7 +1,4 @@
-import React, { Fragment } from "react";
-import { useSelector } from "react-redux";
 import { Props } from "../../shared/types/props.type";
-import { RootState } from "../../store";
 import Footer from "./Footer";
 import Header from "./Header";
 import styles from "./layout.module.css";

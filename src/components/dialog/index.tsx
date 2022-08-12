@@ -34,7 +34,7 @@ type Props = {
   orderIndex?: number
 };
 
-export default function DialogAlert({ open, prepTime, onClose, orderId, orderIndex }: Props) {
+export default function DialogAlert({ open, prepTime, onClose, orderId,  }: Props) {
   const dispatch = useDispatch<AppDispatch>();
   // const clickHandler = () => {
   //   dispatch(updateState(orderId));

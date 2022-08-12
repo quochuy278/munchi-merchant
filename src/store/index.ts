@@ -1,7 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
 import OrderSlice from "./order-slice";
 import AuthSlice from "./auth-slice";
+import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
   reducer: { order: OrderSlice, auth: AuthSlice },

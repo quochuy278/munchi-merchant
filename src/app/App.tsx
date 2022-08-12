@@ -3,7 +3,7 @@ import { Route, Link, Routes } from "react-router-dom";
 
 import "./App.css";
 import { DetailPage, MainPage, AuthPage, ErrorPage } from "../pages";
-import ProtectedRoutes from "../utils/ProtectedRoutes";
+
 
 function App() {
   return (

@@ -2,8 +2,8 @@ import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import DiningIcon from "@mui/icons-material/Dining";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import TakeoutDiningOutlinedIcon from "@mui/icons-material/TakeoutDiningOutlined";
-import { Card, Collapse, IconButton, Typography } from "@mui/material";
-import { Box } from "@mui/system";
+import { Box, Card, Collapse, IconButton, Typography } from "@mui/material";
+
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
@@ -366,14 +366,14 @@ export default function OrderCard({ ordersData }: Props) {
               >
                 <Typography>see more</Typography>
                 <Box>
-                <ExpandMore
-                  expand={expanded}
-                  onClick={handleExpandClick}
-                  aria-expanded={expanded}
-                  aria-label="show more"
-                >
-                  <ExpandMoreIcon />
-                </ExpandMore>
+                  <ExpandMore
+                    expand={expanded}
+                    onClick={handleExpandClick}
+                    aria-expanded={expanded}
+                    aria-label="show more"
+                  >
+                    <ExpandMoreIcon />
+                  </ExpandMore>
                 </Box>
               </Box>
               <Card
@@ -389,7 +389,11 @@ export default function OrderCard({ ordersData }: Props) {
                 </Typography>
               </Card>
             </Box>
-            <OrderFooter orderStatus={order.status} orderId={order.id} orderIndex={index}/>
+            <OrderFooter
+              orderStatus={order.status}
+              orderId={order.id}
+              orderIndex={index}
+            />
           </Box>
         );
       })}
