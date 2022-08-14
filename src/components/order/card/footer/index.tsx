@@ -1,11 +1,12 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { Button, Typography } from "@mui/material";
+import { Button, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { FooterProps, Props } from "../../../../shared/types/props.type";
 import {
   CustomAcceptedButton,
-  CustomReadyButton
+  CustomReadyButton,
 } from "../../../customcomponents";
 import DialogAlert from "../../../dialog";
 
@@ -19,7 +20,16 @@ export const ReadyFooter = ({ orderStatus, orderId }: FooterProps) => {
   );
 };
 
-export const AcceptedFooter = ({ orderStatus, orderId, prepTime }: FooterProps) => {
+export const AcceptedFooter = ({
+  orderStatus,
+  orderId,
+  prepTime,
+  delivery_type,
+  onOpen,
+}: Props) => {
+  console.log(prepTime);
+
+  const { t } = useTranslation("common");
   return (
     <Box
       display="flex"
@@ -41,37 +51,36 @@ export const AcceptedFooter = ({ orderStatus, orderId, prepTime }: FooterProps) 
         borderRadius="8px"
       >
         <Typography sx={{ color: "#FF5F5F" }} fontSize="20px" lineHeight="26px">
-          3
+          {prepTime}
         </Typography>
         <Typography sx={{ color: "#FF5F5F" }} fontSize="8px" lineHeight="10px">
           min.
         </Typography>
       </Box>
       <Box></Box>
-      <CustomAcceptedButton variant="contained">
+      <CustomAcceptedButton variant="contained" onClick={onOpen}>
         <Typography sx={{ color: "white", opacity: 0.98 }} fontSize="13px">
-          Ready
+          {t("buttonContent.7")}
         </Typography>
       </CustomAcceptedButton>
     </Box>
   );
 };
 
-export const PendingFooter = ({ orderIndex, orderId , delivery_type}: Props) => {
+export const PendingFooter = ({
+  orderId,
+  delivery_type,
+  orderStatus,
+  onOpen,
+}: Props) => {
   const [prepTime, setPrepTime] = useState(10);
   const [open, setOpen] = useState(false);
   const presetPreparationTimes = [5, 10, 20];
+  const { t } = useTranslation("common");
   const setTimeHandler = (event: any, time: number) => {
     event.preventDefault();
     event.stopPropagation();
     setPrepTime(time);
-  };
-  const acceptHandler = () => {
-    setOpen(true);
-  };
-
-  const acceptDialogCloseHandler = () => {
-    setOpen(false);
   };
 
   return (
@@ -155,8 +164,7 @@ export const PendingFooter = ({ orderIndex, orderId , delivery_type}: Props) => 
       })}
 
       <Box gridColumn="span 1">
-        <Button
-          variant="outlined"
+        <IconButton
           sx={{
             width: "90%",
             height: "54px",
@@ -171,15 +179,16 @@ export const PendingFooter = ({ orderIndex, orderId , delivery_type}: Props) => 
             },
             "&:focus": {
               border: "none",
+              "&:hover": {
+                backgroundColor: "none",
+              },
             },
           }}
           disableFocusRipple={true}
           disableTouchRipple={true}
         >
-          <Box display="flex" flexDirection="column">
-            <CloseIcon sx={{ color: "#FF5F5F" }} />
-          </Box>
-        </Button>
+          <CloseIcon sx={{ color: "#FF5F5F" }} />
+        </IconButton>
       </Box>
 
       <Box gridColumn="span 2">
@@ -191,39 +200,71 @@ export const PendingFooter = ({ orderIndex, orderId , delivery_type}: Props) => 
             borderRadius: "8px",
             border: "none",
           }}
-          onClick={acceptHandler}
+          onClick={onOpen}
         >
-          Accept
+          {t("buttonContent.6")}
         </Button>
       </Box>
+    </Box>
+  );
+};
+
+export default function OrderFooter({
+  orderStatus,
+  orderId,
+  orderIndex,
+  prepTime,
+  delivery_type,
+}: Props) {
+  const [open, setOpen] = useState(false);
+  const acceptHandler = () => {
+    setOpen(true);
+  };
+
+  const acceptDialogCloseHandler = () => {
+    setOpen(false);
+  };
+  let orderFooter = <></>;
+  switch (orderStatus) {
+    case 0:
+      orderFooter = (
+        <PendingFooter
+          orderStatus={orderStatus}
+          orderId={orderId}
+          orderIndex={orderIndex}
+          onOpen={acceptHandler}
+        />
+      );
+      break;
+    case 1:
+      orderFooter = (
+        <AcceptedFooter
+          orderStatus={orderStatus}
+          orderId={orderId}
+          prepTime={prepTime}
+          onOpen={acceptHandler}
+        />
+      );
+      break;
+    default:
+      orderFooter = (
+        <ReadyFooter
+          orderStatus={orderStatus}
+          orderId={orderId}
+        />
+      );
+  }
+  return (
+    <>
+      {orderFooter}
       <DialogAlert
         open={open}
         prepTime={prepTime}
         onClose={acceptDialogCloseHandler}
         orderId={orderId}
         delivery_type={delivery_type}
+        status={orderStatus}
       />
-    </Box>
+    </>
   );
-};
-
-export default function OrderFooter({ orderStatus, orderId, orderIndex }: Props) {
-
-  let orderFooter = <></>;
-  switch(orderStatus){
-    case 0 :
-      return (orderFooter = (
-        <PendingFooter orderStatus={orderStatus} orderId={orderId} orderIndex={orderIndex}/>
-      ));
-      case 1 : 
-      return (orderFooter = (
-        <AcceptedFooter orderStatus={orderStatus} orderId={orderId} />
-      ));
-      default :
-      return (orderFooter = (
-        <ReadyFooter orderStatus={orderStatus} orderId={orderId} />
-      ));
-
-  }
-
 }

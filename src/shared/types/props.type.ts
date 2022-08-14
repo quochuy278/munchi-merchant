@@ -16,10 +16,12 @@ export type Props = {
   delivery_type?: any;
   productList?: ProductItem[];
   orderIndex?: number 
+  prepTime?: string | number
+  onOpen?: () => void
 };
 
 export type FooterProps = {
-  prepTime?: number;
+  prepTime?: number | string;
   orderId?: number;
-  orderStatus?: number
+  orderStatus?: number;
 };

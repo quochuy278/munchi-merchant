@@ -85,6 +85,7 @@ export default function OrderCard({ ordersData }: Props) {
 
     event.preventDefault();
   };
+  console.log(ordersData)
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -229,7 +230,7 @@ export default function OrderCard({ ordersData }: Props) {
   return (
     <>
       {ordersData.map((order: any, index: number) => {
-        // console.log(order.delivery_type);
+        console.log(order.prepTime);
         return (
           <Box className={styles.main__card__container} key={order.id}>
             <Box
@@ -394,6 +395,7 @@ export default function OrderCard({ ordersData }: Props) {
               orderId={order.id}
               orderIndex={index}
               delivery_type={order.delivery_type}
+              prepTime={order.prepTime}
             />
           </Box>
         );

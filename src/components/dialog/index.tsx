@@ -14,8 +14,7 @@ import { CustomAcceptButton, CustomDeclineButton } from "../customcomponents";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { updateState } from "../../store/order-slice";
-
-
+import { useTranslation } from "react-i18next";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -32,44 +31,83 @@ type Props = {
   prepTime: any;
   onClose: () => void;
   orderId?: string | number;
-  delivery_type: number
+  delivery_type: number;
+  status?: number;
 };
 
-
-
-const DialogFactory = ({
+export default function DialogAlert({
+  open,
   prepTime,
   onClose,
   orderId,
   delivery_type,
-}: Props) => {};
-
-export default function DialogAlert({ open, prepTime, onClose, orderId, delivery_type  }: Props) {
+  status,
+}: Props) {
   const dispatch = useDispatch<AppDispatch>();
+  const { t } = useTranslation("common");
   // const clickHandler = () => {
   //   dispatch(updateState(orderId));
   // }
-  return (
-    <Dialog
-      open={open}
-      TransitionComponent={Transition}
-      keepMounted
-      aria-describedby="alert-dialog-slide-description"
-    >
-      <DialogTitle>Order confirmation</DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-slide-description">
-          Please confirm that you will give the order in {prepTime} minutes
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions sx={{ display: "flex", justifyContent: "space-between" }}>
-        <CustomDeclineButton variant="contained" onClick={onClose}>
-          Go Back
-        </CustomDeclineButton>
-        <CustomAcceptButton onClick={() => dispatch(updateState({orderId,prepTime}))} variant="contained">
-          Confirm
-        </CustomAcceptButton>
-      </DialogActions>
-    </Dialog>
-  );
+  console.log(open)
+  let DialogRenderContent = <></>;
+  if (delivery_type === 1 && status === 1) {
+    return (DialogRenderContent = (
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>{t("section.dialog.dialogTitle")}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            {t("dialogContent.0")}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <CustomDeclineButton variant="contained" onClick={onClose}>
+            Go Back
+          </CustomDeclineButton>
+          <CustomAcceptButton
+            onClick={() => dispatch(updateState({ orderId, prepTime }))}
+            variant="contained"
+          >
+            Confirm
+          </CustomAcceptButton>
+        </DialogActions>
+      </Dialog>
+    ));
+  } else if (status == 0) {
+    return (DialogRenderContent = (
+      <Dialog
+        open={open}
+        TransitionComponent={Transition}
+        keepMounted
+        aria-describedby="alert-dialog-slide-description"
+      >
+        <DialogTitle>Order confirmation</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-slide-description">
+            Please confirm that you will give the order in {prepTime} minutes
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions
+          sx={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <CustomDeclineButton variant="contained" onClick={onClose}>
+            Go Back
+          </CustomDeclineButton>
+          <CustomAcceptButton
+            onClick={() => dispatch(updateState({ orderId, prepTime }))}
+            variant="contained"
+          >
+            Confirm
+          </CustomAcceptButton>
+        </DialogActions>
+      </Dialog>
+    ));
+  }
+  return <>{DialogRenderContent}</>;
 }

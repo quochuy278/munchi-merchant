@@ -57,6 +57,7 @@ const initialState = {
       comment: "No potatoe please",
       delivery_type: 1,
       timeStamp: "15:43",
+      prepTime: 15
     },
     {
       id: 12434,
@@ -104,6 +105,7 @@ const initialState = {
       comment: "No potatoe please",
       delivery_type: 1,
       timeStamp: "15:43",
+      prepTime: ""
     },
   ],
   init: false,
@@ -143,9 +145,14 @@ export const orderSlice = createSlice({
         const currentState = current(state.orders)
       // if (state.orders[payload].status >=  3) state.orders[payload].status =  state.orders[payload].status
       // else state.orders[payload].status = state.orders[payload].status + 1
-     const updateOrderArray =  currentState.filter((order:Order) => order.id === payload)
+      const orderId = payload.orderId
+     const updateOrderArray = currentState.filter(
+       (order: Order) => order.id === orderId
+     );
      const updateOrderObject =  updateOrderArray[0]
     //  console.log(updateOrderArray)
+    //check order status 
+
     const updateOrderStatus = updateOrderArray[0].status + 1;
     console.log(updateOrderStatus)
     const mergeUpdateOrder={...updateOrderObject, status:updateOrderStatus }

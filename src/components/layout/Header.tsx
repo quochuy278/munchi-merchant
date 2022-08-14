@@ -1,4 +1,4 @@
-import { IconButton, Toolbar, Typography } from "@mui/material";
+import { Button, ButtonGroup, IconButton, Toolbar, Typography } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import React from "react";
@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 export default function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const { t } = useTranslation("common");
+  const { t, i18n } = useTranslation("common");
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "#F3F5F7" }}>
@@ -69,6 +69,12 @@ export default function Header() {
                   ? t("restaurantStatus.open")
                   : t("restaurantStatus.close")}
               </Typography>
+            </Box>
+            <Box display={"flex"} alignItems="center">
+              <ButtonGroup variant="text" aria-label="text button group">
+                <Button onClick={() => i18n.changeLanguage("en")}>en</Button>
+                <Button onClick={() => i18n.changeLanguage("fi")}>fi</Button>
+              </ButtonGroup>
             </Box>
           </Box>
         </Toolbar>

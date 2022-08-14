@@ -5,7 +5,7 @@
   "section": {
     "sectiontitle": {
       "0": "Pending",
-      "1": "Ready",
+      "1": "Valmis",
       "2": "Accepted"
     },
     "detailTitle": {
@@ -38,7 +38,8 @@
     "3": "Ready to serve",
     "4": "Ready in",
     "5":"Custom",
-    "6":"Accept"
+    "6":"Accept",
+    "7":"Ready"
   },
   "tax": "Tax",
   "total": "Order Total",

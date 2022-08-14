@@ -16,6 +16,7 @@ import { Order } from "../../shared/types/order.type";
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const orders = useTypedSelector(selectOrders);
+  console.log("🚀 ~ file: index.tsx ~ line 19 ~ MainPage ~ orders", orders)
   const statusLoaded = useSelector(selectStatus);
   const { t } = useTranslation("common");
   useEffect(() => {
