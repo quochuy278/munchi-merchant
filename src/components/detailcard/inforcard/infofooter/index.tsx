@@ -2,16 +2,21 @@ import { Box, Button, Input, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import OrderEnum from "../../../../shared/enum/enum";
-import { Props } from "../../../../shared/types/props.type";
+import {
+  DetailFooterProps,
+  FactoryProps,
+} from "../../../../shared/interfaces/props.interface";
+
 import styles from "./index.module.css";
 
 const timeAvailable = [1, 5, 10, 15, 20, 30];
-const FactoryButton = ({ delivery_type }: Props) => {
+
+const FactoryButton = ({ deliveryType }: FactoryProps) => {
   const deliveryReadyHandler = () => {};
   const pickupReadyHandler = () => {};
   const readyReadyHandler = () => {};
   const { t } = useTranslation("common");
-  switch (delivery_type) {
+  switch (deliveryType) {
     case OrderEnum.Delivery:
       return (
         // delivery
@@ -64,7 +69,7 @@ const FactoryButton = ({ delivery_type }: Props) => {
       );
   }
 };
-const InfoReadyFooter = ({ delivery_type, timeStamp }: Props) => {
+const InfoReadyFooter = ({ deliveryType, timeStamp }: DetailFooterProps) => {
   const { t } = useTranslation("common");
   return (
     <Box
@@ -148,14 +153,14 @@ const InfoReadyFooter = ({ delivery_type, timeStamp }: Props) => {
           </Typography>
         </Box>
         <Box width="100%" height="30%">
-          <FactoryButton delivery_type={delivery_type} />
+          <FactoryButton deliveryType={deliveryType} />
         </Box>
       </Box>
     </Box>
   );
 };
 
-const InfoPendingFooter = ({ status, timeStamp }: Props) => {
+const InfoPendingFooter = ({ orderStatus, timeStamp }: DetailFooterProps) => {
   const [inputVisible, setInputVisible] = useState(false);
   const [prepTime, setPrepTime] = useState(10);
   const [open, setOpen] = useState(false);
@@ -372,21 +377,22 @@ const InfoPendingFooter = ({ status, timeStamp }: Props) => {
 
 export default function InfoFooter({
   timeStamp,
-  status,
-  delivery_type,
-}: Props) {
-  console.log(
-    "🚀 ~ file: index.tsx ~ line 355 ~ InfoFooter ~ delivery_type",
-    delivery_type
-  );
-  console.log(status);
-  switch (status) {
+  orderStatus,
+  deliveryType,
+}: DetailFooterProps) {
+  // console.log(
+  //   "🚀 ~ file: index.tsx ~ line 355 ~ InfoFooter ~ delivery_type",
+  //   delivery_type
+  // );
+  // console.log(status);
+  switch (orderStatus) {
     case OrderEnum.processing:
       return (
         <Box className={styles.detail_footer_container}>
           <InfoReadyFooter
             timeStamp={timeStamp}
-            delivery_type={delivery_type}
+            deliveryType={deliveryType}
+            orderStatus={orderStatus}
           />
         </Box>
       );
@@ -395,7 +401,8 @@ export default function InfoFooter({
         <Box className={styles.detail_footer_container}>
           <InfoPendingFooter
             timeStamp={timeStamp}
-            delivery_type={delivery_type}
+            deliveryType={deliveryType}
+            orderStatus={orderStatus}
           />
         </Box>
       );
@@ -404,7 +411,8 @@ export default function InfoFooter({
         <Box className={styles.detail_footer_container}>
           <InfoReadyFooter
             timeStamp={timeStamp}
-            delivery_type={delivery_type}
+            deliveryType={deliveryType}
+            orderStatus={orderStatus}
           />
         </Box>
       );

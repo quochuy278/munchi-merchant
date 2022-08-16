@@ -2,7 +2,8 @@ import styles from "./index.module.css";
 
 import styled from "@emotion/styled";
 import { Box, Typography } from "@mui/material";
-import { Props } from "../../../shared/types/props.type";
+import { OrderTitleProps } from "../../../shared/interfaces/props.interface";
+
 
 
 const CustomeTypography = styled(Typography)(({ theme }) => ({
@@ -23,12 +24,10 @@ const CustomeBox = styled(Box)(({ theme }) => ({
   justifyContent: "center",
 }));
 
-export default function OrderTitle({ orderTitle, orderQuantity }: Props) {
+export default function OrderTitle({ orderTitle, orderQuantity }: OrderTitleProps) {
   return (
     <Box gridColumn="span 2" className={styles.section__title} display="flex">
-      <CustomeTypography variant="h5">
-       {orderTitle}
-      </CustomeTypography>
+      <CustomeTypography variant="h5">{orderTitle}</CustomeTypography>
       <CustomeBox>
         <Typography fontSize="12px">{orderQuantity}</Typography>
       </CustomeBox>

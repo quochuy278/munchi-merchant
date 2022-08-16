@@ -1,4 +1,4 @@
-import { Props } from '../../shared/types/props.type';
+import { Props } from '../../shared/interfaces/props.interface';
 import styles from './detailcontent.module.css'
 
 export default function DetailContent({ children }: Props) {

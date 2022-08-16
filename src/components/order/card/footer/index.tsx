@@ -3,14 +3,14 @@ import { Button, IconButton, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FooterProps, Props } from "../../../../shared/types/props.type";
+import { FooterChildProps, FooterProps } from "../../../../shared/interfaces/props.interface";
 import {
   CustomAcceptedButton,
   CustomReadyButton,
 } from "../../../customcomponents";
 import DialogAlert from "../../../dialog";
 
-export const ReadyFooter = ({ orderStatus, orderId }: FooterProps) => {
+export const ReadyFooter = ({ orderStatus, orderId }: FooterChildProps) => {
   return (
     <CustomReadyButton variant="contained">
       <Typography sx={{ color: "white", opacity: 0.98 }} fontSize="13px">
@@ -24,10 +24,10 @@ export const AcceptedFooter = ({
   orderStatus,
   orderId,
   prepTime,
-  delivery_type,
+  deliveryType,
   onOpen,
-}: Props) => {
-  console.log(prepTime);
+}: FooterChildProps) => {
+
 
   const { t } = useTranslation("common");
   return (
@@ -69,12 +69,11 @@ export const AcceptedFooter = ({
 
 export const PendingFooter = ({
   orderId,
-  delivery_type,
+  deliveryType,
   orderStatus,
   onOpen,
-}: Props) => {
+}: FooterChildProps) => {
   const [prepTime, setPrepTime] = useState(10);
-  const [open, setOpen] = useState(false);
   const presetPreparationTimes = [5, 10, 20];
   const { t } = useTranslation("common");
   const setTimeHandler = (event: any, time: number) => {
@@ -212,10 +211,9 @@ export const PendingFooter = ({
 export default function OrderFooter({
   orderStatus,
   orderId,
-  orderIndex,
   prepTime,
-  delivery_type,
-}: Props) {
+  deliveryType,
+}: FooterProps) {
   const [open, setOpen] = useState(false);
   const acceptHandler = () => {
     setOpen(true);
@@ -231,8 +229,9 @@ export default function OrderFooter({
         <PendingFooter
           orderStatus={orderStatus}
           orderId={orderId}
-          orderIndex={orderIndex}
           onOpen={acceptHandler}
+          prepTime={prepTime}
+          deliveryType={deliveryType}
         />
       );
       break;
@@ -243,6 +242,7 @@ export default function OrderFooter({
           orderId={orderId}
           prepTime={prepTime}
           onOpen={acceptHandler}
+          deliveryType={deliveryType}
         />
       );
       break;
@@ -251,6 +251,9 @@ export default function OrderFooter({
         <ReadyFooter
           orderStatus={orderStatus}
           orderId={orderId}
+          deliveryType={deliveryType}
+          prepTime={prepTime}
+          onOpen={acceptHandler}
         />
       );
   }
@@ -262,8 +265,8 @@ export default function OrderFooter({
         prepTime={prepTime}
         onClose={acceptDialogCloseHandler}
         orderId={orderId}
-        delivery_type={delivery_type}
-        status={orderStatus}
+        deliveryType={deliveryType}
+        orderStatus={orderStatus}
       />
     </>
   );

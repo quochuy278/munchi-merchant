@@ -1,5 +1,4 @@
-import React from "react";
-import { Props } from "../../shared/types/props.type";
+import { Props } from '../../shared/interfaces/props.interface';
 import styles from './maincontent.module.css';
 
 export default function MainContent({children}: Props) {

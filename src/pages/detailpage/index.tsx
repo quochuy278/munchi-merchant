@@ -4,7 +4,8 @@ import DetailContent from "../../components/container/DetailContent";
 import InfoCard from "../../components/detailcard/inforcard";
 import ItemCard from "../../components/detailcard/itemcard";
 import DetailTitle from "../../components/detailcard/title";
-import { Order } from "../../shared/types/order.type";
+import { Order } from "../../shared/interfaces/order.interface";
+
 import { useTypedSelector } from "../../store";
 import { selectOrders } from "../../store/order-slice";
 import styles from "./index.module.css";
@@ -21,7 +22,7 @@ export default function DetailPage() {
     return order.id === numberOrderId;
   });
 
-  const detailOrder = detailOrderArray[0];
+  const detailOrder = detailOrderArray[0] as Order;
   // console.log(
   //   "🚀 ~ file: index.tsx ~ line 26 ~ DetailPage ~ detailOrder",
   //   detailOrder

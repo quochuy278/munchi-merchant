@@ -1,18 +1,18 @@
 import { Url } from "url";
 
-export type CustomerLocation = {
+export interface CustomerLocation {
   lat: number;
   lng: number;
-};
+}
 
-export type OrderSummary = {
+export interface OrderSummary {
   total?: number;
   discount?: number;
   tax_rate?: number;
   tax?: number;
   tax_after_discount?: number;
   tax_with_discount?: number;
-};
+}
 
 // export type TodoId = string;
 
@@ -21,29 +21,29 @@ export type OrderSummary = {
 //   title: string;
 //   completed: boolean;
 // };
-export type FetchOrderError = {
-    message:string
+export interface FetchOrderError {
+  message: string;
 }
-export type OrderState = {
+export interface OrderState {
   orders: Order[];
   loading: boolean;
   init: boolean;
   error: string | null;
-};
+}
 
-export type OrderCustomer = {
+export interface OrderCustomer {
   id: number;
-  name?: string;
-  order_id?: number;
-  email?: string;
-  address?: string;
-  address_notes?: string;
-  zipcode?: string;
-  cellphone?: string;
-  location?: CustomerLocation;
-};
+  name: string;
+  order_id: number;
+  email: string;
+  address: string;
+  address_notes: string;
+  zipcode: string;
+  cellphone: string;
+  location: CustomerLocation;
+}
 
-export type OrderBusiness = {
+export interface OrderBusiness {
   id: number;
   order_id: number;
   name: string;
@@ -57,26 +57,26 @@ export type OrderBusiness = {
   header: Url;
   pickup_time: string;
   delivery_time: string;
-};
-export type ProductItemOptions = {
+}
+export interface ProductItemOptions {
   id: number;
   name: string;
   price: number;
   position: string;
   quantity: number;
-};
-export type ProductItem = {
-  id?: number;
-  name?: string;
+}
+export interface ProductItem {
+  id: number;
+  name: string;
   logo?: Url;
   allow_suboption_quantity?: boolean;
   with_half_option?: false;
   limit_suboptions_by_max?: false;
   options?: ProductItemOptions[];
-  quantity: number
-};
+  quantity: number;
+}
 
-export type Order = {
+export interface Order {
   id: number;
   uuid: string;
   status: number;
@@ -86,6 +86,6 @@ export type Order = {
   business: OrderBusiness;
   comment: string;
   prepTime: string;
-  delivery_type:number,
-  timeStamp:string
-};
+  deliveryType: number;
+  timeStamp: string;
+}

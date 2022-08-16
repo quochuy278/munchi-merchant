@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { updateState } from "../../store/order-slice";
 import { useTranslation } from "react-i18next";
+import { DialogProps } from "../../shared/interfaces/props.interface";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -25,32 +26,31 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
-type Props = {
-  children?: JSX.Element | JSX.Element[];
-  open: boolean;
-  prepTime: any;
-  onClose: () => void;
-  orderId?: string | number;
-  delivery_type: number;
-  status?: number;
-};
+// type Props = {
+//   children?: JSX.Element | JSX.Element[];
+//   open: boolean;
+//   prepTime: any;
+//   onClose: () => void;
+//   orderId?: string | number;
+//   delivery_type: number;
+//   status?: number;
+// };
 
 export default function DialogAlert({
   open,
   prepTime,
   onClose,
   orderId,
-  delivery_type,
-  status,
-}: Props) {
+  deliveryType,
+  orderStatus,
+}: DialogProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation("common");
   // const clickHandler = () => {
   //   dispatch(updateState(orderId));
   // }
-  console.log(open)
   let DialogRenderContent = <></>;
-  if (delivery_type === 1 && status === 1) {
+  if (deliveryType === 1 && orderStatus === 1) {
     return (DialogRenderContent = (
       <Dialog
         open={open}
@@ -79,7 +79,7 @@ export default function DialogAlert({
         </DialogActions>
       </Dialog>
     ));
-  } else if (status == 0) {
+  } else if (orderStatus == 0) {
     return (DialogRenderContent = (
       <Dialog
         open={open}

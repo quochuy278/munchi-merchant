@@ -1,7 +1,8 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from ".";
 import { fetchOrders } from "../services/services";
-import { Order, OrderState } from "../shared/types/order.type";
+import { Order, OrderState } from "../shared/interfaces/order.interface";
+
 
 export type Item = {
   id: number;
@@ -55,9 +56,9 @@ const initialState = {
         name: "munchi",
       },
       comment: "No potatoe please",
-      delivery_type: 1,
+      deliveryType: 1,
       timeStamp: "15:43",
-      prepTime: 15
+      prepTime: 15,
     },
     {
       id: 12434,
@@ -103,9 +104,9 @@ const initialState = {
         name: "munchi",
       },
       comment: "No potatoe please",
-      delivery_type: 1,
+      deliveryType: 1,
       timeStamp: "15:43",
-      prepTime: ""
+      prepTime: "",
     },
   ],
   init: false,
@@ -140,8 +141,8 @@ export const orderSlice = createSlice({
   initialState,
   reducers: {
     updateState:(state, {payload}): any=> {
-      console.log(payload)
-        console.log(current(state.orders))
+      // console.log(payload)
+      //   console.log(current(state.orders))
         const currentState = current(state.orders)
       // if (state.orders[payload].status >=  3) state.orders[payload].status =  state.orders[payload].status
       // else state.orders[payload].status = state.orders[payload].status + 1
@@ -154,9 +155,9 @@ export const orderSlice = createSlice({
     //check order status 
 
     const updateOrderStatus = updateOrderArray[0].status + 1;
-    console.log(updateOrderStatus)
+    
     const mergeUpdateOrder={...updateOrderObject, status:updateOrderStatus }
-    console.log(mergeUpdateOrder)
+    
     //  state.orders.push(mergeUpdateOrder)
     state.orders = state.orders.map((order) => {
       if (order.id === mergeUpdateOrder.id){

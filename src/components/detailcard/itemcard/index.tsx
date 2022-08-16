@@ -7,11 +7,11 @@ import CloseIcon from "@mui/icons-material/Close";
 import { Item } from "../../../store/order-slice";
 import ItemList from "./itemlist";
 import ItemFooter from "./itemfooter";
-import { Props } from "../../../shared/types/props.type";
+
 import { useTranslation } from "react-i18next";
 
 
-export default function ItemCard({ detailOrder }: Props) {
+export default function ItemCard({ detailOrder }: any) {
   const {t} = useTranslation('common')
   const { products, comments } = detailOrder;
   return (

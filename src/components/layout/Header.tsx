@@ -70,12 +70,12 @@ export default function Header() {
                   : t("restaurantStatus.close")}
               </Typography>
             </Box>
-            <Box display={"flex"} alignItems="center">
+            {/* <Box display={"flex"} alignItems="center">
               <ButtonGroup variant="text" aria-label="text button group">
                 <Button onClick={() => i18n.changeLanguage("en")}>en</Button>
                 <Button onClick={() => i18n.changeLanguage("fi")}>fi</Button>
               </ButtonGroup>
-            </Box>
+            </Box> */}
           </Box>
         </Toolbar>
       </AppBar>

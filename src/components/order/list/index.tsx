@@ -2,12 +2,11 @@ import React from 'react'
 import { Box } from "@mui/material";
 import styles from "./index.module.css";
 import OrderCard from '../card';
-import { Props } from '../../../shared/types/props.type';
+import { OrderDataProps } from '../../../shared/interfaces/props.interface';
 
 
 
-export default function OrderCardList({  ordersData }: Props) {
- 
+export default function OrderCardList({ ordersData }: OrderDataProps) {
   return (
     <Box
       display="grid"

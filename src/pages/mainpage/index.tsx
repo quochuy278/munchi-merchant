@@ -11,12 +11,12 @@ import { selectOrders, selectStatus } from "../../store/order-slice";
 import { fetchOrders } from "../../services/services";
 import OrderEnum from "../../shared/enum/enum";
 import { useTranslation } from "react-i18next";
-import { Order } from "../../shared/types/order.type";
+import { Order } from "../../shared/interfaces/order.interface";
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const orders = useTypedSelector(selectOrders);
-  console.log("🚀 ~ file: index.tsx ~ line 19 ~ MainPage ~ orders", orders)
+
   const statusLoaded = useSelector(selectStatus);
   const { t } = useTranslation("common");
   useEffect(() => {

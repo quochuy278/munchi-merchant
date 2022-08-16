@@ -47,7 +47,7 @@
       "9":"Go back"
   },
   "dialogContent": {
-     "0": "Confirming that this item is ready to delivery?",
+    "0": "Confirming that this item is ready to delivery",
     "1": "Confirming that this item is ready to pick up",
     "2": "Confirming that this item is ready to serve"
   },

@@ -8,7 +8,9 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import OrderEnum from "../../../shared/enum/enum";
-import { Props } from "../../../shared/types/props.type";
+import { ProductItem } from "../../../shared/interfaces/order.interface";
+import { OrderDataProps, OrderProductListProps } from "../../../shared/interfaces/props.interface";
+
 import { ExpandMore } from "../../customcomponents";
 import OrderFooter from "./footer";
 import styles from "./index.module.css";
@@ -67,7 +69,7 @@ export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
   }
 };
 
-export default function OrderCard({ ordersData }: Props) {
+export default function OrderCard({ ordersData }: OrderDataProps) {
   const [expanded, setExpanded] = useState(false);
   const { t } = useTranslation("common");
   const navigate = useNavigate();
@@ -85,16 +87,16 @@ export default function OrderCard({ ordersData }: Props) {
 
     event.preventDefault();
   };
-  console.log(ordersData)
+ 
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
-  const RenderProductList = ({ productList }: Props) => {
+  const RenderProductList = ({ productList }: OrderProductListProps) => {
     // console.log(productList?.length);
     if (productList!.length <= 3) {
       return (
         <>
-          {productList?.map((product) => {
+          {productList?.map((product: ProductItem) => {
             return (
               <Box key={product.id} className={styles.product_item_container}>
                 <Box display="flex" width="90%" textAlign="left">
@@ -130,7 +132,9 @@ export default function OrderCard({ ordersData }: Props) {
       );
     } else if (productList!.length > 3) {
       const renderProduct = productList!.slice(0, 2);
-      const filterProduct = productList!.filter((item, index) => index >= 2);
+      const filterProduct = productList!.filter(
+        (item: ProductItem, index: number) => index >= 2
+      );
       // console.log(renderProduct);
       return (
         <Box className={styles.product_item_container}>
@@ -141,7 +145,7 @@ export default function OrderCard({ ordersData }: Props) {
             flexDirection={"column"}
             justifyContent="center"
           >
-            {renderProduct.map((product) => {
+            {renderProduct.map((product: ProductItem) => {
               return (
                 <Box
                   display={"flex"}
@@ -230,7 +234,7 @@ export default function OrderCard({ ordersData }: Props) {
   return (
     <>
       {ordersData.map((order: any, index: number) => {
-        console.log(order.prepTime);
+       
         return (
           <Box className={styles.main__card__container} key={order.id}>
             <Box
@@ -393,9 +397,8 @@ export default function OrderCard({ ordersData }: Props) {
             <OrderFooter
               orderStatus={order.status}
               orderId={order.id}
-              orderIndex={index}
-              delivery_type={order.delivery_type}
-              prepTime={order.prepTime}
+              deliveryType={order.deliveryType}
+              prepTime={order.prepTime} 
             />
           </Box>
         );

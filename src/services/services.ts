@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { FetchOrderError, Order } from "../shared/types/order.type";
+import { FetchOrderError, Order } from "../shared/interfaces/order.interface";
+
 import { store } from "../store";
 
 export type UpdateParameter = {
