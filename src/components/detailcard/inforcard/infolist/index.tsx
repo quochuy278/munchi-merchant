@@ -15,7 +15,7 @@ export type FactoryType = {
 const FactoryIcon = ({ deliveryType }: FactoryType): JSX.Element => {
   const { t } = useTranslation("common");
   switch (deliveryType) {
-    case OrderEnum.Delivery: {
+    case OrderEnum.DELIVERY: {
       return (
         <Box className={styles.detail__icon__container}>
           <DeliveryDiningIcon sx={{ color: "#707070" }} />
@@ -25,7 +25,7 @@ const FactoryIcon = ({ deliveryType }: FactoryType): JSX.Element => {
         </Box>
       );
     }
-    case OrderEnum.Eatin: {
+    case OrderEnum.EATIN: {
       return (
         <Box className={styles.detail__icon__container}>
           <DiningIcon sx={{ color: "#707070" }} />
@@ -35,7 +35,7 @@ const FactoryIcon = ({ deliveryType }: FactoryType): JSX.Element => {
         </Box>
       );
     }
-    case OrderEnum.Pickup: {
+    case OrderEnum.PICKUP: {
       return (
         <Box className={styles.detail__icon__container}>
           <TakeoutDiningOutlinedIcon sx={{ color: "#707070" }} />
@@ -62,7 +62,6 @@ const FactoryIcon = ({ deliveryType }: FactoryType): JSX.Element => {
 };
 
 export default function InfoList({ name, deliveryType }: DetailInfoListProps) {
-  // console.log("🚀 ~ file: index.tsx ~ line 64 ~ InfoList ~ delivery_type", delivery_type)
   const { t } = useTranslation("common");
   return (
     <Box className={styles.detail__info}>

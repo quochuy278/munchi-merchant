@@ -4,9 +4,7 @@ export type Props = {
   children?: JSX.Element | JSX.Element[];
 };
 
-export interface FooterChildProps extends FooterProps {
-  onOpen: () => void;
-}
+
 
 export interface FooterProps extends Props {
   prepTime: number | string;
@@ -28,6 +26,10 @@ export interface DetailOrderDataProps extends Props {
   detailOrder: Order;
 }
 
+export interface FactoryIcon {
+  orderType: number;
+}
+
 export interface OrderProductListProps extends Props {
   productList: ProductItem[];
 }
@@ -39,6 +41,7 @@ export interface DetailInfoListProps extends Props {
 
 export interface DialogProps extends FooterProps {
   open: boolean;
+  newPrepTime: number;
   onClose: () => void;
 }
 
@@ -46,13 +49,17 @@ export interface DetailFooterProps extends Props {
   timeStamp: string;
   orderStatus: number;
   deliveryType: number;
+  orderId: number;
+}
+
+export interface DetailFooterChildProps extends DetailFooterProps {
+  onOpen: () => void;
 }
 
 export interface DetailTitleProps extends Props {
- orderId: number
+  orderId: number;
 }
 
 export interface FactoryProps {
-  deliveryType: number
+  deliveryType: number;
 }
-

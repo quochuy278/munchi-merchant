@@ -9,8 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 import { TransitionProps } from "@mui/material/transitions";
-import styles from "./index.module.css";
-import { CustomAcceptButton, CustomDeclineButton } from "../customcomponents";
+import { CustomAcceptButton, CustomDeclineButton } from "../customcomponents/mui";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { updateState } from "../../store/order-slice";
@@ -26,15 +25,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="left" ref={ref} {...props} />;
 });
 
-// type Props = {
-//   children?: JSX.Element | JSX.Element[];
-//   open: boolean;
-//   prepTime: any;
-//   onClose: () => void;
-//   orderId?: string | number;
-//   delivery_type: number;
-//   status?: number;
-// };
+
 
 export default function DialogAlert({
   open,
@@ -43,6 +34,7 @@ export default function DialogAlert({
   orderId,
   deliveryType,
   orderStatus,
+  newPrepTime,
 }: DialogProps) {
   const dispatch = useDispatch<AppDispatch>();
   const { t } = useTranslation("common");
@@ -71,7 +63,7 @@ export default function DialogAlert({
             Go Back
           </CustomDeclineButton>
           <CustomAcceptButton
-            onClick={() => dispatch(updateState({ orderId, prepTime }))}
+            onClick={() => dispatch(updateState({ orderId, newPrepTime }))}
             variant="contained"
           >
             Confirm
@@ -90,7 +82,7 @@ export default function DialogAlert({
         <DialogTitle>Order confirmation</DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-slide-description">
-            Please confirm that you will give the order in {prepTime} minutes
+            Please confirm that you will give the order in {newPrepTime} minutes
           </DialogContentText>
         </DialogContent>
         <DialogActions
@@ -100,7 +92,7 @@ export default function DialogAlert({
             Go Back
           </CustomDeclineButton>
           <CustomAcceptButton
-            onClick={() => dispatch(updateState({ orderId, prepTime }))}
+            onClick={() => dispatch(updateState({ orderId, newPrepTime }))}
             variant="contained"
           >
             Confirm

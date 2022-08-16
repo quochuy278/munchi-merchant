@@ -24,14 +24,14 @@ const MainPage = () => {
   }, []);
 
   const pendingOrders = orders.filter((order: Order) => {
-    return order.status === OrderEnum.pending;
+    return order.status === OrderEnum.PENDING;
   });
 
   const acceptedOrders = orders.filter((order: Order) => {
-    return order.status === OrderEnum.processing;
+    return order.status === OrderEnum.PROCESSING;
   });
   const readyOrders = orders.filter((order: Order) => {
-    return order.status === OrderEnum.ready;
+    return order.status === OrderEnum.READY;
   });
 
   return (

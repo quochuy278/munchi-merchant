@@ -1,10 +1,10 @@
 enum OrderEnum {
-    Delivery =  1,
-    Pickup =  2,
-    Eatin = 3,
-    pending = 0,
-    processing = 1,
-    ready = 2,
+    DELIVERY =  1,
+    PICKUP =  2,
+    EATIN = 3,
+    PENDING = 0,
+    PROCESSING = 1,
+    READY = 2,
 }
 
 

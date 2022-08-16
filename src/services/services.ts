@@ -3,12 +3,12 @@ import { FetchOrderError, Order } from "../shared/interfaces/order.interface";
 
 import { store } from "../store";
 
-export type UpdateParameter = {
+export interface UpdateParameter  {
   orderId: number;
   prepTime: string;
 };
 
-export type RejectObject = {
+export interface RejectObject  {
   orderId: number;
 };
 

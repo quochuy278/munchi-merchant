@@ -31,17 +31,17 @@ const initialState = {
           quantity: 1,
         },
         {
-          id: 2131524,
+          id: 21323231524,
           name: "Nugget",
           quantity: 1,
         },
         {
-          id: 2131244,
+          id: 213123211244,
           name: "Oninon ring",
           quantity: 1,
         },
         {
-          id: 21315224,
+          id: 21315212312312311231224,
           name: "Somthing",
           quantity: 1,
         },

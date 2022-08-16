@@ -9,65 +9,15 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import OrderEnum from "../../../shared/enum/enum";
 import { ProductItem } from "../../../shared/interfaces/order.interface";
-import { OrderDataProps, OrderProductListProps } from "../../../shared/interfaces/props.interface";
+import {
+  OrderDataProps,
+  OrderProductListProps,
+} from "../../../shared/interfaces/props.interface";
+import { FactoryIconInfo } from "../../customcomponents/factory";
 
-import { ExpandMore } from "../../customcomponents";
+import { ExpandMore } from "../../customcomponents/mui";
 import OrderFooter from "./footer";
 import styles from "./index.module.css";
-
-export type FactoryIcon = {
-  orderType: number;
-};
-
-export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
-  const { t } = useTranslation("common");
-  switch (orderType) {
-    case OrderEnum.Pickup:
-      return (
-        <Box display="flex">
-          <DiningIcon sx={{ width: "16px", height: "14px", marginX: 1 }} />
-          <Typography fontSize="10px" lineHeight="13px">
-            {t("delivery_type.2")}
-          </Typography>
-        </Box>
-      );
-    case OrderEnum.Delivery:
-      return (
-        <Box display="flex">
-          <DeliveryDiningIcon
-            sx={{ width: "16px", height: "14px", marginX: 1 }}
-          />
-          <Typography fontSize="10px" lineHeight="13px">
-            {t("delivery_type.1")}
-          </Typography>
-        </Box>
-      );
-    case OrderEnum.Eatin:
-      return (
-        <Box display="flex">
-          <TakeoutDiningOutlinedIcon
-            sx={{ width: "16px", height: "14px", marginX: 1 }}
-          />
-          <Typography fontSize="10px" lineHeight="13px">
-            {t("delivery_type.3")}
-          </Typography>
-        </Box>
-      );
-    case null:
-      return null;
-    default:
-      return (
-        <Box display="flex">
-          <TakeoutDiningOutlinedIcon
-            sx={{ width: "16px", height: "14px", marginX: 1 }}
-          />
-          <Typography fontSize="10px" lineHeight="13px">
-            {t("delivery_type.0")}
-          </Typography>
-        </Box>
-      );
-  }
-};
 
 export default function OrderCard({ ordersData }: OrderDataProps) {
   const [expanded, setExpanded] = useState(false);
@@ -87,7 +37,7 @@ export default function OrderCard({ ordersData }: OrderDataProps) {
 
     event.preventDefault();
   };
- 
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -234,7 +184,6 @@ export default function OrderCard({ ordersData }: OrderDataProps) {
   return (
     <>
       {ordersData.map((order: any, index: number) => {
-       
         return (
           <Box className={styles.main__card__container} key={order.id}>
             <Box
@@ -280,7 +229,7 @@ export default function OrderCard({ ordersData }: OrderDataProps) {
                       opacity: 1,
                     }}
                   >
-                    <FactoryIconInfo orderType={order.delivery_type} />
+                    <FactoryIconInfo orderType={order.deliveryType} />
                   </IconButton>
                 </Box>
               </Box>
@@ -398,7 +347,7 @@ export default function OrderCard({ ordersData }: OrderDataProps) {
               orderStatus={order.status}
               orderId={order.id}
               deliveryType={order.deliveryType}
-              prepTime={order.prepTime} 
+              prepTime={order.prepTime}
             />
           </Box>
         );
