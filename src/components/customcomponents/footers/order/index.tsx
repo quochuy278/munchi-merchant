@@ -86,7 +86,7 @@ export const OrderPendingFooter = ({
   prepTime,
 }: FooterProps) => {
   const [newPrepTime, setNewPrepTime] = useState(10);
-  const presetPreparationTimes = [5, 10, 20];
+  const presetPreparationTimes = [5, 10, 30];
   const { t } = useTranslation("common");
   const setTimeHandler = (event: any, time: number) => {
     event.preventDefault();
@@ -134,6 +134,9 @@ export const OrderPendingFooter = ({
                         backgroundColor: "#5D8139",
                         color: "white",
                       },
+                      "&:hover": {
+                        backgroundColor: "none",
+                      },
                       "&.MuiButton-selected": {
                         backgroundColor: "#F1F6ED",
                         color: "#74A047",
@@ -153,6 +156,9 @@ export const OrderPendingFooter = ({
                       "&:focus": {
                         backgroundColor: "#F1F6ED",
                         color: "#74A047",
+                      },
+                      "&:hover": {
+                        backgroundColor: "none",
                       },
                       "&:active": {
                         backgroundColor: "#5D8139",

@@ -4,17 +4,21 @@ import MainContent from "../../components/container/MainContent";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { useDispatch } from "react-redux";
 import { login } from "../../store/auth-slice";
+import { useNavigate } from "react-router-dom";
 
 const AuthPage = () => {
     const dispatch = useDispatch()
+     const navigate = useNavigate();
      const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
        event.preventDefault();
+       
        const data = new FormData(event.currentTarget);
       //  console.log({
       //    email: data.get("email"),
       //    password: data.get("password"),
       //  });
        dispatch(login())
+          navigate("/dashboard", { replace: true });
      };
   return (
     <MainContent>

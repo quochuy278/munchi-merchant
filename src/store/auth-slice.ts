@@ -1,18 +1,21 @@
 import { createSlice, current } from "@reduxjs/toolkit";
+import {  useNavigate } from "react-router-dom";
 
 const initialState = {
-    isAuthenticated: false
-}
+  isAuthenticated: false,
+};
 
 export const AuthSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
     login: (state) => {
-        state.isAuthenticated = true
-        // console.log(current(state))
-    }
-  }
+      state.isAuthenticated = true;
+      // console.log(current(state))
+     
+   
+    },
+  },
 });
 
 export const { login } = AuthSlice.actions;

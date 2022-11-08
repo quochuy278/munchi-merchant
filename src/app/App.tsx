@@ -1,17 +1,31 @@
-import { Card } from "@mui/material";
-import { Route, Link, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import ClockComponent from "../components/countdownlock";
 
+import { AuthPage, DetailPage, ErrorPage, MainPage } from "../pages";
+import ProtectedRoutes from "../utils/ProtectedRoutes";
 import "./App.css";
-import { DetailPage, MainPage, AuthPage, ErrorPage } from "../pages";
-
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
-      {/* <Route path="/dashboard" element={<MainPage />} /> */}
-      {/* <Route path="/" element={<AuthPage />} /> */}
-      <Route path="/detail" element={<DetailPage />}>
+      <Route path="/" element={<AuthPage />} />
+      <Route path="/clock" element={<ClockComponent />} />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoutes>
+            <MainPage />
+          </ProtectedRoutes>
+        }
+      />
+      <Route
+        path="/detail"
+        element={
+          <ProtectedRoutes>
+            <DetailPage />
+          </ProtectedRoutes>
+        }
+      >
         <Route path="/detail/:detailId" element={<DetailPage />} />
       </Route>
       <Route path="*" element={<ErrorPage />} />
