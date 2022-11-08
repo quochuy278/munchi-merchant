@@ -4,6 +4,8 @@ import OrderEnum from "../../../shared/enum/enum";
 import {
   FactoryIcon,
   FactoryProps,
+
+  FactoryTimeFormatProps,
 } from "../../../shared/interfaces/props.interface";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import DiningIcon from "@mui/icons-material/Dining";
@@ -57,6 +59,56 @@ export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
   const { t } = useTranslation("common");
   switch (orderType) {
     case OrderEnum.PICKUP:
+      return (
+        <Box display="flex">
+          <DiningIcon sx={{ width: "16px", height: "14px", marginX: 1 }} />
+          <Typography fontSize="10px" lineHeight="13px">
+            {t("delivery_type.2")}
+          </Typography>
+        </Box>
+      );
+    case OrderEnum.DELIVERY:
+      return (
+        <Box display="flex">
+          <DeliveryDiningIcon
+            sx={{ width: "16px", height: "14px", marginX: 1 }}
+          />
+          <Typography fontSize="10px" lineHeight="13px">
+            {t("delivery_type.1")}
+          </Typography>
+        </Box>
+      );
+    case OrderEnum.EATIN:
+      return (
+        <Box display="flex">
+          <TakeoutDiningOutlinedIcon
+            sx={{ width: "16px", height: "14px", marginX: 1 }}
+          />
+          <Typography fontSize="10px" lineHeight="13px">
+            {t("delivery_type.3")}
+          </Typography>
+        </Box>
+      );
+    case null:
+      return null;
+    default:
+      return (
+        <Box display="flex">
+          <TakeoutDiningOutlinedIcon
+            sx={{ width: "16px", height: "14px", marginX: 1 }}
+          />
+          <Typography fontSize="10px" lineHeight="13px">
+            {t("delivery_type.0")}
+          </Typography>
+        </Box>
+      );
+  }
+};
+
+export const FactoryTimeFormat = ({ minutes,seconds }: FactoryTimeFormatProps) => {
+  const { t } = useTranslation("common");
+  switch (minutes | seconds) {
+    case seconds:
       return (
         <Box display="flex">
           <DiningIcon sx={{ width: "16px", height: "14px", marginX: 1 }} />

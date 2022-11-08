@@ -85,7 +85,7 @@ export interface Order {
   products: ProductItem[];
   business: OrderBusiness;
   comment: string;
-  prepTime: string;
+  prepTime: number;
   deliveryType: number;
   timeStamp: string;
 }

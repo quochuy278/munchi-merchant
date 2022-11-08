@@ -5,7 +5,8 @@ import { FooterProps } from "../../../../shared/interfaces/props.interface";
 import DialogAlert from "../../../dialog";
 import { CustomAcceptedButton, CustomReadyButton } from "../../mui";
 import CloseIcon from "@mui/icons-material/Close";
-
+import { useCountdown } from "../../../../hooks/useCountdown";
+import ClockComponent from "../../../countdownlock";
 
 export const OrderReadyFooter = ({ orderStatus, orderId }: FooterProps) => {
   return (
@@ -33,6 +34,12 @@ export const OrderAcceptedFooter = ({
   const acceptDialogCloseHandler = () => {
     setOpen(false);
   };
+
+  const prepTimeInMs = prepTime * 60 * 1000;
+  const nowInMs = new Date().getTime();
+
+  const dateTimeAfterPrepTime = prepTimeInMs + nowInMs;
+
   return (
     <Box
       display="flex"
@@ -53,9 +60,8 @@ export const OrderAcceptedFooter = ({
         marginRight={2}
         borderRadius="8px"
       >
-        <Typography sx={{ color: "#FF5F5F" }} fontSize="20px" lineHeight="26px">
-          {prepTime}
-        </Typography>
+        <ClockComponent targetDate={dateTimeAfterPrepTime} />
+
         <Typography sx={{ color: "#FF5F5F" }} fontSize="8px" lineHeight="10px">
           mins.
         </Typography>

@@ -106,7 +106,7 @@ const initialState = {
       comment: "No potatoe please",
       deliveryType: 1,
       timeStamp: "15:43",
-      prepTime: "",
+      prepTime: 0,
     },
   ],
   init: false,
@@ -147,6 +147,9 @@ export const orderSlice = createSlice({
       // if (state.orders[payload].status >=  3) state.orders[payload].status =  state.orders[payload].status
       // else state.orders[payload].status = state.orders[payload].status + 1
       const orderId = payload.orderId
+      const newPrepTime = payload.newPrepTime
+      console.log("🚀 ~ file: order-slice.ts ~ line 151 ~ newPrepTime", newPrepTime)
+      
      const updateOrderArray = currentState.filter(
        (order: Order) => order.id === orderId
      );
@@ -155,8 +158,13 @@ export const orderSlice = createSlice({
     //check order status 
 
     const updateOrderStatus = updateOrderArray[0].status + 1;
+    const updateOrderPrepTime = newPrepTime;
     
-    const mergeUpdateOrder={...updateOrderObject, status:updateOrderStatus }
+    const mergeUpdateOrder = {
+      ...updateOrderObject,
+      status: updateOrderStatus,
+      prepTime: updateOrderPrepTime,
+    };
     
     //  state.orders.push(mergeUpdateOrder)
     state.orders = state.orders.map((order) => {

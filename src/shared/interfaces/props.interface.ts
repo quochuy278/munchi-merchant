@@ -5,9 +5,8 @@ export type Props = {
 };
 
 
-
 export interface FooterProps extends Props {
-  prepTime: number | string;
+  prepTime: number;
   orderId: number;
   orderStatus: number;
   deliveryType: number;
@@ -63,3 +62,18 @@ export interface DetailTitleProps extends Props {
 export interface FactoryProps {
   deliveryType: number;
 }
+
+
+export interface ClockProps extends Props {
+  targetDate:number
+}
+
+export interface CoundownProps extends Props {
+  targetDate: number;
+}
+
+export interface FactoryTimeFormatProps extends Props {
+  minutes: number;
+  seconds: number;
+}
+
