@@ -19,9 +19,9 @@ const MainPage = () => {
 
   const statusLoaded = useSelector(selectStatus);
   const { t } = useTranslation("common");
-  useEffect(() => {
-    dispatch(fetchOrders({ status: ["pending", "processing", "ready"] }));
-  }, []);
+  // useEffect(() => {      
+  //   dispatch(fetchOrders({ status: ["pending", "processing", "ready"] }));
+  // }, []);
 
   const pendingOrders = orders.filter((order: Order) => {
     return order.status === OrderEnum.PENDING;
@@ -33,7 +33,7 @@ const MainPage = () => {
   const readyOrders = orders.filter((order: Order) => {
     return order.status === OrderEnum.READY;
   });
-
+console.log(statusLoaded)
   return (
     <MainContent>
       {statusLoaded ? (
