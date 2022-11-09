@@ -1,12 +1,15 @@
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { FooterProps } from "../../../../shared/interfaces/props.interface";
-import DialogAlert from "../../../dialog";
-import { CustomAcceptedButton, CustomReadyButton } from "../../mui";
+import { FooterProps } from "../../../shared/interfaces/props.interface";
+import DialogAlert from "../../dialog";
+import {
+  CustomAcceptedButton,
+  CustomReadyButton,
+} from "../../customcomponents/mui";
 import CloseIcon from "@mui/icons-material/Close";
-import { useCountdown } from "../../../../hooks/useCountdown";
-import ClockComponent from "../../../countdownlock";
+import { useCountdown } from "../../../hooks/useCountdown";
+import ClockComponent from "../../countdownlock";
 
 export const OrderReadyFooter = ({ orderStatus, orderId }: FooterProps) => {
   return (
@@ -47,26 +50,7 @@ export const OrderAcceptedFooter = ({
       alignItems="center"
       sx={{ marginTop: "15px" }}
     >
-      <Box
-        sx={{
-          width: "25%",
-          height: "50px",
-          backgroundColor: "#FDF4F3",
-        }}
-        alignItems="center"
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        marginRight={2}
-        borderRadius="8px"
-      >
-        <ClockComponent targetDate={dateTimeAfterPrepTime} />
-
-        <Typography sx={{ color: "#FF5F5F" }} fontSize="8px" lineHeight="10px">
-          mins.
-        </Typography>
-      </Box>
-      <Box></Box>
+      <ClockComponent targetDate={dateTimeAfterPrepTime} />
       <CustomAcceptedButton variant="contained" onClick={acceptHandler}>
         <Typography sx={{ color: "white", opacity: 0.98 }} fontSize="13px">
           {t("buttonContent.7")}

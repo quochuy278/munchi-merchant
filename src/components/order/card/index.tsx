@@ -13,7 +13,7 @@ import {
   OrderDataProps,
   OrderProductListProps,
 } from "../../../shared/interfaces/props.interface";
-import { FactoryIconInfo } from "../../customcomponents/factory";
+import { FactoryIconInfo } from "../../factory";
 
 import { ExpandMore } from "../../customcomponents/mui";
 import OrderFooter from "./footer";
@@ -242,73 +242,6 @@ export default function OrderCard({ ordersData }: OrderDataProps) {
                 {t("timeStamp.day.0")} at {order.timeStamp}
               </Typography>
               <Box className={styles.card__item__container}>
-                {/* {order.products.map((product: any) => {
-                  console.log(product)
-                  return (
-                    <Box
-                      key={product.id}
-                      className={styles.product_item_container}
-                    >
-                      <Box display="flex" width="90%" textAlign="left">
-                        <Typography
-                          fontSize="14px"
-                          lineHeight="16px"
-                          fontWeight={600}
-                        >
-                          {product.quantity}
-                        </Typography>
-                        <Typography
-                          fontSize="14px"
-                          lineHeight="16px"
-                          fontWeight={600}
-                          sx={{ marginX: "20px" }}
-                        >
-                          x
-                        </Typography>
-
-                        <Typography
-                          fontSize="14px"
-                          lineHeight="16px"
-                          fontWeight={600}
-                          sx={{ marginX: "20px" }}
-                        >
-                          {product.name}
-                        </Typography>
-                      </Box>
-                      <Box
-                        display="flex"
-                        width="100%"
-                        sx={{ marginLeft: "15px" }}
-                      >
-                        <Typography
-                          fontSize="12px"
-                          lineHeight="16px"
-                          fontWeight={600}
-                        >
-                          1
-                        </Typography>
-                        <Typography
-                          fontSize="12px"
-                          lineHeight="16px"
-                          fontWeight={600}
-                          sx={{ marginX: "20px" }}
-                        >
-                          x
-                        </Typography>
-
-                        <Typography
-                          fontSize="12px"
-                          lineHeight="16px"
-                          fontWeight={600}
-                          sx={{ marginX: "20px" }}
-                        >
-                          BBQ SAuce
-                        </Typography>
-                      </Box>
-                      
-                    </Box>
-                  );
-                })} */}
                 <RenderProductList productList={order.products} />
               </Box>
               <Box

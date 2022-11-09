@@ -1,5 +1,7 @@
-import { Button, IconButton, IconButtonProps } from "@mui/material";
+import { Button, IconButton, IconButtonProps, Slide } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { TransitionProps } from "@mui/material/transitions";
+import React from "react";
 
 // order footer buttons
 export const CustomReadyButton = styled(Button)(({ theme }) => ({
@@ -93,3 +95,12 @@ export const ExpandMore = styled((props: ExpandMoreProps) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
+
+export const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="left" ref={ref} {...props} />;
+});

@@ -1,6 +1,12 @@
 import { Typography } from "@mui/material";
+import { Box } from "@mui/system";
+import { useState } from "react";
 import { useCountdown } from "../../hooks/useCountdown";
-import { ClockProps, CoundownProps } from "../../shared/interfaces/props.interface";
+import {
+  ClockProps,
+  CoundownProps,
+} from "../../shared/interfaces/props.interface";
+import { FactoryTimeFormat } from "../factory";
 
 const ExpiredNotice = () => {
   return (
@@ -13,36 +19,17 @@ const ExpiredNotice = () => {
 
 const CountdownTimer = ({ targetDate }: CoundownProps) => {
   const [days, hours, minutes, seconds] = useCountdown(targetDate);
-
+ 
   if (days + hours + minutes + seconds <= 0) {
     return <ExpiredNotice />;
-  } 
-   else if (seconds < 10) {
-     return (
-       <Typography
-         sx={{ color: "#FF5F5F" }}
-         fontSize="20px"
-         lineHeight="26px"
-         component={"div"}
-       >
-         {minutes}: 0:{seconds}
-       </Typography>
-     );
-   } else {
-     return (
-       <Typography
-         sx={{ color: "#FF5F5F" }}
-         fontSize="20px"
-         lineHeight="26px"
-         component={"div"}
-       >
-         {minutes}:{seconds}
-       </Typography>
-     );
-   }
+  } else {
+    return <FactoryTimeFormat minutes={minutes} seconds={seconds} isDanger={minutes < 3}/>;
+  }
 };
 const ClockComponent = ({ targetDate }: ClockProps) => {
-  return <CountdownTimer targetDate={targetDate} />;
+  return (
+      <CountdownTimer targetDate={targetDate} />
+  );
 };
 
 export default ClockComponent;

@@ -13,7 +13,7 @@ export default function Layout({ children }: Props) {
   return (
     <div className={styles.app__container}>
       {isAuthenticated ? <Header /> : null}
-      {/* <Header /> */}
+      <Header />
       <main>{children}</main>
       <Footer />
     </div>

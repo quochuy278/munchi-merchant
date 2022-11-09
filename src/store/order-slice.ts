@@ -58,7 +58,7 @@ const initialState = {
       comment: "No potatoe please",
       deliveryType: 1,
       timeStamp: "15:43",
-      prepTime: 15,
+      prepTime: 2,
     },
     {
       id: 12434,
@@ -84,7 +84,7 @@ const initialState = {
           quantity: 1,
         },
         {
-          id: 213124,
+          id: 2143124,
           name: "Oninon ring",
           quantity: 1,
         },
@@ -104,7 +104,7 @@ const initialState = {
         name: "munchi",
       },
       comment: "No potatoe please",
-      deliveryType: 1,
+      deliveryType: 0,
       timeStamp: "15:43",
       prepTime: 0,
     },

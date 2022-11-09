@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import {
   DetailFooterChildProps,
   DetailFooterProps,
-} from "../../../../shared/interfaces/props.interface";
-import DialogAlert from "../../../dialog";
+} from "../../../shared/interfaces/props.interface";
+import DialogAlert from "../../dialog";
 import { FactoryButton } from "../../factory";
 import styles from "./index.module.css";
 const timeAvailable = [1, 5, 10, 15, 20, 30];

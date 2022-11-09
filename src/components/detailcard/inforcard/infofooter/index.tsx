@@ -3,11 +3,11 @@ import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import OrderEnum from "../../../../shared/enum/enum";
 import { DetailFooterProps } from "../../../../shared/interfaces/props.interface";
-import { FactoryButton } from "../../../customcomponents/factory";
+import { FactoryButton } from "../../../factory";
 import {
   DetailInfoPendingFooter,
   DetailInfoReadyFooter,
-} from "../../../customcomponents/footers/detail";
+} from "../../../buttonfooters/detail";
 import DialogAlert from "../../../dialog";
 import styles from "./index.module.css";
 

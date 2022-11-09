@@ -1,7 +1,7 @@
 import { FooterProps } from "../../../../shared/interfaces/props.interface";
 import {
   OrderAcceptedFooter, OrderPendingFooter, OrderReadyFooter
-} from "../../../customcomponents/footers/order";
+} from "../../../buttonfooters/order";
 
 export default function OrderFooter({
   orderStatus,

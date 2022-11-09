@@ -75,5 +75,14 @@ export interface CoundownProps extends Props {
 export interface FactoryTimeFormatProps extends Props {
   minutes: number;
   seconds: number;
+  isDanger:boolean
 }
 
+export interface FactoryDialogContentProps extends Props {
+  open:boolean,
+  onClose: () => void,
+  orderId:number,
+  deliveryType:number,
+  orderStatus:number,
+  newPrepTime:number
+}

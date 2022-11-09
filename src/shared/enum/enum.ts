@@ -5,6 +5,7 @@ enum OrderEnum {
     PENDING = 0,
     PROCESSING = 1,
     READY = 2,
+    TAKEOUT = 0,
 }
 
 
