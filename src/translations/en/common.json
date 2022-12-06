@@ -1,0 +1,59 @@
+{
+  "header": {
+    "title": "Orders manager"
+  },
+  "section": {
+    "sectiontitle": {
+      "0": "Pending",
+      "1": "Ready",
+      "2": "Accepted"
+    },
+    "detail": {
+        "detailTitle": "Order"
+    },
+    "dialog": {
+      "dialogTitle": "Order Confirmation"
+    }
+  },
+  "restaurantStatus": {
+    "close": "close",
+    "open": "open"
+  },
+  "delivery_type": {
+    "0": "Take Out",
+    "1": "Delivery",
+    "2": "Pick Up",
+    "3": "Eat In"
+  },
+  "timeStamp": {
+    "day": {
+      "0": "Today",
+      "1": "Yesterday"
+    },
+    "create": "Created",
+    "accepted": "Accepted",
+    "marked__ready": "Marked ready"
+  },
+  "buttonContent": {
+    "0": "Decline",
+    "1": "Ready to delivery",
+    "2": "Ready to pick up",
+    "3": "Ready to serve",
+    "4": "Ready in",
+    "5":"Custom",
+     "6":"Accept",
+     "7":"Ready",
+     "8":"Confirm",
+      "9":"Go back"
+  },
+  "dialogContent": {
+    "0": "Confirming that this item is ready to delivery",
+    "1": "Confirming that this item is ready to pick up",
+    "2": "Confirming that this item is ready to serve"
+  },
+  "tax": "Tax",
+  "total": "Order Total",
+  "items": "Items",
+  "error": "Something wrong happened",
+  "customer": "Customer"
+}

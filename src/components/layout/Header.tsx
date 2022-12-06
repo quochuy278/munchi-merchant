@@ -1,35 +1,82 @@
-import {  IconButton, Toolbar, Typography } from '@mui/material'
+import { Button, ButtonGroup, IconButton, Toolbar, Typography } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
-import React from 'react'
+import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
-
+import Switch from "@mui/material/Switch";
+import CircleIcon from "@mui/icons-material/Circle";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 export default function Header() {
+  const [isOpen, setIsOpen] = React.useState(false);
+  const { t, i18n } = useTranslation("common");
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="fixed">
+      <AppBar position="static" sx={{ backgroundColor: "#F3F5F7" }}>
         <Toolbar>
           <IconButton
             size="large"
             edge="start"
-            color="inherit"
             aria-label="menu"
-            sx={{ mr: 2 }}
+            sx={{ padding: 0 }}
           >
-            <MenuIcon />
+            <MenuIcon sx={{ color: "#000000" }} />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          <Box sx={{ flex: 1 }} display="flex" justifyContent="space-between">
             <IconButton
               size="large"
               edge="start"
-              color="inherit"
               aria-label="menu"
-              sx={{ mr: 2 }}
+              sx={{
+                mr: 2,
+                backgroundColor: "#FFFFFF",
+                width: "125px",
+                height: "32px",
+                borderRadius: 5,
+                marginLeft: 2,
+              }}
+              component={Link}
+              to={"/"}
             >
-              <FactCheckIcon />
+              <Box
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
+              >
+                <FactCheckIcon
+                  color="primary"
+                  sx={{ height: "15px", width: "15px", marginRight: "5px" }}
+                />
+                <Typography color={"#5191D9"} fontSize="10px" lineHeight="13px">
+                  {t("header.title")}
+                </Typography>
+              </Box>
             </IconButton>
-          </Typography>
+            <Box display={"flex"} alignItems="center">
+              <Switch checked={isOpen} onChange={() => setIsOpen(!isOpen)} />
+              <CircleIcon
+                sx={{
+                  width: "10px",
+                  height: "10px",
+                  marginRight: "10px",
+                }}
+                {...(isOpen ? { color: "success" } : { color: "warning" })}
+              />
+              <Typography color={"#000000"} fontSize="12px" lineHeight="16px">
+                Restaurant{" "}
+                {isOpen
+                  ? t("restaurantStatus.open")
+                  : t("restaurantStatus.close")}
+              </Typography>
+            </Box>
+            {/* <Box display={"flex"} alignItems="center">
+              <ButtonGroup variant="text" aria-label="text button group">
+                <Button onClick={() => i18n.changeLanguage("en")}>en</Button>
+                <Button onClick={() => i18n.changeLanguage("fi")}>fi</Button>
+              </ButtonGroup>
+            </Box> */}
+          </Box>
         </Toolbar>
       </AppBar>
     </Box>

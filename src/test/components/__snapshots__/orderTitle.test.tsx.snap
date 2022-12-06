@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`order Title component displays the OrderTitle 1`] = `
+<div
+  className="section__title MuiBox-root css-15yyoo3"
+>
+  <h5
+    className="MuiTypography-root MuiTypography-h5 css-1ivaqk5-MuiTypography-root"
+  >
+    Pending
+  </h5>
+  <div
+    className="MuiBox-root css-q2ye7b"
+  >
+    <p
+      className="MuiTypography-root MuiTypography-body1 css-17893no-MuiTypography-root"
+    >
+      7
+    </p>
+  </div>
+</div>
+`;
