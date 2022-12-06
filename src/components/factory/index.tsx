@@ -226,7 +226,7 @@ export const FactoryDialogContent = ({
     case null:
       return null;
     default:
-      return <div>Hello there</div>;
+      return null;;
   }
 };
 

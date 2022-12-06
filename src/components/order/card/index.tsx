@@ -39,6 +39,7 @@ export default function OrderCard({ ordersData }: OrderDataProps) {
   };
 
   const handleExpandClick = () => {
+    //check Id here before expand
     setExpanded(!expanded);
   };
   const RenderProductList = ({ productList }: OrderProductListProps) => {
@@ -257,7 +258,7 @@ export default function OrderCard({ ordersData }: OrderDataProps) {
                     expand={expanded}
                     onClick={handleExpandClick}
                     aria-expanded={expanded}
-                    aria-label="show more"
+                    aria-label="show more"     
                   >
                     <ExpandMoreIcon />
                   </ExpandMore>
