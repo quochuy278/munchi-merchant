@@ -45,6 +45,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:android": "npx capacitor run android",
+    "start:ios": "npx capacitor run ios",
+    "open:android": "npx capacitor open android",
+    "open:ios": "npx capacitor open ios",
+    "sync": "react-scripts build && npx capacitor sync",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
