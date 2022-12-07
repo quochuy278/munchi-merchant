@@ -61,6 +61,54 @@ const initialState = {
       prepTime: 2,
     },
     {
+      id: 12354,
+      uuid: "fsdf1343124134141",
+      status: 1,
+      summary: {
+        total: 32,
+      },
+      customer: {
+        id: 213121324,
+        name: "Huy",
+        email: "test@test.com",
+      },
+      products: [
+        {
+          id: 21366124,
+          name: "Veggie burger with margarita on top of The burger double patty.",
+          quantity: 1,
+        },
+        {
+          id: 21323232342341524,
+          name: "Nugget",
+          quantity: 1,
+        },
+        {
+          id: 213123211244,
+          name: "Oninon ring",
+          quantity: 1,
+        },
+        {
+          id: 21315212312312311231224,
+          name: "Somthing",
+          quantity: 1,
+        },
+        {
+          id: 2133124,
+          name: "Fried Fry",
+          quantity: 3,
+        },
+      ],
+      business: {
+        id: 123123,
+        name: "munchi",
+      },
+      comment: "No potatoe please",
+      deliveryType: 3,
+      timeStamp: "15:43",
+      prepTime: 2,
+    },
+    {
       id: 12434,
       uuid: "fsdf1343124134141",
       status: 0,

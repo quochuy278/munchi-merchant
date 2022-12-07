@@ -1,28 +1,112 @@
-import { Button, ButtonGroup, IconButton, Toolbar, Typography } from "@mui/material";
+import {
+  Button,
+  ButtonGroup,
+  Divider,
+  Drawer,
+  IconButton,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Toolbar,
+  Typography,
+} from "@mui/material";
 import AppBar from "@mui/material/AppBar";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Box from "@mui/material/Box";
-import React from "react";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MailIcon from "@mui/icons-material/Mail";
+import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import FactCheckIcon from "@mui/icons-material/FactCheck";
 import Switch from "@mui/material/Switch";
 import CircleIcon from "@mui/icons-material/Circle";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+type Anchor = "top" | "left" | "bottom" | "right";
 export default function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
   const { t, i18n } = useTranslation("common");
+  const [state, setState] = React.useState({
+    left: false,
+  });
+
+  const toggleDrawer =
+    (anchor: Anchor, open: boolean) =>
+    (event: React.KeyboardEvent | React.MouseEvent) => {
+      if (
+        event &&
+        event.type === "keydown" &&
+        ((event as React.KeyboardEvent).key === "Tab" ||
+          (event as React.KeyboardEvent).key === "Shift")
+      ) {
+        return;
+      }
+
+      setState({ ...state, [anchor]: open });
+    };
+  const list = (anchor: Anchor) => (
+    <Box
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List>
+        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {["All mail", "Trash", "Spam"].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "#F3F5F7" }}>
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            aria-label="menu"
-            sx={{ padding: 0 }}
-          >
-            <MenuIcon sx={{ color: "#000000" }} />
-          </IconButton>
+          <div>
+            <React.Fragment key={"left"}>
+              <IconButton
+                size="large"
+                edge="start"
+                aria-label="menu"
+                sx={{ padding: 0 }}
+                onClick={toggleDrawer("left", true)}
+              >
+                <MenuIcon sx={{ color: "#000000" }} />
+              </IconButton>
+              <SwipeableDrawer
+                anchor={"left"}
+                open={state["left"]}
+                onClose={toggleDrawer("left", false)}
+                onOpen={toggleDrawer("left", true)}
+              >
+                {list("left")}
+              </SwipeableDrawer>
+            </React.Fragment>
+          </div>
+
           <Box sx={{ flex: 1 }} display="flex" justifyContent="space-between">
             <IconButton
               size="large"
