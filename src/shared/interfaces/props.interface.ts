@@ -31,6 +31,7 @@ export interface FactoryIcon {
 
 export interface OrderProductListProps extends Props {
   productList: ProductItem[];
+  orderId: number
 }
 
 export interface DetailInfoListProps extends Props {
