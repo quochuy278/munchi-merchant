@@ -1,7 +1,13 @@
 import { Route, Routes } from "react-router-dom";
 import ClockComponent from "../components/countdownlock";
 
-import { DetailPage, ErrorPage, MainPage } from "../pages";
+import {
+  DetailPage,
+  ErrorPage,
+  LoginPage,
+  MainPage,
+  SignUpPage,
+} from "../pages";
 
 import "./App.css";
 
@@ -12,6 +18,8 @@ function App() {
       <Route path="/detail" element={<DetailPage />}>
         <Route path="/detail/:detailId" element={<DetailPage />} />
       </Route>
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignUpPage />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );

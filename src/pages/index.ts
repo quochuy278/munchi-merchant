@@ -1,5 +1,7 @@
-import MainPage from "./mainpage";
-import DetailPage from "./detailpage";
-import ErrorPage from "./errorpage";
+import MainPage from "./main";
+import DetailPage from "./detail";
+import ErrorPage from "./error";
+import LoginPage from "./login";
+import SignUpPage from "./signup";
 
-export { MainPage, DetailPage, ErrorPage };
+export { MainPage, DetailPage, ErrorPage, LoginPage, SignUpPage };

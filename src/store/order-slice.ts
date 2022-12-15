@@ -104,7 +104,7 @@ const initialState = {
         name: "munchi",
       },
       comment: "No potatoe please",
-      deliveryType: 3,
+      deliveryType: 1,
       timeStamp: "15:43",
       prepTime: 2,
     },
