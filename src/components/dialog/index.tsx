@@ -18,7 +18,7 @@ import { AppDispatch } from "../../store";
 import { updateState } from "../../store/order-slice";
 import { useTranslation } from "react-i18next";
 import { DialogProps } from "../../shared/interfaces/props.interface";
-import OrderEnum from "../../shared/enum/enum";
+import {OrderEnum} from "../../shared/enum/enum";
 import { FactoryDialogContent } from "../factory";
 
 export default function DialogAlert({

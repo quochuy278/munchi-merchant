@@ -3,21 +3,25 @@ import {  useNavigate } from "react-router-dom";
 
 const initialState = {
   isAuthenticated: false,
+  token : "",
 };
 
 export const AuthSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login: (state) => {
+    signin: (state,payload) => {
+      console.log(payload);
       state.isAuthenticated = true;
+      state.token ="acdcas"
       // console.log(current(state))
-     
-   
     },
+    setUser: () => {
+      
+    }
   },
 });
 
-export const { login } = AuthSlice.actions;
+export const { signin } = AuthSlice.actions;
 
 export default AuthSlice.reducer;

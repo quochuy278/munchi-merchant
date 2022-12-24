@@ -4,21 +4,24 @@ import ClockComponent from "../components/countdownlock";
 import {
   DetailPage,
   ErrorPage,
-  LoginPage,
+  SignInPage,
   MainPage,
   SignUpPage,
 } from "../pages";
+import ProtectedRoute from "../utils/protectedRoute";
 
 import "./App.css";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path="/detail" element={<DetailPage />}>
-        <Route path="/detail/:detailId" element={<DetailPage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/detail" element={<DetailPage />}>
+          <Route path="/detail/:detailId" element={<DetailPage />} />
+        </Route>
       </Route>
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signin" element={<SignInPage />} />
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>

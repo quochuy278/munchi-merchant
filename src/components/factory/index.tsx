@@ -1,32 +1,30 @@
-import {
-  Box,
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  Typography,
-} from "@mui/material";
-import { useTranslation } from "react-i18next";
-import OrderEnum from "../../shared/enum/enum";
-import {
-  FactoryDialogContentProps,
-  FactoryIcon,
-  FactoryProps,
-  FactoryTimeFormatProps,
-} from "../../shared/interfaces/props.interface";
 import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 import DiningIcon from "@mui/icons-material/Dining";
 import TakeoutDiningOutlinedIcon from "@mui/icons-material/TakeoutDiningOutlined";
 import {
-  CustomAcceptButton,
-  CustomDeclineButton,
-  Transition,
-} from "../customcomponents/mui";
+  Box, Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Typography
+} from "@mui/material";
+import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
+import { OrderEnum } from "../../shared/enum/enum";
+import {
+  FactoryDialogContentProps,
+  FactoryIcon,
+  FactoryProps,
+  FactoryTimeFormatProps
+} from "../../shared/interfaces/props.interface";
 import { AppDispatch } from "../../store";
 import { updateState } from "../../store/order-slice";
+import {
+  CustomAcceptButton,
+  CustomDeclineButton,
+  Transition
+} from "../customcomponents/mui";
 
 export const FactoryButton = ({ deliveryType }: FactoryProps) => {
   const deliveryReadyHandler = () => {};

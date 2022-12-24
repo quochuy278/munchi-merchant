@@ -1,4 +1,4 @@
-enum OrderEnum {
+export enum OrderEnum {
     DELIVERY =  1,
     PICKUP =  2,
     EATIN = 3,
@@ -8,5 +8,11 @@ enum OrderEnum {
     TAKEOUT = 0,
 }
 
-
-export default OrderEnum;
+export enum RolesEnum {
+  ADMINISTRATOR = 0,
+  CITY_MANAGER = 1,
+  BUSSINESS_OWNER = 2,
+  CUSTOMER = 3,
+  DRIVER = 4,
+  DRIVER_MANAGER = 5,
+}

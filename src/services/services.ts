@@ -1,15 +1,49 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 import { FetchOrderError, Order } from "../shared/interfaces/order.interface";
+import {
+  SignInData,
+  SignUpData,
+} from "../shared/interfaces/services.interface";
 
 import { store } from "../store";
 
-export interface UpdateParameter  {
-  orderId: number;
-  prepTime: string;
+export const signInService = async (signInData: SignInData) => {
+  console.log(signInData);
+  const result = await axios({
+    url: "http://localhost:5000/auth/signin",
+    method: "POST",
+    data: JSON.stringify({
+      email: signInData.email,
+      password: signInData.password,
+    }),
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+    },
+  });
+  return result;
 };
 
-export interface RejectObject  {
-  orderId: number;
+export const signUpService = async (signupData: SignUpData) => {
+  console.log(signupData);
+ 
+  const result = await axios({
+    url: "http://localhost:5000/auth/signin",
+    method: "POST",
+    data: JSON.stringify({
+      name: signupData.name,
+      lastName: signupData.lastName,
+      role: signupData.role,
+      email: signupData.email,
+      password: signupData.password,
+    }),
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+    },
+  });
+  return result;
 };
 
 export const fetchOrders = createAsyncThunk<
@@ -118,8 +152,6 @@ export const fetchOrders = createAsyncThunk<
 //   return data;
 // });
 
-
-
 //processing to pickup
 
 // export const updateOrders = createAsyncThunk<
@@ -147,8 +179,6 @@ export const fetchOrders = createAsyncThunk<
 //   }
 //   return data;
 // });
-
-
 
 //processing to eatin
 
