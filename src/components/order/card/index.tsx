@@ -25,20 +25,6 @@ export default function OrderCard({ ordersData }: OrderDataProps) {
   const [selectedOrderIDs, setSelectedOrderIDs] = useState<number[]>([]);
   const { t } = useTranslation("common");
   const navigate = useNavigate();
-  // const clickHandler = (event: any, status: string, orderId: string) => {
-  //   switch (expanded) {
-  //     case true: {
-  //       navigate(`/detail/${orderId}`);
-  //       break;
-  //     }
-  //     case false: {
-  //       console.log("show expanded");
-  //       break;
-  //     }
-  //   }
-
-  //   event.preventDefault();
-  // };
   const handleOrderPressed = (id: number) => () => {
     setSelectedOrderIDs((prevState) =>
       prevState.includes(id)

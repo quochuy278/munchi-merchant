@@ -16,23 +16,25 @@ import { AppDispatch, useTypedSelector } from "../../store";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
-import { signin } from "../../store/auth-slice";
+
+import { SignInService } from "../../services/services";
+import { setUser } from "../../store/auth-slice";
+
 const theme = createTheme();
-const SignInPage = () => {
+const SignInPage =  () => {
   const dispatch = useDispatch<AppDispatch>();
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit =async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // console.log({
-    //   email: data.get("email"),
-    //   password: data.get("password"),
-    // });
-    const email = data.get("email");
-    const password = data.get("password");
-    dispatch(signin({ email, password }));
+    const signInData = {
+      email: data.get("email") as string,
+      password: data.get("password") as string,
+    };
+    const userInfo = await SignInService(signInData).then(res => res.data);
+    dispatch(setUser(userInfo));
   };
 
   // console.log(isAuthenticated);

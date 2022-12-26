@@ -1,6 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import ClockComponent from "../components/countdownlock";
-
 import {
   DetailPage,
   ErrorPage,

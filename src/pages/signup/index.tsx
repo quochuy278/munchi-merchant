@@ -16,7 +16,7 @@ import InputLabel from "@mui/material/InputLabel";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { FormControl, MenuItem } from "@mui/material";
 import { useState } from "react";
-import { signUpService } from "../../services/services";
+import { SignUpService } from "../../services/services";
 const theme = createTheme();
 const SignUpPage = () => {
   const [role, setRole] = useState("");
@@ -24,6 +24,8 @@ const SignUpPage = () => {
   const handleRoleChange = (event: SelectChangeEvent) => {
     setRole(event.target.value as string);
   };
+ 
+  
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -34,7 +36,7 @@ const SignUpPage = () => {
        password: data.get("password") as string,
        role: data.get("role") as string,
      };
-     signUpService(signUpData);
+     SignUpService(signUpData);
   };
 
 

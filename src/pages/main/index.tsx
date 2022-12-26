@@ -9,17 +9,17 @@ import { AppDispatch, useTypedSelector } from "../../store";
 
 import { selectOrders, selectStatus } from "../../store/order-slice";
 import { fetchOrders } from "../../services/services";
-import {OrderEnum} from "../../shared/enum/enum";
+import { OrderEnum } from "../../shared/enum/enum";
 import { useTranslation } from "react-i18next";
 import { Order } from "../../shared/interfaces/order.interface";
+import { userInfo } from "../../store/auth-slice";
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();
   const orders = useTypedSelector(selectOrders);
-
   const statusLoaded = useSelector(selectStatus);
   const { t } = useTranslation("common");
-  // useEffect(() => {      
+  // useEffect(() => {
   //   dispatch(fetchOrders({ status: ["pending", "processing", "ready"] }));
   // }, []);
 
@@ -33,7 +33,7 @@ const MainPage = () => {
   const readyOrders = orders.filter((order: Order) => {
     return order.status === OrderEnum.READY;
   });
-// console.log(statusLoaded)
+  // console.log(statusLoaded)
   return (
     <MainContent>
       {statusLoaded ? (

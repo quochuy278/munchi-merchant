@@ -21,6 +21,12 @@ export interface OrderSummary {
 //   title: string;
 //   completed: boolean;
 // };
+export interface Item  {
+  id: number;
+  quantity: number;
+  name: string;
+};
+
 export interface FetchOrderError {
   message: string;
 }

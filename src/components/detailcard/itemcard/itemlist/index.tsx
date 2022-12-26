@@ -1,14 +1,21 @@
 import CloseIcon from "@mui/icons-material/Close";
-import { Box, Divider, Typography } from '@mui/material';
-import { Item } from '../../../../store/order-slice';
-import styles from './index.module.css';
-type Props = {
-    items: []
-}
+import { Box, Divider, Typography } from "@mui/material";
+import { Item } from "../../../../shared/interfaces/order.interface";
 
-export default function ItemList( {items}: Props) {
+import styles from "./index.module.css";
+type Props = {
+  items: [];
+};
+
+export default function ItemList({ items }: Props) {
   return (
-    <Box display="flex" flexDirection="column" alignItems="center" width="100%" sx={{overflowX:"hidden", overflowY:"scroll"}}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      width="100%"
+      sx={{ overflowX: "hidden", overflowY: "scroll" }}
+    >
       {items.map((item: Item, index) => {
         return (
           <Box className={styles.detail__item} key={index}>

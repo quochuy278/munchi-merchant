@@ -1,17 +1,20 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useDispatch } from "react-redux";
 import { FetchOrderError, Order } from "../shared/interfaces/order.interface";
 import {
   SignInData,
   SignUpData,
 } from "../shared/interfaces/services.interface";
+import { AppDispatch } from "../store";
+import { setUser } from "../store/auth-slice";
 
-import { store } from "../store";
+import { getEnvironment } from "../utils/getEnv";
 
-export const signInService = async (signInData: SignInData) => {
-  console.log(signInData);
+export const SignInService = async (signInData: SignInData) => {
+ 
   const result = await axios({
-    url: "http://localhost:5000/auth/signin",
+    url: getEnvironment("auth/signin") as string,
     method: "POST",
     data: JSON.stringify({
       email: signInData.email,
@@ -22,14 +25,13 @@ export const signInService = async (signInData: SignInData) => {
       "content-type": "application/json",
     },
   });
-  return result;
+  return result
 };
 
-export const signUpService = async (signupData: SignUpData) => {
+export const SignUpService = async (signupData: SignUpData) => {
   console.log(signupData);
- 
   const result = await axios({
-    url: "http://localhost:5000/auth/signin",
+    url: getEnvironment("auth/signup") as string,
     method: "POST",
     data: JSON.stringify({
       name: signupData.name,
@@ -39,7 +41,7 @@ export const signUpService = async (signupData: SignUpData) => {
       password: signupData.password,
     }),
     headers: {
-      accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
       "content-type": "application/json",
     },
   });
