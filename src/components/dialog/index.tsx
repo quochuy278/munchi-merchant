@@ -12,7 +12,7 @@ import { TransitionProps } from "@mui/material/transitions";
 import {
   CustomAcceptButton,
   CustomDeclineButton,
-} from "../customcomponents/mui";
+} from "../customcomponents";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../../store";
 import { updateState } from "../../store/order-slice";

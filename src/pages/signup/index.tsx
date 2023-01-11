@@ -17,30 +17,40 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { FormControl, MenuItem } from "@mui/material";
 import { useState } from "react";
 import { SignUpService } from "../../services/services";
+import Notification from "../../components/notification";
+import { setUser } from "../../store/auth-slice";
+import { AppDispatch } from "../../store";
+import { useDispatch } from "react-redux";
 const theme = createTheme();
 const SignUpPage = () => {
   const [role, setRole] = useState("");
-  const [errMsg, setErrMsg] = useState("Something wrong happend")
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(false);
+ const dispatch = useDispatch<AppDispatch>();
   const handleRoleChange = (event: SelectChangeEvent) => {
     setRole(event.target.value as string);
   };
- 
-  
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-     const signUpData = {
-       name: data.get("firstName") as string,
-       lastName: data.get("lastName") as string,
-       email: data.get("email") as string,
-       password: data.get("password") as string,
-       role: data.get("role") as string,
-     };
-     SignUpService(signUpData);
+    const signUpData = {
+      name: data.get("firstName") as string,
+      lastName: data.get("lastName") as string,
+      email: data.get("email") as string,
+      password: data.get("password") as string,
+      role: data.get("role") as string,
+    };
+    const userInfo = await SignUpService(signUpData)
+      .then((res) => res.data)
+      .catch((error) => {
+        console.log(error);
+        setMessage(error);
+        setError(true);
+      });
+    dispatch(setUser(userInfo));
   };
 
-
-  
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -153,6 +163,11 @@ const SignUpPage = () => {
           </Box>
         </Box>
         {/* <Copyright sx={{ mt: 5 }} /> */}
+        {error ? (
+          <Box sx={{ marginTop: "20px" }}>
+            <Notification message={message} isError={error} />
+          </Box>
+        ) : null}
       </Container>
     </ThemeProvider>
   );

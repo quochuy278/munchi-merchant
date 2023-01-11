@@ -24,7 +24,7 @@ import {
   CustomAcceptButton,
   CustomDeclineButton,
   Transition
-} from "../customcomponents/mui";
+} from "../customcomponents";
 
 export const FactoryButton = ({ deliveryType }: FactoryProps) => {
   const deliveryReadyHandler = () => {};

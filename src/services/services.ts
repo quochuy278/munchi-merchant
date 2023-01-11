@@ -14,7 +14,7 @@ import { getEnvironment } from "../utils/getEnv";
 export const SignInService = async (signInData: SignInData) => {
  
   const result = await axios({
-    url: getEnvironment("auth/signin") as string,
+    url: getEnvironment("auth/signin"),
     method: "POST",
     data: JSON.stringify({
       email: signInData.email,
@@ -31,7 +31,7 @@ export const SignInService = async (signInData: SignInData) => {
 export const SignUpService = async (signupData: SignUpData) => {
   console.log(signupData);
   const result = await axios({
-    url: getEnvironment("auth/signup") as string,
+    url: getEnvironment("auth/signup"),
     method: "POST",
     data: JSON.stringify({
       name: signupData.name,

@@ -1,0 +1,12 @@
+.business__logo {
+    width: 40%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.business__item__container{
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: inset;
+    background-color: #ebe1e1c9;
+}

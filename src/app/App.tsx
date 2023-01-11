@@ -5,6 +5,7 @@ import {
   SignInPage,
   MainPage,
   SignUpPage,
+  BusinessPage,
 } from "../pages";
 import ProtectedRoute from "../utils/protectedRoute";
 
@@ -15,10 +16,12 @@ function App() {
     <Routes>
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<MainPage />} />
+
         <Route path="/detail" element={<DetailPage />}>
           <Route path="/detail/:detailId" element={<DetailPage />} />
         </Route>
       </Route>
+      <Route path="/business" element={<BusinessPage />} />
       <Route path="/signin" element={<SignInPage />} />
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="*" element={<ErrorPage />} />

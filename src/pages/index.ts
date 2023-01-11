@@ -3,5 +3,12 @@ import DetailPage from "./detail";
 import ErrorPage from "./error";
 import SignInPage from "./signin";
 import SignUpPage from "./signup";
-
-export { MainPage, DetailPage, ErrorPage, SignInPage, SignUpPage };
+import BusinessPage from "./business";
+export {
+  MainPage,
+  DetailPage,
+  ErrorPage,
+  SignInPage,
+  SignUpPage,
+  BusinessPage,
+};

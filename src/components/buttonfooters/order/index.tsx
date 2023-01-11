@@ -6,7 +6,7 @@ import DialogAlert from "../../dialog";
 import {
   CustomAcceptedButton,
   CustomReadyButton,
-} from "../../customcomponents/mui";
+} from "../../customcomponents";
 import CloseIcon from "@mui/icons-material/Close";
 import { useCountdown } from "../../../hooks/useCountdown";
 import ClockComponent from "../../countdownlock";

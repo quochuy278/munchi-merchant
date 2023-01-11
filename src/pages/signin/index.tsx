@@ -19,24 +19,38 @@ import { RootState } from "../../store";
 
 import { SignInService } from "../../services/services";
 import { setUser } from "../../store/auth-slice";
-
+import Notification from "../../components/notification";
+import { useState } from "react";
 const theme = createTheme();
-const SignInPage =  () => {
+const SignInPage = () => {
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState(false);
   const dispatch = useDispatch<AppDispatch>();
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
-  const handleSubmit =async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const signInData = {
       email: data.get("email") as string,
       password: data.get("password") as string,
     };
-    const userInfo = await SignInService(signInData).then(res => res.data);
+    const userInfo = await SignInService(signInData)
+      .then((res) => res.data)
+      .catch((error) => {
+        console.log(error);
+        setMessage(error);
+        setError(true);
+      });
     dispatch(setUser(userInfo));
   };
-
+  const showNotification = () => {
+    setTimeout(() => {
+      setError(false);
+    }, 3000);
+  };
+    if(error) showNotification()
   // console.log(isAuthenticated);
   return (
     <ThemeProvider theme={theme}>
@@ -109,6 +123,11 @@ const SignInPage =  () => {
           </Box>
         </Box>
         {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
+        {error ? (
+          <Box sx={{ marginTop: "20px" }}>
+            <Notification message={message} isError={error} />
+          </Box>
+        ) : null}
       </Container>
     </ThemeProvider>
   );
