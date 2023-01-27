@@ -3,9 +3,17 @@ import OrderSlice from "./order-slice";
 import AuthSlice from "./auth-slice";
 import { configureStore } from "@reduxjs/toolkit";
 import BusinessSlice from "./business-slice";
+import { MunchiApi } from "./api-slice";
 
 export const store = configureStore({
-  reducer: { order: OrderSlice, auth: AuthSlice, business: BusinessSlice },
+  reducer: {
+    order: OrderSlice,
+    auth: AuthSlice,
+    business: BusinessSlice,
+    [MunchiApi.reducerPath]: MunchiApi.reducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(MunchiApi.middleware),
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

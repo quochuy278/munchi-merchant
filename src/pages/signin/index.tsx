@@ -18,40 +18,62 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 
 import { SignInService } from "../../services/services";
-import { setUser } from "../../store/auth-slice";
+import { setUser, signin } from "../../store/auth-slice";
 import Notification from "../../components/notification";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { validateSignInData } from "../../utils/validateInput";
+
 const theme = createTheme();
 const SignInPage = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
+  const userInfo = useSelector((state: RootState) => state.auth.userInfo);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const signInData = {
-      email: data.get("email") as string,
-      password: data.get("password") as string,
-    };
-    const userInfo = await SignInService(signInData)
-      .then((res) => res.data)
-      .catch((error) => {
+    const data = new FormData(event.currentTarget)!;
+    const email = data.get("email") as string;
+    const password = data.get("password") as string;
+    const validatedData = validateSignInData(email, password);
+    console.log(validatedData);
+
+    if (!validatedData.isValidated) {
+      setError(true);
+      setMessage(validatedData.message);
+      return;
+    } else {
+      const signInData = {
+        email: email,
+        password: password,
+      };
+      try {
+        const response = await SignInService(signInData);
+        dispatch(setUser(response.data));
+        console.log(response.data);
+       
+      } catch (error) {
         console.log(error);
-        setMessage(error);
-        setError(true);
-      });
-    dispatch(setUser(userInfo));
+      }
+    }
+    console.log(userInfo);
+    // if (!userInfo[0]) {
+    //   console.log("No user info");
+    
+    // } else {
+    //   console.log(userInfo);
+    //   dispatch(signin());
+    //   navigate("/business");
+    // }
   };
   const showNotification = () => {
     setTimeout(() => {
       setError(false);
     }, 3000);
   };
-    if(error) showNotification()
-  // console.log(isAuthenticated);
+  if (error) showNotification();
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -85,6 +107,7 @@ const SignInPage = () => {
               name="email"
               autoComplete="email"
               autoFocus
+              type="email"
             />
             <TextField
               margin="normal"
@@ -122,7 +145,6 @@ const SignInPage = () => {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
         {error ? (
           <Box sx={{ marginTop: "20px" }}>
             <Notification message={message} isError={error} />

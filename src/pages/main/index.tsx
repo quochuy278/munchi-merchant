@@ -12,7 +12,7 @@ import { fetchOrders } from "../../services/services";
 import { OrderEnum } from "../../shared/enum/enum";
 import { useTranslation } from "react-i18next";
 import { Order } from "../../shared/interfaces/order.interface";
-import { userInfo } from "../../store/auth-slice";
+
 
 const MainPage = () => {
   const dispatch = useDispatch<AppDispatch>();

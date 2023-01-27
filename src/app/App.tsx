@@ -16,12 +16,11 @@ function App() {
     <Routes>
       <Route element={<ProtectedRoute />}>
         <Route path="/" element={<MainPage />} />
-
         <Route path="/detail" element={<DetailPage />}>
           <Route path="/detail/:detailId" element={<DetailPage />} />
         </Route>
+        <Route path="/business" element={<BusinessPage />} />
       </Route>
-      <Route path="/business" element={<BusinessPage />} />
       <Route path="/signin" element={<SignInPage />} />
       <Route path="/signup" element={<SignUpPage />} />
       <Route path="*" element={<ErrorPage />} />

@@ -4,18 +4,18 @@ import { RootState } from ".";
 import { UserObject } from "../shared/interfaces/user.interface";
 
 const initialState = {
-  enbled: false,
-  name: ''
+  enabled: false,
+  name: "",
 };
 
 export const BusinessSlice = createSlice({
   name: "business",
   initialState,
   reducers: {
-    setBusiness: (state) => {
-      console.log('set business')
-      state.enbled = true
-    
+    setBusiness: (state, { payload }: PayloadAction) => {
+      console.log(payload);
+      state.enabled = true;
+      console.log("set business");
     },
   },
 });

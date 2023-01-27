@@ -12,25 +12,22 @@ export const AuthSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    signin: (state, payload) => {
+    signin: (state) => {
       state.isAuthenticated = true;
-
       // console.log(current(state))
     },
     setUser: (state, { payload }: any) => {
-      console.log(payload);
-      state.userInfo.push(payload)
-      state.isAuthenticated = true;
+      state.userInfo.push(payload);
+      console.log("set user succeed");
     },
     signout: (state, payload) => {
-      console.log(payload);
       state.isAuthenticated = true;
 
       // console.log(current(state))
     },
   },
 });
-export const userInfo = (state: RootState) => state.auth.userInfo[0];
+
 export const { signin, setUser, signout } = AuthSlice.actions;
 
 export default AuthSlice.reducer;

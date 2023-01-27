@@ -1,4 +1,3 @@
-
 export interface UpdateParameter {
   orderId: number;
   prepTime: string;
@@ -19,4 +18,8 @@ export interface SignUpData {
 export interface SignInData {
   email: string;
   password: string;
+}
+export interface ValidateResult {
+  isValidated: boolean;
+  message: string;
 }

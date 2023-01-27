@@ -4,7 +4,7 @@ import { NotificationProps } from "../../shared/interfaces/props.interface";
 const Notification= ( props: NotificationProps) => {
   return (
     <>
-      <Alert severity="error">This is an {props.message}</Alert>
+      <Alert severity="error">{props.message}</Alert>
     </>
   );
 }
