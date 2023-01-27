@@ -1,8 +1,10 @@
+import CircleIcon from "@mui/icons-material/Circle";
+import FactCheckIcon from "@mui/icons-material/FactCheck";
+import MailIcon from "@mui/icons-material/Mail";
+import MenuIcon from "@mui/icons-material/Menu";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
 import {
-  Button,
-  ButtonGroup,
   Divider,
-  Drawer,
   IconButton,
   List,
   ListItem,
@@ -13,17 +15,12 @@ import {
   Typography,
 } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Box from "@mui/material/Box";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
-import React, { useState } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
-import FactCheckIcon from "@mui/icons-material/FactCheck";
+import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Switch from "@mui/material/Switch";
-import CircleIcon from "@mui/icons-material/Circle";
-import { Link } from "react-router-dom";
+import React from "react";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 type Anchor = "top" | "left" | "bottom" | "right";
 export default function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
@@ -54,7 +51,7 @@ export default function Header() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
+        {/* {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -63,8 +60,17 @@ export default function Header() {
               <ListItemText primary={text} />
             </ListItemButton>
           </ListItem>
-        ))}
+        ))} */}
+        <ListItem key="Dashboard" disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard" />
+          </ListItemButton>
+        </ListItem>
       </List>
+
       <Divider />
       <List>
         {["All mail", "Trash", "Spam"].map((text, index) => (

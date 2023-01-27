@@ -1,17 +1,28 @@
 import { Route, Routes } from "react-router-dom";
-import ClockComponent from "../components/countdownlock";
-
-import { DetailPage, ErrorPage, MainPage } from "../pages";
+import {
+  DetailPage,
+  ErrorPage,
+  SignInPage,
+  MainPage,
+  SignUpPage,
+  BusinessPage,
+} from "../pages";
+import ProtectedRoute from "../utils/protectedRoute";
 
 import "./App.css";
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path="/detail" element={<DetailPage />}>
-        <Route path="/detail/:detailId" element={<DetailPage />} />
+      <Route element={<ProtectedRoute />}>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/detail" element={<DetailPage />}>
+          <Route path="/detail/:detailId" element={<DetailPage />} />
+        </Route>
+        <Route path="/business" element={<BusinessPage />} />
       </Route>
+      <Route path="/signin" element={<SignInPage />} />
+      <Route path="/signup" element={<SignUpPage />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>
   );

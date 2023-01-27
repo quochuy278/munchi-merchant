@@ -4,7 +4,7 @@ import TakeoutDiningOutlinedIcon from "@mui/icons-material/TakeoutDiningOutlined
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useTranslation } from "react-i18next";
-import OrderEnum from "../../../../shared/enum/enum";
+import {OrderEnum} from "../../../../shared/enum/enum";
 import { DetailInfoListProps } from "../../../../shared/interfaces/props.interface";
 import styles from "./index.module.css";
 

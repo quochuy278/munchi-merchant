@@ -1,5 +1,14 @@
-import MainPage from "./mainpage";
-import DetailPage from "./detailpage";
-import ErrorPage from "./errorpage";
-
-export { MainPage, DetailPage, ErrorPage };
+import MainPage from "./main";
+import DetailPage from "./detail";
+import ErrorPage from "./error";
+import SignInPage from "./signin";
+import SignUpPage from "./signup";
+import BusinessPage from "./business";
+export {
+  MainPage,
+  DetailPage,
+  ErrorPage,
+  SignInPage,
+  SignUpPage,
+  BusinessPage,
+};

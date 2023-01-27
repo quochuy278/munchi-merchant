@@ -1,30 +1,23 @@
-import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
-import DiningIcon from "@mui/icons-material/Dining";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import TakeoutDiningOutlinedIcon from "@mui/icons-material/TakeoutDiningOutlined";
 import {
   Accordion,
   AccordionDetails,
   AccordionSummary,
   Box,
-  Card,
-  Collapse,
-  IconButton,
-  Typography,
+  Card, IconButton,
+  Typography
 } from "@mui/material";
 
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import OrderEnum from "../../../shared/enum/enum";
 import { Order, ProductItem } from "../../../shared/interfaces/order.interface";
 import {
   OrderDataProps,
-  OrderProductListProps,
+  OrderProductListProps
 } from "../../../shared/interfaces/props.interface";
 import { FactoryIconInfo } from "../../factory";
 
-import { ExpandMore } from "../../customcomponents/mui";
 import OrderFooter from "./footer";
 import styles from "./index.module.css";
 
@@ -32,20 +25,6 @@ export default function OrderCard({ ordersData }: OrderDataProps) {
   const [selectedOrderIDs, setSelectedOrderIDs] = useState<number[]>([]);
   const { t } = useTranslation("common");
   const navigate = useNavigate();
-  // const clickHandler = (event: any, status: string, orderId: string) => {
-  //   switch (expanded) {
-  //     case true: {
-  //       navigate(`/detail/${orderId}`);
-  //       break;
-  //     }
-  //     case false: {
-  //       console.log("show expanded");
-  //       break;
-  //     }
-  //   }
-
-  //   event.preventDefault();
-  // };
   const handleOrderPressed = (id: number) => () => {
     setSelectedOrderIDs((prevState) =>
       prevState.includes(id)
@@ -59,7 +38,7 @@ export default function OrderCard({ ordersData }: OrderDataProps) {
     productList,
     orderId,
   }: OrderProductListProps) => {
-    console.log(ordersData);
+    // console.log(ordersData);
     const productLength = productList.length;
     switch (true) {
       case productLength <= 5:

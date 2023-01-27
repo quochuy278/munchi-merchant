@@ -1,7 +1,7 @@
 import { Box, Button, Input, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import OrderEnum from "../../../../shared/enum/enum";
+import {OrderEnum} from "../../../../shared/enum/enum";
 import { DetailFooterProps } from "../../../../shared/interfaces/props.interface";
 import { FactoryButton } from "../../../factory";
 import {

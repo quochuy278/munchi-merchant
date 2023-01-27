@@ -1,15 +1,51 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import { useDispatch } from "react-redux";
 import { FetchOrderError, Order } from "../shared/interfaces/order.interface";
+import {
+  SignInData,
+  SignUpData,
+} from "../shared/interfaces/services.interface";
+import { AppDispatch } from "../store";
+import { setUser } from "../store/auth-slice";
 
-import { store } from "../store";
+import { getEnvironment } from "../utils/getEnv";
 
-export interface UpdateParameter  {
-  orderId: number;
-  prepTime: string;
+export const SignInService = async (signInData: SignInData) => {
+ 
+  const result = await axios({
+    url: getEnvironment("auth/signin"),
+    method: "POST",
+    data: JSON.stringify({
+      email: signInData.email,
+      password: signInData.password,
+    }),
+    headers: {
+      accept: "application/json",
+      "content-type": "application/json",
+    },
+  });
+  return result
 };
 
-export interface RejectObject  {
-  orderId: number;
+export const SignUpService = async (signupData: SignUpData) => {
+  console.log(signupData);
+  const result = await axios({
+    url: getEnvironment("auth/signup"),
+    method: "POST",
+    data: JSON.stringify({
+      name: signupData.name,
+      lastName: signupData.lastName,
+      role: signupData.role,
+      email: signupData.email,
+      password: signupData.password,
+    }),
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "content-type": "application/json",
+    },
+  });
+  return result;
 };
 
 export const fetchOrders = createAsyncThunk<
@@ -118,8 +154,6 @@ export const fetchOrders = createAsyncThunk<
 //   return data;
 // });
 
-
-
 //processing to pickup
 
 // export const updateOrders = createAsyncThunk<
@@ -147,8 +181,6 @@ export const fetchOrders = createAsyncThunk<
 //   }
 //   return data;
 // });
-
-
 
 //processing to eatin
 

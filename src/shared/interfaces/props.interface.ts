@@ -87,3 +87,8 @@ export interface FactoryDialogContentProps extends Props {
   orderStatus:number,
   newPrepTime:number
 }
+
+export interface NotificationProps extends Props {
+  message:string,
+  isError: boolean
+}

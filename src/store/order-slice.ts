@@ -3,13 +3,6 @@ import { RootState } from ".";
 import { fetchOrders } from "../services/services";
 import { Order, OrderState } from "../shared/interfaces/order.interface";
 
-
-export type Item = {
-  id: number;
-  quantity: number;
-  name: string;
-};
-
 const initialState = {
   orders: [
     {
@@ -104,7 +97,7 @@ const initialState = {
         name: "munchi",
       },
       comment: "No potatoe please",
-      deliveryType: 3,
+      deliveryType: 1,
       timeStamp: "15:43",
       prepTime: 2,
     },
@@ -188,39 +181,41 @@ export const orderSlice = createSlice({
   name: "order",
   initialState,
   reducers: {
-    updateState:(state, {payload}): any=> {
+    updateState: (state, { payload }): any => {
       // console.log(payload)
       //   console.log(current(state.orders))
-        const currentState = current(state.orders)
+      const currentState = current(state.orders);
       // if (state.orders[payload].status >=  3) state.orders[payload].status =  state.orders[payload].status
       // else state.orders[payload].status = state.orders[payload].status + 1
-      const orderId = payload.orderId
-      const newPrepTime = payload.newPrepTime
-      console.log("🚀 ~ file: order-slice.ts ~ line 151 ~ newPrepTime", newPrepTime)
-      
-     const updateOrderArray = currentState.filter(
-       (order: Order) => order.id === orderId
-     );
-     const updateOrderObject =  updateOrderArray[0]
-    //  console.log(updateOrderArray)
-    //check order status 
+      const orderId = payload.orderId;
+      const newPrepTime = payload.newPrepTime;
+      console.log(
+        "🚀 ~ file: order-slice.ts ~ line 151 ~ newPrepTime",
+        newPrepTime
+      );
 
-    const updateOrderStatus = updateOrderArray[0].status + 1;
-    const updateOrderPrepTime = newPrepTime;
-    
-    const mergeUpdateOrder = {
-      ...updateOrderObject,
-      status: updateOrderStatus,
-      prepTime: updateOrderPrepTime,
-    };
-    
-    //  state.orders.push(mergeUpdateOrder)
-    state.orders = state.orders.map((order) => {
-      if (order.id === mergeUpdateOrder.id){
-         return mergeUpdateOrder
-      }
-      else return {...order}
-    })
+      const updateOrderArray = currentState.filter(
+        (order: Order) => order.id === orderId
+      );
+      const updateOrderObject = updateOrderArray[0];
+      //  console.log(updateOrderArray)
+      //check order status
+
+      const updateOrderStatus = updateOrderArray[0].status + 1;
+      const updateOrderPrepTime = newPrepTime;
+
+      const mergeUpdateOrder = {
+        ...updateOrderObject,
+        status: updateOrderStatus,
+        prepTime: updateOrderPrepTime,
+      };
+
+      //  state.orders.push(mergeUpdateOrder)
+      state.orders = state.orders.map((order) => {
+        if (order.id === mergeUpdateOrder.id) {
+          return mergeUpdateOrder;
+        } else return { ...order };
+      });
     },
   },
   extraReducers: (builder) => {
@@ -231,7 +226,7 @@ export const orderSlice = createSlice({
       if (action.payload.length === 0) {
         // console.log("No Order");
         //  console.log(action);
-         state.loading = false;
+        state.loading = false;
       } else {
         state.orders.push(...action.payload);
         state.loading = false;
