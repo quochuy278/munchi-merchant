@@ -16,46 +16,59 @@ import { AppDispatch, useTypedSelector } from '../../store'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
-
 import { SignInService } from '../../services/services'
-import { setUser, signin } from '../../store/auth-slice'
-import Notification from '../../components/notification'
+import { setUser, signin, signIn } from '../../store/auth-slice'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { signInSchema, validateSignInData } from '../../utils/validateInput'
+import { signInSchema } from '../../utils/validateInput'
 import { TypeOf } from 'zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import useDocumentTitle from '../../hooks/useDocumentTitle'
+import Notification from '../../components/notification'
+import { displayError } from '../../utils/displayError'
+
 type SignInInput = TypeOf<typeof signInSchema>
 const theme = createTheme()
 const SignInPage = () => {
   const [message, setMessage] = useState('')
   const [error, setError] = useState(false)
+  const [showError, setShowError] = useState(false)
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
   const {
     register,
     formState: { errors, isSubmitSuccessful },
-    reset,
     handleSubmit,
+    resetField,
   } = useForm<SignInInput>({
     resolver: zodResolver(signInSchema),
   })
-  const userInfo = useSelector((state: RootState) => state.auth.userInfo)
   const onHandleSubmit: SubmitHandler<SignInInput> = async (values) => {
-     try {
-        const response = await SignInService({email:values.email, password: values.password});
-        dispatch(setUser(response.data));
-        console.log(response.data);
-      } catch (error) {
-        console.log(error);
-      }
+    try {
+      const response = await SignInService({
+        email: values.email,
+        password: values.password,
+      })
+      setError(false)
+      dispatch(setUser(response.data))
+      console.log(response.data)
+    } catch (error) {
+      const errorMsg = displayError(error)
+      setShowError(true)
+      setError(true)
+      setMessage(errorMsg)
+    }
   }
-   console.log(userInfo)
-//  if (isSubmitSuccessful) {
-//       dispatch(signin());
-//       navigate("/business");
-//     }
+console.log(isSubmitSuccessful , error)
+  if (isSubmitSuccessful && !error) {
+    console.log('signing in')
+    dispatch(signIn())
+    navigate('/business', {replace:true})
+  }
+  setTimeout(() => {
+    setShowError(false)
+  }, 5000)
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -131,6 +144,11 @@ const SignInPage = () => {
             </Grid>
           </Box>
         </Box>
+        {showError ? (
+          <Box sx={{ marginTop: '20px' }}>
+            <Notification message={message} isError={error} />
+          </Box>
+        ) : null}
       </Container>
     </ThemeProvider>
   )

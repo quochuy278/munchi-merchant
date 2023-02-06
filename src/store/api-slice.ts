@@ -36,7 +36,7 @@ export const MunchiApi = createApi({
       }),
     }),
     getAllOrder: builder.query({
-      query: (name: string) => ({
+      query: (name) => ({
         url: `orders/${name}`,
         method: "GET",
       }),

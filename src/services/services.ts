@@ -34,7 +34,7 @@ export const SignUpService = async (signupData: SignUpData) => {
     url: getEnvironment("auth/signup"),
     method: "POST",
     data: JSON.stringify({
-      name: signupData.name,
+      firstName: signupData.firstName,
       lastName: signupData.lastName,
       role: signupData.role,
       email: signupData.email,
