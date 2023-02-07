@@ -12,15 +12,17 @@ export const MunchiApi = createApi({
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
-
       return headers;
     },
   }),
   endpoints: (builder) => ({
     getBusinessByName: builder.query({
-      query: (name: string) => ({
-        url: `business/${name}`,
-        method: "GET",
+      query: (publicUserId) =>(console.log(publicUserId),{
+        url: `business/allbusiness`,
+        method: "POST",
+        body:{
+          publicUserId: publicUserId
+        }
       }),
     }),
     editBusinessOnline: builder.mutation({

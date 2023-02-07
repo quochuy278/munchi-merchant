@@ -6,12 +6,12 @@ import styles from "./index.module.css";
 
 
 const BusinessPage = () => {
-  const {data,isError,isLoading,currentData} = useGetBusinessByNameQuery('allbusiness')
- 
+  const userPublicId = "5371f7d6-455a-41ca-93ac-6cf47e05acbb"
+  const {data,isError,isLoading,currentData} = useGetBusinessByNameQuery(userPublicId)
   console.log(data)
   return (
     <Box className={styles.container}>
-      <BusinessList/>
+      <BusinessList data={data}/>
     </Box>
   );
 };

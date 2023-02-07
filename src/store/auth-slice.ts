@@ -1,66 +1,36 @@
-import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit'
-import { UserObject } from '../shared/interfaces/user.interface'
-import { Preferences } from '@capacitor/preferences'
-
+import {
+  createAsyncThunk,
+  createSerializableStateInvariantMiddleware,
+  createSlice,
+  current,
+  isPlain,
+} from "@reduxjs/toolkit";
+import { UserObject } from "../shared/interfaces/user.interface";
+import { Preferences } from "@capacitor/preferences";
+// async () => {
+//   const initialToken = await Preferences.get({ key: "verifyToken" });
+//   return !!initialToken;
+// },
 const initialState = {
   isAuthenticated: false,
   userInfo: [] as Array<UserObject>,
-}
-
-export const signIn = createAsyncThunk('auth/signIn', async (arg, { getState }) => {
-  const { value } = await Preferences.get({ key: 'isAuthenticated' })
-  const state:any = getState()
-  if (value !== 'true' || value === null) {
-    console.log('value not existed')
-     const isAuthenticated = await Preferences.set({
-    key: 'isAuthenticated',
-    value: 'true',
-     })
-  }
-  console.log('running')
-  console.log(value)
-  console.log(state.auth.isAuthenticated) 
-  return state.auth.isAuthenticated = !state.auth.isAuthenticated
-})
+};
+// Augment middleware to consider Immutable.JS iterables serializable
 
 export const AuthSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     setUser: (state, { payload }: any) => {
       if (state.userInfo.length == 1) {
-        return
+        return;
       } else {
-        state.userInfo.push(payload)
+        state.userInfo.push(payload);
       }
     },
-    signout: (state, payload) => {
-      state.isAuthenticated = false
-
-      // console.log(current(state))
-    },
-     signin: (state) => {
-      state.isAuthenticated = true
-
-      // console.log(current(state))
-    },
   },
-  extraReducers: (builder) => {
-    builder.addCase(signIn.fulfilled, (state, action) => {
-      // Add user to the state array
-      console.log(current(state))
-    })
-    // builder.addCase(signIn.pending, (state, action) => {
-    //   // Add user to the state array
-    //   console.log('Loading')
-    // })
-    // builder.addCase(signIn.rejected, (state, action) => {
-    //   // Add user to the state array
-    //   console.log('Something wrong happened')
-    // })
-  },
-})
+});
 
-export const { signin,setUser, signout } = AuthSlice.actions
+export const { setUser } = AuthSlice.actions;
 
-export default AuthSlice.reducer
+export default AuthSlice.reducer;

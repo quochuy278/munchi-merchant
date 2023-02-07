@@ -13,7 +13,8 @@ export const store = configureStore({
     [MunchiApi.reducerPath]: MunchiApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(MunchiApi.middleware),
+    getDefaultMiddleware({serializableCheck:true}).concat(MunchiApi.middleware),
+
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

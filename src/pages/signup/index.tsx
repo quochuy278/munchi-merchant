@@ -18,7 +18,7 @@ import { FormControl, MenuItem } from '@mui/material'
 import { useState } from 'react'
 import { SignUpService } from '../../services/services'
 import Notification from '../../components/notification'
-import {signIn,setUser} from '../../store/auth-slice'
+import {setUser} from '../../store/auth-slice'
 import { AppDispatch } from '../../store'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -67,7 +67,6 @@ const SignUpPage = () => {
   }
   if (isSubmitSuccessful && !error) {
     console.log('signing in')
-    dispatch(signIn())
     navigate('/business')
   }
   setTimeout(() => {

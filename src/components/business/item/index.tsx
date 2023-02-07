@@ -3,7 +3,7 @@ import {
   CardActionArea, CardHeader
 } from "@mui/material";
 
-const BusinessItem = () => {
+const BusinessItem = ({data:any}) => {
   return (
     <Card
       sx={{

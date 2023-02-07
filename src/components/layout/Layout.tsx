@@ -7,19 +7,19 @@ import styles from "./layout.module.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
-export default function Layout({ children }: Props) {
+export default  function Layout({ children }: Props) {
   const navigate = useNavigate();
-  const isAuthenticated = useSelector(
-    (state: RootState) => state.auth.isAuthenticated
-  );
-  console.log(isAuthenticated);
+  // const isAuthenticated = useSelector(
+  //   (state: RootState) => state.auth.isAuthenticated
+  // );
+  // console.log(isAuthenticated);
   // useEffect(() => {
   //   if (!isAuthenticated) return navigate("/login");
   // }, [isAuthenticated]);
 
   return (
     <div className={styles.app__container}>
-      {isAuthenticated ? <Header /> : null}
+      {/* {isAuthenticated() ? <Header /> : null} */}
       <main>{children}</main>
       <Footer />
     </div>
