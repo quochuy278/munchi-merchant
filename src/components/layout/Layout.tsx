@@ -1,25 +1,47 @@
 import { useSelector } from "react-redux";
 import { Props } from "../../shared/interfaces/props.interface";
-import { RootState } from "../../store";
+import { AppDispatch, RootState } from "../../store";
 import Footer from "./Footer";
 import Header from "./Header";
 import styles from "./layout.module.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { Preferences } from "@capacitor/preferences";
+import { useDispatch } from "react-redux";
+import { setAuthenticated } from "../../store/auth-slice";
 
-export default  function Layout({ children }: Props) {
+
+export default function Layout({ children }: Props) {
   const navigate = useNavigate();
-  // const isAuthenticated = useSelector(
-  //   (state: RootState) => state.auth.isAuthenticated
-  // );
-  // console.log(isAuthenticated);
-  // useEffect(() => {
-  //   if (!isAuthenticated) return navigate("/login");
-  // }, [isAuthenticated]);
+  const dispatch = useDispatch<AppDispatch>();
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  );
+  useEffect(() => {
+    const getToken = async () => {
+      const { value } = await Preferences.get({ key: "verifyToken" });
+      const isAuthenticatedCheck = !!value;
+      if (value !== null) dispatch(setAuthenticated(isAuthenticatedCheck));
+      else dispatch(setAuthenticated(false))
+    };
+
+    try {
+      getToken();
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+  //   if (isAuthenticated) {
+  //     console.log(isAuthenticated)
+  //     console.log('Authenticated')
+  //   } else {
+  //     console.log(isAuthenticated)
+  //     console.log('Not Authenticated yet')
+  //   }
 
   return (
     <div className={styles.app__container}>
-      {/* {isAuthenticated() ? <Header /> : null} */}
+      {isAuthenticated ? <Header /> : null}
       <main>{children}</main>
       <Footer />
     </div>

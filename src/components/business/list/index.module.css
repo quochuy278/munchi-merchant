@@ -4,8 +4,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
+   
 }
-.business__title{
-    margin-bottom: 40px;
+.business__item{
+   padding: 10px;
+   box-shadow: none;
 }

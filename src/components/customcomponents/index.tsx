@@ -1,6 +1,8 @@
 import { Button, IconButton, IconButtonProps, Slide } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import { styled } from "@mui/material/styles";
 import { TransitionProps } from "@mui/material/transitions";
+import { Box } from "@mui/system";
 import React from "react";
 
 // order footer buttons
@@ -44,13 +46,13 @@ export const CustomAcceptedButton = styled(Button)(({ theme }) => ({
 }));
 
 // dialog buttons
-export const CustomDeclineButton = styled(Button)(({ theme }) => ({ 
+export const CustomDeclineButton = styled(Button)(({ theme }) => ({
   width: "50%",
   height: "54px",
   borderRadius: "8px",
   border: "none",
   backgroundColor: "#FF5F5F",
-   boxShadow:"none",
+  boxShadow: "none",
   "&:active": {
     backgroundColor: "#98BD73",
   },
@@ -68,17 +70,17 @@ export const CustomAcceptButton = styled(Button)(({ theme }) => ({
   height: "54px",
   borderRadius: "8px",
   border: "none",
-  boxShadow:"none"
-//   "&:active": {
-//     backgroundColor: "#98BD73",
-//   },
-//   "&:focus": {
-//     backgroundColor: "#5D8139",
-//   },
-//   "&:hover": {
-//     backgroundColor: "#5D8139",
-//     border: "none",
-//   },
+  boxShadow: "none",
+  //   "&:active": {
+  //     backgroundColor: "#98BD73",
+  //   },
+  //   "&:focus": {
+  //     backgroundColor: "#5D8139",
+  //   },
+  //   "&:hover": {
+  //     backgroundColor: "#5D8139",
+  //     border: "none",
+  //   },
 }));
 
 interface ExpandMoreProps extends IconButtonProps {
@@ -104,3 +106,11 @@ export const Transition = React.forwardRef(function Transition(
 ) {
   return <Slide direction="left" ref={ref} {...props} />;
 });
+
+export const LoadingSpinner = () => {
+  return (
+    <Box sx={{ display: "flex" }}>
+      <CircularProgress color="error"/>
+    </Box>
+  );
+};

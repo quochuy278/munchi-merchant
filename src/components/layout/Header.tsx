@@ -3,6 +3,7 @@ import FactCheckIcon from "@mui/icons-material/FactCheck";
 import MailIcon from "@mui/icons-material/Mail";
 import MenuIcon from "@mui/icons-material/Menu";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
+import LogoutIcon from '@mui/icons-material/Logout';
 import {
   Divider,
   IconButton,
@@ -20,10 +21,16 @@ import SwipeableDrawer from "@mui/material/SwipeableDrawer";
 import Switch from "@mui/material/Switch";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Preferences } from "@capacitor/preferences";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../store";
+import { setAuthenticated } from "../../store/auth-slice";
 type Anchor = "top" | "left" | "bottom" | "right";
 export default function Header() {
   const [isOpen, setIsOpen] = React.useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
   const { t, i18n } = useTranslation("common");
   const [state, setState] = React.useState({
     left: false,
@@ -43,6 +50,12 @@ export default function Header() {
 
       setState({ ...state, [anchor]: open });
     };
+    const onLogoutHandler = async () => {
+      console.log('connected')
+      await Preferences.remove({key:"verifyToken"})
+      dispatch(setAuthenticated(false))
+      navigate('/signin')
+    }
   const list = (anchor: Anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
@@ -51,16 +64,6 @@ export default function Header() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {/* {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))} */}
         <ListItem key="Dashboard" disablePadding>
           <ListItemButton>
             <ListItemIcon>
@@ -83,6 +86,14 @@ export default function Header() {
             </ListItemButton>
           </ListItem>
         ))}
+         <ListItem key="Logout" disablePadding>
+            <ListItemButton onClick={onLogoutHandler}>
+              <ListItemIcon>
+                <LogoutIcon/>
+              </ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
+          </ListItem>
       </List>
     </Box>
   );

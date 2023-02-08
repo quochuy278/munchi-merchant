@@ -1,9 +1,10 @@
-import {
-  Avatar, Card,
-  CardActionArea, CardHeader
-} from "@mui/material";
+import { Avatar, Card, CardActionArea, CardHeader } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "../../../store";
+import { setBusiness } from "../../../store/business-slice";
 
-const BusinessItem = ({data:any}) => {
+const BusinessItem = ({ data }) => {
+  const dispatch = useDispatch<AppDispatch>();
   return (
     <Card
       sx={{
@@ -13,14 +14,10 @@ const BusinessItem = ({data:any}) => {
           backgroundColor: "#888888",
         },
       }}
+      onClick={() => dispatch(setBusiness(data))}
     >
       <CardActionArea>
-        <CardHeader
-          avatar={
-            <Avatar src="https://res.cloudinary.com/ordering/image/upload/v1534196961/ak4o8bfgxcpoue0fx1xa.jpg"></Avatar>
-          }
-          title="Twirly Laundry"
-        />
+        <CardHeader title={data.name} />
       </CardActionArea>
     </Card>
   );

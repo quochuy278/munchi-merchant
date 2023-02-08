@@ -5,17 +5,22 @@ import { UserObject } from "../shared/interfaces/user.interface";
 
 const initialState = {
   enabled: false,
-  name: "",
+  businessData: {},
 };
 
 export const BusinessSlice = createSlice({
   name: "business",
   initialState,
   reducers: {
-    setBusiness: (state, { payload }: PayloadAction) => {
+    setBusiness: (state, { payload }: any) => {
       console.log(payload);
-      state.enabled = true;
-      console.log("set business");
+      if (state.businessData !== null) {
+        state.businessData = { ...state.businessData, ...payload };
+      } else {
+        console.log("can only set one business");
+      }
+      // state.enabled = true;
+      // console.log("set business");
     },
   },
 });

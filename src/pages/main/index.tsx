@@ -8,7 +8,7 @@ import styles from "./index.module.css";
 import { AppDispatch, useTypedSelector } from "../../store";
 
 import { selectOrders, selectStatus } from "../../store/order-slice";
-import { fetchOrders } from "../../services/services";
+
 import { OrderEnum } from "../../shared/enum/enum";
 import { useTranslation } from "react-i18next";
 import { Order } from "../../shared/interfaces/order.interface";

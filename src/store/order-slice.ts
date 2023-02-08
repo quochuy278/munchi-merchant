@@ -1,6 +1,5 @@
 import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from ".";
-import { fetchOrders } from "../services/services";
 import { Order, OrderState } from "../shared/interfaces/order.interface";
 
 const initialState = {
@@ -217,25 +216,6 @@ export const orderSlice = createSlice({
         } else return { ...order };
       });
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchOrders.pending, (state) => {
-      state.loading = true;
-    });
-    builder.addCase(fetchOrders.fulfilled, (state, action) => {
-      if (action.payload.length === 0) {
-        // console.log("No Order");
-        //  console.log(action);
-        state.loading = false;
-      } else {
-        state.orders.push(...action.payload);
-        state.loading = false;
-      }
-    });
-    builder.addCase(fetchOrders.rejected, (state, action) => {
-      if (action.payload) state.error = action.payload.message;
-      state.loading = false;
-    });
   },
 });
 

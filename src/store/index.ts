@@ -3,7 +3,7 @@ import OrderSlice from "./order-slice";
 import AuthSlice from "./auth-slice";
 import { configureStore } from "@reduxjs/toolkit";
 import BusinessSlice from "./business-slice";
-import { MunchiApi } from "./api-slice";
+import { MunchiApi } from "./services-slice";
 
 export const store = configureStore({
   reducer: {

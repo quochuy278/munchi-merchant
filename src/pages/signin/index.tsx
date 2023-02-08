@@ -1,40 +1,39 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { AppDispatch, useTypedSelector } from "../../store";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { SignInService } from "../../services/services";
-import { setUser } from "../../store/auth-slice";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { signInSchema } from "../../utils/validateInput";
-import { TypeOf } from "zod";
-import { useForm, SubmitHandler } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import useDocumentTitle from "../../hooks/useDocumentTitle";
-import Notification from "../../components/notification";
-import { displayError } from "../../utils/displayError";
 import { Preferences } from "@capacitor/preferences";
+import { zodResolver } from "@hookform/resolvers/zod";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { LoadingButton } from "@mui/lab";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Checkbox from "@mui/material/Checkbox";
+import Container from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { TypeOf } from "zod";
+import Notification from "../../components/notification";
+import { AppDispatch, RootState } from "../../store";
+import { setAuthenticated } from "../../store/auth-slice";
+import { signInUser } from "../../store/services-slice";
+import { displayError } from "../../utils/displayError";
+import { signInSchema } from "../../utils/validateInput";
 
 type SignInInput = TypeOf<typeof signInSchema>;
 const theme = createTheme();
-const SignInPage =  () => {
+const SignInPage = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState(false);
   const [showError, setShowError] = useState(false);
+  const { isLoading, isAuthenticated } = useSelector(
+    (state: RootState) => state.auth
+  );
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const {
@@ -47,14 +46,9 @@ const SignInPage =  () => {
   });
   const onHandleSubmit: SubmitHandler<SignInInput> = async (values) => {
     try {
-      const response = await SignInService({
-        email: values.email,
-        password: values.password,
-      });
-      setError(false);
-      dispatch(setUser(response.data));
-      console.log(response.data);
-    
+      dispatch(signInUser({ email: values.email, password: values.password }));
+      console.log('redirecting')
+      navigate("/business", { replace: true, state: isAuthenticated });
     } catch (error) {
       const errorMsg = displayError(error);
       setShowError(true);
@@ -62,11 +56,6 @@ const SignInPage =  () => {
       setMessage(errorMsg);
     }
   };
-  if (isSubmitSuccessful && !error) {
-    console.log("signing in");
-
-    navigate("/business", { replace: true });
-  }
   setTimeout(() => {
     setShowError(false);
   }, 5000);
@@ -123,14 +112,16 @@ const SignInPage =  () => {
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-            <Button
+            <LoadingButton
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              loadingPosition="center"
+              {...(isLoading ? { loading: true } : { loading: false })}
             >
               Sign In
-            </Button>
+            </LoadingButton>
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">

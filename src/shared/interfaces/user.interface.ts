@@ -4,7 +4,7 @@ export interface Session {
   expires_in: number;
 }
 export interface UserObject {
-  id: number;
+  publicId: number;
   name: string;
   lastName: string;
   email: string;
