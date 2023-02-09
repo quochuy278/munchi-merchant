@@ -13,7 +13,7 @@ import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -44,11 +44,15 @@ const SignInPage = () => {
   } = useForm<SignInInput>({
     resolver: zodResolver(signInSchema),
   });
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/business", { replace: true });
+    }
+  }, [isAuthenticated]);
+
   const onHandleSubmit: SubmitHandler<SignInInput> = async (values) => {
     try {
       dispatch(signInUser({ email: values.email, password: values.password }));
-      console.log('redirecting')
-      navigate("/business", { replace: true, state: isAuthenticated });
     } catch (error) {
       const errorMsg = displayError(error);
       setShowError(true);

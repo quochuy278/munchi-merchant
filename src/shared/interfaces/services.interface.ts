@@ -1,3 +1,5 @@
+import { Preferences } from "@capacitor/preferences";
+
 export interface UpdateParameter {
   orderId: number;
   prepTime: string;
@@ -22,4 +24,9 @@ export interface SignInData {
 export interface ValidateResult {
   isValidated: boolean;
   message: string;
+}
+
+export interface PreferencesData {
+  verifyToken:string,
+  publicUserId: string
 }

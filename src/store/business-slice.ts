@@ -1,30 +1,68 @@
-import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
-import { useNavigate } from "react-router-dom";
-import { RootState } from ".";
-import { UserObject } from "../shared/interfaces/user.interface";
-
+import { Preferences } from '@capacitor/preferences'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { BusinessData } from '../shared/interfaces/business.interface'
 const initialState = {
-  enabled: false,
-  businessData: {},
-};
-
+    loading: false,
+    enabled: false,
+    businessData: [] as BusinessData[],
+    error: null,
+}
+export const setPreferenceBusiness = createAsyncThunk(
+    'business/:businessId',
+    async (businessData: BusinessData, { dispatch, rejectWithValue }) => {
+        console.log(businessData)
+        try {
+            await Preferences.set({
+                key: 'businessData',
+                value: JSON.stringify({
+                    name: businessData.name,
+                    publicBusinessId: businessData.publicId,
+                }),
+            })
+            dispatch(setBusiness(businessData))
+        } catch (error: any) {
+            if (error.response && error.response.data.message) {
+                return rejectWithValue(error.response.data.message)
+            } else {
+                return rejectWithValue(error.message)
+            }
+        }
+    }
+)
 export const BusinessSlice = createSlice({
-  name: "business",
-  initialState,
-  reducers: {
-    setBusiness: (state, { payload }: any) => {
-      console.log(payload);
-      if (state.businessData !== null) {
-        state.businessData = { ...state.businessData, ...payload };
-      } else {
-        console.log("can only set one business");
-      }
-      // state.enabled = true;
-      // console.log("set business");
+    name: 'business',
+    initialState,
+    reducers: {
+        setBusiness: (state, { payload }: any) => {
+            if (state.businessData.length < 1) {
+                state.businessData.push(payload)
+            } else if (state.businessData.length === 1) {
+                console.log('can only set one business')
+                return
+            }
+            // state.enabled = true;
+            // console.log("set business");
+        },
     },
-  },
-});
+    extraReducers: (builder) => {
+        // Add reducers for additional action types here, and handle loading state as needed
+        builder.addCase(setPreferenceBusiness.fulfilled, (state, { payload }: any) => {
+            // Add user to the state array
+            state.loading = false
+        })
+        builder.addCase(setPreferenceBusiness.pending, (state, { payload }: any) => {
+            // Add user to the state array
+            state.loading = true
+            state.error = null
+        })
+        builder.addCase(setPreferenceBusiness.rejected, (state, { payload }: any) => {
+            // Add user to the state array
+            state.loading = false
+            state.error = payload
+        })
+    },
+})
 
-export const { setBusiness } = BusinessSlice.actions;
+export const { setBusiness } = BusinessSlice.actions
 
-export default BusinessSlice.reducer;
+export default BusinessSlice.reducer

@@ -1,11 +1,6 @@
-import styles from "./index.module.css";
+import { Box } from "@mui/material";
 import BusinessItem from "../item";
-import { RootObject } from "../../../shared/interfaces/business.interface";
-import { Box, Typography } from "@mui/material";
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../../../store";
-import { setBusiness } from "../../../store/business-slice";
+import styles from "./index.module.css";
 
 const BusinessList = ({ data }) => {
   // const dispatch = useDispatch<AppDispatch>();
@@ -18,6 +13,7 @@ const BusinessList = ({ data }) => {
         return (
           <Box
             className={styles.business__item}
+            key={business.publicId}
           >
             <BusinessItem data={business} />
           </Box>

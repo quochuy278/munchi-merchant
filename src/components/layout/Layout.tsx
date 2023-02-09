@@ -19,7 +19,7 @@ export default function Layout({ children }: Props) {
   );
   useEffect(() => {
     const getToken = async () => {
-      const { value } = await Preferences.get({ key: "verifyToken" });
+      const { value } = await Preferences.get({ key: "authenticateData" });
       const isAuthenticatedCheck = !!value;
       if (value !== null) dispatch(setAuthenticated(isAuthenticatedCheck));
       else dispatch(setAuthenticated(false))
