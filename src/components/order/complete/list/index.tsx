@@ -1,11 +1,13 @@
-import { Box } from '@mui/material'
 import styles from './index.module.css'
-import OrderCard from '../card'
-import { OrderDataProps } from '../../../shared/interfaces/props.interface'
-import Typography from '@mui/material/Typography'
-import { Order } from '../../../shared/interfaces/order.interface'
 
-export default function OrderCardList({ ordersData }: OrderDataProps) {
+import React from 'react'
+import PropTypes from 'prop-types'
+import OrderCompleteCard from '../card'
+import { Box, Typography } from '@mui/material'
+import { OrderDataProps } from '../../../../shared/interfaces/props.interface'
+import { Order } from '../../../../shared/interfaces/order.interface'
+
+const OrderCompleteList = ({ ordersData }: OrderDataProps) => {
     return (
         <Box
             display="grid"
@@ -27,10 +29,12 @@ export default function OrderCardList({ ordersData }: OrderDataProps) {
             ) : (
                 <>
                     {ordersData.map((order: Order) => {
-                        return <OrderCard order={order} key={order.id}/>
+                        return <OrderCompleteCard order={order} key={order.id} />
                     })}
                 </>
             )}
         </Box>
     )
 }
+
+export default OrderCompleteList

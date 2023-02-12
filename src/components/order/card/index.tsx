@@ -1,310 +1,78 @@
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Card, IconButton,
-  Typography
-} from "@mui/material";
+import { Box, IconButton, Typography } from '@mui/material'
+import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router-dom'
+import { Order } from '../../../shared/interfaces/order.interface'
+import { OrderDataProps } from '../../../shared/interfaces/props.interface'
+import { FactoryIconInfo } from '../../factory'
+import { ProductListFactory } from '../../factory/products'
+import OrderFooter from './footer'
+import styles from './index.module.css'
+import moment from 'moment'
 
-import { useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
-import { Order, ProductItem } from "../../../shared/interfaces/order.interface";
-import {
-  OrderDataProps,
-  OrderProductListProps
-} from "../../../shared/interfaces/props.interface";
-import { FactoryIconInfo } from "../../factory";
-
-import OrderFooter from "./footer";
-import styles from "./index.module.css";
-
-export default function OrderCard({ ordersData }: OrderDataProps) {
-  const [selectedOrderIDs, setSelectedOrderIDs] = useState<number[]>([]);
-  const { t } = useTranslation("common");
-  const navigate = useNavigate();
-  const handleOrderPressed = (id: number) => () => {
-    setSelectedOrderIDs((prevState) =>
-      prevState.includes(id)
-        ? // If ID is already selected, remove it
-          prevState.filter((orderId) => orderId !== id)
-        : // If ID is not selected, add it
-          [...prevState, id]
-    );
-  };
-  const ProductListFactory = ({
-    productList,
-    orderId,
-  }: OrderProductListProps) => {
-    // console.log(ordersData);
-    const productLength = productList.length;
-    switch (true) {
-      case productLength <= 5:
-        return (
-          <Box>
-            {productList?.map((product: ProductItem) => {
-              return (
-                <Box key={product.id} className={styles.product_item_container}>
-                  <Box display="flex" width="90%" textAlign="left">
-                    <Typography
-                      fontSize="14px"
-                      lineHeight="16px"
-                      fontWeight={600}
-                    >
-                      {product.quantity}
-                    </Typography>
-                    <Typography
-                      fontSize="14px"
-                      lineHeight="16px"
-                      fontWeight={600}
-                      sx={{ marginX: "20px" }}
-                    >
-                      x
-                    </Typography>
-
-                    <Typography
-                      fontSize="14px"
-                      lineHeight="16px"
-                      fontWeight={600}
-                      sx={{ marginX: "20px" }}
-                    >
-                      {product.name}
-                    </Typography>
-                  </Box>
-                </Box>
-              );
-            })}
-          </Box>
-        );
-      case productLength > 5:
-        const renderProduct = productList!.slice(0, 2);
-        const filterProduct = productList!.filter(
-          (item: ProductItem, index: number) => index >= 2
-        );
-        // console.log(renderProduct);
-        return (
-          <Box className={styles.product_item_container}>
-            <Box
-              display="flex"
-              width="90%"
-              textAlign="left"
-              flexDirection={"column"}
-              justifyContent="center"
-            >
-              {renderProduct.map((product: ProductItem) => {
-                return (
-                  <Box
-                    display={"flex"}
-                    key={product.id}
-                    sx={{ padding: "5px" }}
-                    width="100%"
-                  >
-                    <Typography
-                      fontSize="14px"
-                      lineHeight="16px"
-                      fontWeight={600}
-                    >
-                      {product.quantity}
-                    </Typography>
-                    <Typography
-                      fontSize="14px"
-                      lineHeight="16px"
-                      fontWeight={600}
-                      sx={{ marginX: "20px" }}
-                    >
-                      x
-                    </Typography>
-                    <Typography
-                      fontSize="14px"
-                      lineHeight="16px"
-                      fontWeight={600}
-                      sx={{ marginX: "20px" }}
-                    >
-                      {product.name}
-                    </Typography>
-                  </Box>
-                );
-              })}
-              <Accordion
-                key={orderId}
-                expanded={selectedOrderIDs.includes(orderId)}
-                onChange={handleOrderPressed(orderId)}
-                sx={{
-                  boxShadow: "none",
-                  "&:before": {
-                    display: "none",
-                  },
-                }}
-                TransitionProps={{ unmountOnExit: true }}
-              >
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  See more
-                </AccordionSummary>
-                <AccordionDetails sx={{ padding: 0, paddingY: 2 }}>
-                  {filterProduct.map((product: any) => {
-                    return (
-                      <Box
-                        display={"flex"}
-                        key={product.id}
-                        sx={{ padding: "5px" }}
-                        width="100%"
-                      >
-                        <Typography
-                          fontSize="14px"
-                          lineHeight="16px"
-                          fontWeight={600}
-                        >
-                          {product.quantity}
-                        </Typography>
-                        <Typography
-                          fontSize="14px"
-                          lineHeight="16px"
-                          fontWeight={600}
-                          sx={{ marginX: "20px" }}
-                        >
-                          x
-                        </Typography>
-
-                        <Typography
-                          fontSize="14px"
-                          lineHeight="16px"
-                          fontWeight={600}
-                          sx={{ marginX: "20px", opacity: "0.98px" }}
-                        >
-                          {product.name}
-                        </Typography>
-                      </Box>
-                    );
-                  })}
-                </AccordionDetails>
-              </Accordion>
-            </Box>
-          </Box>
-        );
-      default:
-        return (
-          <Box>
-            {productList?.map((product: ProductItem) => {
-              return (
-                <Box key={product.id} className={styles.product_item_container}>
-                  <Box display="flex" width="90%" textAlign="left">
-                    <Typography
-                      fontSize="14px"
-                      lineHeight="16px"
-                      fontWeight={600}
-                    >
-                      {product.quantity}
-                    </Typography>
-                    <Typography
-                      fontSize="14px"
-                      lineHeight="16px"
-                      fontWeight={600}
-                      sx={{ marginX: "20px" }}
-                    >
-                      x
-                    </Typography>
-
-                    <Typography
-                      fontSize="14px"
-                      lineHeight="16px"
-                      fontWeight={600}
-                      sx={{ marginX: "20px" }}
-                    >
-                      {product.name}
-                    </Typography>
-                  </Box>
-                </Box>
-              );
-            })}
-          </Box>
-        );
-    }
-  };
-  return (
-    <>
-      {ordersData.map((order: Order, index: number) => {
-        return (
-          <Box className={styles.main__card__container} key={order.id}>
+export default function OrderCard({ order }: any) {
+    const { t } = useTranslation('common')
+    const navigate = useNavigate()
+    const time = moment(order.createdAt).format('HH:mm:ss')
+    const time2 = moment(order.createdAt)
+    const now = moment()
+    return (
+        <Box className={styles.main__card__container} key={order.id}>
             <Box component="form">
-              <Box
-                display="flex"
-                sx={{ width: "100%" }}
-                justifyContent="space-between"
-                alignItems="center"
-              >
                 <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  sx={{ width: "40%" }}
+                    display="flex"
+                    sx={{ width: '100%' }}
+                    justifyContent="space-between"
+                    alignItems="center"
                 >
-                  <Typography
-                    lineHeight="29px"
-                    fontSize="22px"
-                    fontWeight={600}
+                    <Box
+                        display="flex"
+                        justifyContent="space-between"
+                        alignItems="center"
+                        sx={{ width: '40%' }}
+                    >
+                        <Typography
+                            lineHeight="29px"
+                            fontSize="22px"
+                            fontWeight={600}
+                            textAlign="left"
+                        >
+                            # {order.id}
+                        </Typography>
+                        <div className={styles.divider}></div>
+                        <Typography lineHeight="18px" fontSize="14px" fontWeight={600}>
+                            {order.customer.name}
+                        </Typography>
+                    </Box>
+                    <Box>
+                        <IconButton
+                            sx={{
+                                borderRadius: '3px',
+                                border: '1px solid #F3F5F7',
+                                opacity: 1,
+                            }}
+                        >
+                            <FactoryIconInfo orderType={order.deliveryType} />
+                        </IconButton>
+                    </Box>
+                </Box>
+                <Typography
                     textAlign="left"
-                  >
-                    # {order.id}
-                  </Typography>
-                  <div className={styles.divider}></div>
-                  <Typography
-                    lineHeight="18px"
-                    fontSize="14px"
-                    fontWeight={600}
-                  >
-                    {order.customer.name}
-                  </Typography>
-                </Box>
-                <Box>
-                  <IconButton
-                    sx={{
-                      borderRadius: "3px",
-                      border: "1px solid #F3F5F7",
-                      opacity: 1,
-                    }}
-                  >
-                    <FactoryIconInfo orderType={order.deliveryType} />
-                  </IconButton>
-                </Box>
-              </Box>
-              <Typography
-                textAlign="left"
-                sx={{ color: "#707070" }}
-                fontSize="8px"
-                lineHeight="10px"
-              >
-                {t("timeStamp.day.0")} at {order.timeStamp}
-              </Typography>
-              <Box className={styles.card__item__container}>
-                <ProductListFactory
-                  productList={order.products}
-                  orderId={order.id}
-                />
-              </Box>
-              <Card
-                sx={{
-                  backgroundColor: "#F3F5F7",
-                  width: "fit-content",
-                  padding: 0.75,
-                  marginTop: "5px",
-                }}
-              >
-                <Typography fontSize="10px" lineHeight="13px">
-                  {order.comment}
+                    sx={{ color: '#707070' }}
+                    fontSize="8px"
+                    lineHeight="10px"
+                >
+                    {t('timeStamp.day.0')} at {time}
                 </Typography>
-              </Card>
+                <Box className={styles.card__item__container}>
+                    <ProductListFactory productList={order.products} orderId={order.id} />
+                </Box>
             </Box>
             <OrderFooter
-              orderStatus={order.status}
-              orderId={order.id}
-              deliveryType={order.deliveryType}
-              prepTime={order.prepTime}
+                orderStatus={order.status}
+                orderId={order.id}
+                deliveryType={order.deliveryType}
+                prepTime={order.preparedIn}
             />
-          </Box>
-        );
-      })}
-    </>
-  );
+        </Box>
+    )
 }

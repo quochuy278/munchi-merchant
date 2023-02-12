@@ -1,3 +1,4 @@
+import { OrderEnum } from "../../../../shared/enum/enum";
 import { FooterProps } from "../../../../shared/interfaces/props.interface";
 import {
   OrderAcceptedFooter, OrderPendingFooter, OrderReadyFooter
@@ -10,8 +11,8 @@ export default function OrderFooter({
   deliveryType,
 }: FooterProps) {
   let orderFooter = <></>;
-  switch (orderStatus) {
-    case 0:
+  switch (true) {
+    case orderStatus === OrderEnum.PENDING:
       orderFooter = (
         <OrderPendingFooter
           orderStatus={orderStatus}
@@ -21,7 +22,7 @@ export default function OrderFooter({
         />
       );
       break;
-    case 1:
+    case orderStatus === OrderEnum.ACCEPTED_BY_BUSINESS:
       orderFooter = (
         <OrderAcceptedFooter
           orderStatus={orderStatus}

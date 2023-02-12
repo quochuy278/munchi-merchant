@@ -1,4 +1,4 @@
-import { Preferences } from '@capacitor/preferences'
+import { GetResult, Preferences } from '@capacitor/preferences'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { BusinessData } from '../shared/interfaces/business.interface'
 const initialState = {
@@ -6,27 +6,35 @@ const initialState = {
     enabled: false,
     businessData: [] as BusinessData[],
     error: null,
+    isValid: false
 }
 export const setPreferenceBusiness = createAsyncThunk(
     'business/:businessId',
     async (businessData: BusinessData, { dispatch, rejectWithValue }) => {
-        console.log(businessData)
-        try {
-            await Preferences.set({
-                key: 'businessData',
-                value: JSON.stringify({
-                    name: businessData.name,
-                    publicBusinessId: businessData.publicId,
-                }),
-            })
-            dispatch(setBusiness(businessData))
-        } catch (error: any) {
-            if (error.response && error.response.data.message) {
-                return rejectWithValue(error.response.data.message)
-            } else {
-                return rejectWithValue(error.message)
+        const businessPreferenceData: GetResult = await Preferences.get({ key: 'businessData' })
+        const { value } = businessPreferenceData
+        if (value){
+            dispatch(setValid(true))
+        }
+        else {
+            try {
+                await Preferences.set({
+                    key: 'businessData',
+                    value: JSON.stringify({
+                        name: businessData.name,
+                        publicBusinessId: businessData.publicId,
+                    }),
+                })
+                dispatch(setBusiness(businessData))
+            } catch (error: any) {
+                if (error.response && error.response.data.message) {
+                    return rejectWithValue(error.response.data.message)
+                } else {
+                    return rejectWithValue(error.message)
+                }
             }
         }
+       
     }
 )
 export const BusinessSlice = createSlice({
@@ -43,6 +51,9 @@ export const BusinessSlice = createSlice({
             // state.enabled = true;
             // console.log("set business");
         },
+        setValid: (state, {payload}:any) => {
+            state.isValid = true
+        }
     },
     extraReducers: (builder) => {
         // Add reducers for additional action types here, and handle loading state as needed
@@ -63,6 +74,6 @@ export const BusinessSlice = createSlice({
     },
 })
 
-export const { setBusiness } = BusinessSlice.actions
+export const { setBusiness,setValid } = BusinessSlice.actions
 
 export default BusinessSlice.reducer

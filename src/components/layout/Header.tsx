@@ -51,7 +51,7 @@ export default function Header() {
       setState({ ...state, [anchor]: open });
     };
     const onLogoutHandler = async () => {
-      console.log('log out')
+    
       await Preferences.clear()
       dispatch(setAuthenticated(false))
       navigate('/signin')

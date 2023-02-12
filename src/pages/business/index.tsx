@@ -9,7 +9,7 @@ import BusinessList from '../../components/business/list'
 import MainContent from '../../components/container/MainContent'
 import { LoadingSpinner } from '../../components/customcomponents'
 import { BusinessData } from '../../shared/interfaces/business.interface'
-import { PreferencesData } from '../../shared/interfaces/services.interface'
+import { PreferencesAuthenticateData, PreferencesData } from '../../shared/interfaces/services.interface'
 import { AppDispatch, RootState } from '../../store'
 import { setAuthenticated } from '../../store/auth-slice'
 import { useGetBusinessByNameQuery } from '../../store/services-slice'
@@ -19,19 +19,20 @@ const BusinessPage = () => {
     const [publicUserId, setPublicUserId] = useState('')
     const { businessData } = useSelector((state: RootState) => state.business)
     const { data, isError, isLoading, error } = useGetBusinessByNameQuery(publicUserId)
+    const { isValid } = useSelector((state: RootState) => state.business)
+    const navigate = useNavigate()
     useEffect(() => {
         const getPublibUserId = async () => {
             const authenticateData: GetResult = await Preferences.get({ key: 'authenticateData' })
-            const data: PreferencesData = JSON.parse(authenticateData.value!)
-            setPublicUserId(data.publicUserId)
+            const data: PreferencesAuthenticateData = JSON.parse(authenticateData.value!)
+            setPublicUserId(data.publicUserId as string)
         }
         getPublibUserId()
-    }, [data])
+        if (isValid) navigate('/')
+    }, [isValid])
     if (!publicUserId) {
-        console.log('no public id')
         return <LoadingSpinner />
     }
-    console.log(data)
     return (
         <Box className={styles.container}>
             {isLoading ? (

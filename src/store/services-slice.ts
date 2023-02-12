@@ -3,8 +3,10 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import axios from 'axios'
 import { RootState } from '.'
-import { PreferencesData, SignInData, SignUpData } from '../shared/interfaces/services.interface'
-import { getEnvironment } from '../utils/getEnv'
+import { FilterQuery, UpdateOrderData } from '../shared/interfaces/order.interface'
+import { PreferencesAuthenticateData, PreferencesData, SignInData, SignUpData } from '../shared/interfaces/services.interface'
+import { getUrl } from '../utils/getUrl'
+
 import { setUser } from './auth-slice'
 
 export const signInUser = createAsyncThunk(
@@ -12,7 +14,7 @@ export const signInUser = createAsyncThunk(
     async (signInData: SignInData, { dispatch, rejectWithValue }) => {
         try {
             const options = {
-                url: getEnvironment('auth/signin'),
+                url: getUrl('auth/signin'),
                 method: 'POST',
                 data: JSON.stringify({
                     email: signInData.email,
@@ -32,7 +34,6 @@ export const signInUser = createAsyncThunk(
                     verifyToken: result.data.verifyToken,
                 } as PreferencesData),
             })
-            console.log(result.data)
         } catch (error: any) {
             if (error.response && error.response.data.message) {
                 return rejectWithValue(error.response.data.message)
@@ -47,7 +48,7 @@ export const signUpUser = createAsyncThunk(
     async (signUpData: SignUpData, { dispatch, rejectWithValue }) => {
         try {
             const options = {
-                url: getEnvironment('auth/signup'),
+                url: getUrl('auth/signup'),
                 method: 'POST',
                 data: JSON.stringify({
                     firstName: signUpData.firstName,
@@ -81,6 +82,37 @@ export const signUpUser = createAsyncThunk(
     }
 )
 
+// export const updateOrder = createAsyncThunk(
+//     'orders/updateOrder',
+//     async (data: UpdateOrderData, { dispatch, rejectWithValue }) => {
+//         const authenticateData: GetResult = await Preferences.get({ key: 'authenticateData' })
+//         const preferencesData: PreferencesData = JSON.parse(authenticateData.value!)
+//         console.log(preferencesData.verifyToken)
+//         try {
+//             const options = {
+//                 url: getUrl('orders', data.orderId),
+//                 method: 'PUT',
+//                 data: JSON.stringify({
+//                     preparedIn: data.newPrepTime,
+//                     orderStatus: data.orderStatus,
+//                 }),
+//                 headers: {
+//                     accept: 'application/json',
+//                     'content-type': 'application/json',
+//                 },
+//             }
+//             const result = await axios(options)
+//             console.log(result.data)
+//         } catch (error: any) {
+//             if (error.response && error.response.data.message) {
+//                 return rejectWithValue(error.response.data.message)
+//             } else {
+//                 return rejectWithValue(error.message)
+//             }
+//         }
+//     }
+// )
+
 // Define a service using a base URL and expected endpoints
 export const MunchiApi = createApi({
     reducerPath: 'businessApi',
@@ -89,7 +121,7 @@ export const MunchiApi = createApi({
         async prepareHeaders(headers, { getState }) {
             // If we have a token set in state, let's assume that we should be passing it.
             const authenticateData: GetResult = await Preferences.get({ key: 'authenticateData' })
-            const data: PreferencesData = JSON.parse(authenticateData.value!)
+            const data: PreferencesAuthenticateData = JSON.parse(authenticateData.value!)
             const verifyToken = data.verifyToken
             if (verifyToken) {
                 headers.set('authorization', `Bearer ${verifyToken}`)
@@ -126,6 +158,12 @@ export const MunchiApi = createApi({
                 method: 'GET',
             }),
         }),
+        getFilterOrder: builder.query({
+            query: (filterQuery: FilterQuery) => ({
+                url: `orders/filteredOrders?query=${filterQuery.query}&paramsQuery=${filterQuery.paramsQuery}`,
+                method: 'GET',
+            }),
+        }),
         getOrderById: builder.query({
             query: (id) => ({
                 url: `orders/${id}`,
@@ -133,10 +171,13 @@ export const MunchiApi = createApi({
             }),
         }),
         updateOrder: builder.mutation({
-            query: (id, ...patch) => ({
-                url: `orders/${id}`,
+            query: (data:UpdateOrderData) => ({
+                url: getUrl('orders', data.orderId),
                 method: 'PUT',
-                body: patch,
+                body: {
+                    preparedIn: data.newPrepTime,
+                    orderStatus: data.orderStatus
+                },
             }),
         }),
     }),
@@ -151,4 +192,5 @@ export const {
     useEditBusinessOfflineMutation,
     useEditBusinessOnlineMutation,
     useUpdateOrderMutation,
+    useGetFilterOrderQuery,
 } = MunchiApi

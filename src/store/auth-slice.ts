@@ -9,6 +9,8 @@ const initialState = {
     error: null,
 }
 
+
+
 export const AuthSlice = createSlice({
     name: 'auth',
     initialState,
@@ -21,6 +23,7 @@ export const AuthSlice = createSlice({
             }
         },
         setAuthenticated: (state, { payload }: any) => {
+            console.log(payload)
             if (payload) {
                 state.isAuthenticated = payload
             } else {
@@ -49,7 +52,7 @@ export const AuthSlice = createSlice({
         builder.addCase(signUpUser.fulfilled, (state, { payload }: any) => {
             // Add user to the state array
             state.isLoading = false
-            state.error = payload
+            state.isAuthenticated = true
         })
         builder.addCase(signUpUser.pending, (state, { payload }: any) => {
             // Add user to the state array

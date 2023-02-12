@@ -68,7 +68,7 @@ const SignUpPage = () => {
     }
   };
   if (isSubmitSuccessful && !error) {
-    console.log("signing in");
+    // console.log("signing in");
     navigate("/business");
   }
   setTimeout(() => {

@@ -50,6 +50,7 @@ const theme = createTheme({
   src: url('./assets//font//dm-sans//DMSans-Bold.ttf')format('ttf');
     }`,
     },
+    
   },
   transitions: {
     duration: {

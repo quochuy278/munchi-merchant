@@ -4,7 +4,7 @@ import TakeoutDiningOutlinedIcon from "@mui/icons-material/TakeoutDiningOutlined
 import { Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { useTranslation } from "react-i18next";
-import {OrderEnum} from "../../../../shared/enum/enum";
+import {DeliveryEnum, OrderEnum} from "../../../../shared/enum/enum";
 import { DetailInfoListProps } from "../../../../shared/interfaces/props.interface";
 import styles from "./index.module.css";
 
@@ -15,7 +15,7 @@ export type FactoryType = {
 const FactoryIcon = ({ deliveryType }: FactoryType): JSX.Element => {
   const { t } = useTranslation("common");
   switch (deliveryType) {
-    case OrderEnum.DELIVERY: {
+    case DeliveryEnum.DELIVERY: {
       return (
         <Box className={styles.detail__icon__container}>
           <DeliveryDiningIcon sx={{ color: "#707070" }} />
@@ -25,7 +25,7 @@ const FactoryIcon = ({ deliveryType }: FactoryType): JSX.Element => {
         </Box>
       );
     }
-    case OrderEnum.EATIN: {
+    case DeliveryEnum.EATIN: {
       return (
         <Box className={styles.detail__icon__container}>
           <DiningIcon sx={{ color: "#707070" }} />
@@ -35,7 +35,7 @@ const FactoryIcon = ({ deliveryType }: FactoryType): JSX.Element => {
         </Box>
       );
     }
-    case OrderEnum.PICKUP: {
+    case DeliveryEnum.PICK_UP: {
       return (
         <Box className={styles.detail__icon__container}>
           <TakeoutDiningOutlinedIcon sx={{ color: "#707070" }} />
