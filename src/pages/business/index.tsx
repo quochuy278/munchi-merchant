@@ -31,11 +31,6 @@ const BusinessPage = () => {
     const { loginState } = useSelector((state: RootState) => state.auth)
     console.log('🚀 ~ file: index.tsx:32 ~ BusinessPage ~ loginState', loginState)
     let publicIdParam: string
-    // if (JSON.stringify(loginState) !== '{}') {
-    //     publicIdParam = loginState.publicUserId as string
-    // } else {
-    //     publicIdParam = authState.publicUserId
-    // }
     if (JSON.stringify(authState) === '{}') {
         publicIdParam = loginState.publicUserId as string
     } else {
@@ -56,14 +51,8 @@ const BusinessPage = () => {
         } catch (error) {
             displayError(error)
         }
-        // if (isValid) {
-        //     console.log('login state change and useEffect triggered')
-        //     navigate('/')
-        // }
     }, [])
-    // if (isError || error) {
-    //     return <div>Error</div>
-    // }
+
     return (
         <Box className={styles.container}>
             {isLoading ? (

@@ -51,10 +51,6 @@ const BusinessDialog = ({ loginState }: any) => {
         navigate('/', { replace: true })
         setOpen(false)
     }
-    // useEffect(() => {
-    //     navigate('/', { replace: true })
-    // }, [onSelectBusiness])
-
     return (
         <Dialog
             open={open}

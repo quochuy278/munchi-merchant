@@ -51,11 +51,6 @@ function App() {
             navigate('/signin', { replace: true })
         }
     }, [isAuthenticatedVar, business])
-    // console.log('App state level', authState)
-    // console.log('App state level auth slice', loginState)
-
-    // console.log(business, 'business authen var', isAuthenticatedVar, 'isAuthenticated var')
-
     return (
         <Routes>
             <Route

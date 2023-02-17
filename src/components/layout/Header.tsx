@@ -1,9 +1,9 @@
+import { Preferences } from '@capacitor/preferences'
 import CircleIcon from '@mui/icons-material/Circle'
-import FactCheckIcon from '@mui/icons-material/FactCheck'
+import LogoutIcon from '@mui/icons-material/Logout'
 import MailIcon from '@mui/icons-material/Mail'
 import MenuIcon from '@mui/icons-material/Menu'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
-import LogoutIcon from '@mui/icons-material/Logout'
 import {
     Divider,
     IconButton,
@@ -21,17 +21,14 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer'
 import Switch from '@mui/material/Switch'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Link, useNavigate } from 'react-router-dom'
-import { Preferences } from '@capacitor/preferences'
 import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { AppDispatch } from '../../store'
-import { setAuthenticated, setLogoutState } from '../../store/auth-slice'
-import { preferencesCheck } from '../../utils/preferencesCheck'
-import munchiLogo from '../../assets/img/munchi.png'
-// import { MunchiLogo } from '../../assets'
+import { setLogoutState } from '../../store/auth-slice'
 import MunchiLogo from '../../assets/icons/logo.svg'
 import { LoginState } from '../../shared/interfaces/user.interface'
 import { displayError } from '../../utils/displayError'
+
 type Anchor = 'top' | 'left' | 'bottom' | 'right'
 export default function Header({ loginState }: any) {
     const [isOpen, setIsOpen] = useState(false)
@@ -61,15 +58,11 @@ export default function Header({ loginState }: any) {
         }
         if (JSON.stringify(loginState) === '{}' || JSON.stringify(authState) === '{}') {
             navigate('/signin', { replace: true })
-        }
-        else if (JSON.stringify(loginState) !== '{}' && JSON.stringify(loginState) !== '{}'){
+        } else if (JSON.stringify(loginState) !== '{}' && JSON.stringify(loginState) !== '{}') {
             navigate('/business', { replace: true })
         }
     }, [loginState])
     console.log(authState, 'header level')
-    // if (JSON.stringify(loginState) !== '{}' && JSON.stringify(loginState) !== '{}'){
-    //     navigate('/business', { replace: true })
-    // }
     const toggleDrawer =
         (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
             if (
