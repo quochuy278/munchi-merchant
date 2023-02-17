@@ -9,11 +9,13 @@ import { setAuthenticated } from "../store/auth-slice";
 
 const ProtectedRoutes = ({
   isAuthenticated,
-  redirectPath = '/landing',
+  redirectPath = '/signin',
   children,
 }:any) => {
+  console.log(isAuthenticated, 'protected route level')
+  console.log(redirectPath, 'protected route level')
   if (!isAuthenticated) {
-    return <Navigate to={redirectPath} replace />;
+    return <Navigate to={redirectPath} replace={true} />;
   }
   
   return children ? children : <Outlet />;

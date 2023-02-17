@@ -31,32 +31,32 @@ const MainPage = () => {
             'created_at',
         ].join(','),
     }
-    const { data, isError, isLoading } = useGetFilterOrderQuery(filterData, {})
+    const { data, isError, isLoading } = useGetFilterOrderQuery(filterData, {
+        refetchOnReconnect: true,
+    })
     const { loading } = useSelector((state: RootState) => state.order)
     const dispatch = useDispatch<AppDispatch>()
     const { t } = useTranslation('common')
-    useEffect(() => {
-        const initGateway = async () => {
-            const PreferenceData = await preferencesCheck('authenticateData')
-            const PreferenceBusinessData = await preferencesCheck('businessData')
-            console.log(PreferenceData.publicUserId)
-            console.log(PreferenceBusinessData.name)
-            const socket = io('http://localhost:5000')
-            socket.on('onOrder', async (socket) => {
-                console.log(socket, 'received data')
-                //    await socket.join(PreferenceBusinessData.name)
-            })
-            socket.emit(
-                'orders',
-                JSON.stringify({
-                    publicUserId: PreferenceData.publicUserId,
-                    businessName: PreferenceBusinessData.name,
-                })
-            )
-        }
-        initGateway()
-    }, [])
-    console.log(data)
+    // useEffect(() => {
+    //     const initGateway = async () => {
+    //         const PreferenceData = await preferencesCheck('authenticateData')
+    //         const PreferenceBusinessData = await preferencesCheck('businessData')
+ 
+    //         const socket = io('http://localhost:5000')
+    //         socket.on('onOrder', async (socket) => {
+    //             //    await socket.join(PreferenceBusinessData.name)
+    //         })
+    //         socket.emit(
+    //             'orders',
+    //             JSON.stringify({
+    //                 publicUserId: PreferenceData.publicUserId,
+    //                 businessName: PreferenceBusinessData.name,
+    //             })
+    //         )
+    //     }
+    //     initGateway()
+    // }, [])
+   
     const pendingOrders = data?.filter((order: Order) => order.status === OrderEnum.PENDING)
 
     const acceptedOrders = data?.filter(

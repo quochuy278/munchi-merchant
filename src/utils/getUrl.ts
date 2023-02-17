@@ -3,7 +3,7 @@ export function getUrl(
     idParam?: string | number,
     queryParams?: Array<String>
 ): string {
-    console.log(process.env.NODE_ENV)
+   
     if (process.env.NODE_ENV === 'development') {
         let envUrl: string = `${process.env.REACT_APP_API__URL_DEV}`
         switch (true) {

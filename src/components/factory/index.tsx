@@ -152,7 +152,6 @@ export const FactoryDialogContent = ({
     const getFilterOrder = useGetFilterOrderQuery(filterData)
     const onUpdateClick = async (dataUpdate: UpdateOrderData) => {
         const updateResponse: any = await updateOrder(dataUpdate)
-        getFilterOrder.refetch()
         onClose()
     }
 

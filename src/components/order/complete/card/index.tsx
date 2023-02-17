@@ -8,7 +8,6 @@ import DiningIcon from '@mui/icons-material/Dining'
 import { OrderDataProps } from '../../../../shared/interfaces/props.interface'
 import { Order } from '../../../../shared/interfaces/order.interface'
 const OrderCompleteCard = ({order}: any) => {
-    console.log(order)
     return (
         <Box className={styles.order__complete__card__container}>
             <Typography

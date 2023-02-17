@@ -9,7 +9,7 @@ export default function DialogAlert({
   orderStatus,
   newPrepTime,  
 }: DialogProps) {
-  console.log(newPrepTime)
+ 
   return (
     <FactoryDialogContent
       open={open}

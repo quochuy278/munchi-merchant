@@ -1,27 +1,17 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { UserObject } from '../shared/interfaces/user.interface'
-import { signInUser, signUpUser } from './services-slice'
+import { LoginState, UserObject } from '../shared/interfaces/user.interface'
 
 const initialState = {
-    isLoading: false,
+    loading: false,
     isAuthenticated: false,
-    userInfo: [] as UserObject[],
+    loginState: {} as LoginState,
     error: null,
 }
-
-
 
 export const AuthSlice = createSlice({
     name: 'auth',
     initialState,
     reducers: {
-        setUser: (state, { payload }: any) => {
-            if (state.userInfo.length == 1) {
-                return
-            } else {
-                state.userInfo.push(payload)
-            }
-        },
         setAuthenticated: (state, { payload }: any) => {
             console.log(payload)
             if (payload) {
@@ -30,43 +20,17 @@ export const AuthSlice = createSlice({
                 state.isAuthenticated = false
             }
         },
-    },
-
-    extraReducers: (builder) => {
-        // Add reducers for additional action types here, and handle loading state as needed
-        builder.addCase(signInUser.fulfilled, (state, { payload }: any) => {
-            // Add user to the state array
+        setLoginState: (state, { payload }: any) => {
             state.isAuthenticated = true
-            state.isLoading = false
-        })
-        builder.addCase(signInUser.pending, (state, { payload }: any) => {
-            // Add user to the state array
-            state.isLoading = true
-            state.error = null
-        })
-        builder.addCase(signInUser.rejected, (state, { payload }: any) => {
-            // Add user to the state array
-            state.isLoading = false
-            state.error = payload
-        })
-        builder.addCase(signUpUser.fulfilled, (state, { payload }: any) => {
-            // Add user to the state array
-            state.isLoading = false
-            state.isAuthenticated = true
-        })
-        builder.addCase(signUpUser.pending, (state, { payload }: any) => {
-            // Add user to the state array
-            state.isLoading = true
-            state.error = null
-        })
-        builder.addCase(signUpUser.rejected, (state, { payload }: any) => {
-            // Add user to the state array
-            state.isLoading = false
-            state.error = payload
-        })
+            state.loginState = {...payload}
+        },
+        setLogoutState: (state, { payload }) => {
+            state.isAuthenticated = false
+            state.loginState = payload
+        },
     },
 })
 
-export const { setUser, setAuthenticated } = AuthSlice.actions
+export const { setAuthenticated, setLoginState, setLogoutState } = AuthSlice.actions
 
 export default AuthSlice.reducer

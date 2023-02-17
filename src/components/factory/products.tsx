@@ -85,7 +85,7 @@ export const ProductListFactory = ({ productList, orderId }: OrderProductListPro
             const filterProduct = productList!.filter(
                 (item: ProductItem, index: number) => index >= 2
             )
-            // console.log(renderProduct);
+
             return (
                 <Box className={styles.product_item_container}>
                     <Box

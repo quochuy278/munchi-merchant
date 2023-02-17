@@ -19,9 +19,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { TypeOf } from 'zod'
 import Notification from '../../components/notification'
+import { PreferencesData } from '../../shared/interfaces/services.interface'
 import { AppDispatch, RootState } from '../../store'
-import { setAuthenticated } from '../../store/auth-slice'
-import { signInUser } from '../../store/services-slice'
+import { setAuthenticated, setLoginState } from '../../store/auth-slice'
+import { useSignInUserMutation } from '../../store/services-slice'
 import { displayError } from '../../utils/displayError'
 import { preferencesCheck } from '../../utils/preferencesCheck'
 import { signInSchema } from '../../utils/validateInput'
@@ -32,7 +33,8 @@ const SignInPage = () => {
     const [message, setMessage] = useState('')
     const [error, setError] = useState(false)
     const [showError, setShowError] = useState(false)
-    const { isLoading, isAuthenticated } = useSelector((state: RootState) => state.auth)
+    const [signinUser, { isLoading: loading }] = useSignInUserMutation()
+    // const { isLoading, isAuthenticated } = useSelector((state: RootState) => state.auth)
     const { isValid } = useSelector((state: RootState) => state.business)
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
@@ -45,17 +47,41 @@ const SignInPage = () => {
         resolver: zodResolver(signInSchema),
     })
 
-    useEffect(() => {
-        preferencesCheck('authenticateData')
-        // if (!isValid || !isAuthenticated || (!isValid && !isAuthenticated)) {
-        //     navigate('/signin')
-        // }
-        if (isAuthenticated) navigate('/business', { replace: true })
-    }, [isAuthenticated, isValid])
-    // console.log(isAuthenticated, isValid, 'this is login page')
+    // useEffect(() => {
+    //     preferencesCheck('authenticateData')
+    //     // if (!isValid || !isAuthenticated || (!isValid && !isAuthenticated)) {
+    //     //     navigate('/signin')
+    //     // }
+    //     if (isAuthenticated) navigate('/business', { replace: true })
+    // }, [isAuthenticated])
     const onHandleSubmit: SubmitHandler<SignInInput> = async (values) => {
         try {
-            dispatch(signInUser({ email: values.email, password: values.password }))
+            const response: any = await signinUser({
+                email: values.email,
+                password: values.password,
+            })
+            await Preferences.set({
+                key: 'loginState',
+                value: JSON.stringify({
+                    publicUserId: response.data.publicId,
+                    verifyToken: response.data.verifyToken,
+                    isAuthenticated: true,
+                    publicBusinessId: null,
+                    businessName: null,
+                }),
+            })
+            dispatch(
+                setLoginState({
+                    publicUserId: response.data.publicId,
+                    verifyToken: response.data.verifyToken,
+                    isAuthenticated: true,
+                    publicBusinessId: null,
+                    businessName: null,
+                })
+            )
+            // await Preferences.clear()
+            // dispatch(setAuthenticated(true))
+            navigate('/business', { replace: true })
         } catch (error) {
             const errorMsg = displayError(error)
             setShowError(true)
@@ -125,7 +151,7 @@ const SignInPage = () => {
                             variant="contained"
                             sx={{ mt: 3, mb: 2 }}
                             loadingPosition="center"
-                            {...(isLoading ? { loading: true } : { loading: false })}
+                            {...(loading ? { loading: true } : { loading: false })}
                         >
                             Sign In
                         </LoadingButton>

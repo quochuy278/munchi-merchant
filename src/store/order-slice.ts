@@ -15,18 +15,17 @@ export const orderSlice = createSlice({
     initialState,
     reducers: {
         updateState: (state, { payload }): any => {
-            // console.log(payload)
-            //   console.log(current(state.orders))
+           
             const currentState = current(state.orders)
             // if (state.orders[payload].status >=  3) state.orders[payload].status =  state.orders[payload].status
             // else state.orders[payload].status = state.orders[payload].status + 1
             const orderId = payload.orderId
             const newPrepTime = payload.newPrepTime
-            console.log('🚀 ~ file: order-slice.ts ~ line 151 ~ newPrepTime', newPrepTime)
+          
 
             const updateOrderArray = currentState.filter((order: Order) => order.id === orderId)
             const updateOrderObject = updateOrderArray[0]
-            //  console.log(updateOrderArray)
+          
             //check order status
 
             const updateOrderStatus = updateOrderArray[0].status + 1

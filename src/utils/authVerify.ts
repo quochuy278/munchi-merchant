@@ -13,5 +13,5 @@ export const AuthVerify = async (key:string) => {
     const navigate = useNavigate()
     const dataObject:GetResult = await Preferences.get({key:key})
     const token:string = dataObject.value!
-    console.log(token)
+   
 }

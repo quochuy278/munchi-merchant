@@ -4,45 +4,62 @@ import { useSelector } from 'react-redux'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import { BusinessPage, DetailPage, ErrorPage, MainPage, SignInPage, SignUpPage } from '../pages'
 import { PreferencesBusinessData } from '../shared/interfaces/services.interface'
+import { LoginState } from '../shared/interfaces/user.interface'
 import { RootState } from '../store'
+import { displayError } from '../utils/displayError'
 import ProtectedRoutes from '../utils/protectedRoutes'
 
 import './App.css'
 
 function App() {
     const navigate = useNavigate()
-    const [business, setBusiness] = useState('')
-    const { isAuthenticated } = useSelector((state: RootState) => state.auth)
+    
+    const [authState, setAuthState] = useState<any>({})
+    const { isAuthenticated, loginState } = useSelector((state: RootState) => state.auth)
     const { businessData } = useSelector((state: RootState) => state.business)
-    // console.log('🚀 ~ file: App.tsx:12 ~ App ~ businessData', businessData)
-
+    const getAuthenticateState = async () => {
+        const loginStateObject: any = await Preferences.get({ key: 'loginState' })
+        const preferenceLoginState: LoginState = JSON.parse(loginStateObject.value)
+        console.log('App state level preference loginstate', preferenceLoginState)
+        if (JSON.stringify(loginState) !== '{}') {
+            setAuthState(loginState)
+        } else if (preferenceLoginState) {
+            setAuthState(preferenceLoginState)
+        } else {
+            // move to sign in page in loginState and preference store
+            navigate('/signin', { replace: true })
+        }
+    }
+    let isAuthenticatedVar: boolean
+    const business = !!loginState.businessName || !!authState.businessName
+    if (JSON.stringify(loginState) !== '{}') {
+        isAuthenticatedVar = isAuthenticated
+    } else {
+        isAuthenticatedVar = authState.isAuthenticated
+    }
     useEffect(() => {
-        // console.log('🚀 ~ file: App.tsx:18 ~ App ~ isAuthenticated', isAuthenticated)
-        const getBusinessData = async () => {
-            const businessData: GetResult = await Preferences.get({ key: 'businessData' })
-            const { value } = businessData
-            if (!value) {
-                return
-            } else {
-                const data: PreferencesBusinessData = JSON.parse(businessData.value!)
-                setBusiness(data.publicBusinessId as string)
-            }
+        try {
+            getAuthenticateState()
+        } catch (error) {
+            displayError(error)
         }
-        getBusinessData()
-        if (businessData.length < 1) {
-            navigate('/signin')
-        } else if (businessData.length === 1 || business) {
-            navigate('/')
-            console.log(isAuthenticated, business, 'this is app state')
+        if (isAuthenticatedVar && business) {
+            navigate('/', { replace: true })
+        } else if (isAuthenticatedVar) {
+            navigate('/business', { replace: true })
+        } else {
+            navigate('/signin', { replace: true })
         }
-    }, [businessData, business])
+    }, [isAuthenticatedVar, business])
+    // console.log('App state level', authState)
+    // console.log('App state level auth slice', loginState)
+
+    // console.log(business, 'business authen var', isAuthenticatedVar, 'isAuthenticated var')
 
     return (
         <Routes>
             <Route
-                element={
-                    <ProtectedRoutes isAuthenticated={isAuthenticated} redirectPath="/signin" />
-                }
+                element={<ProtectedRoutes isAuthenticated={isAuthenticated} redirectPath={'/signin'} />}
             >
                 <Route path="/detail" element={<DetailPage />}>
                     <Route path="/detail/:detailId" element={<DetailPage />} />
@@ -53,8 +70,8 @@ function App() {
                 path="/"
                 element={
                     <ProtectedRoutes
-                        redirectPath="/business"
-                        isAuthenticated={isAuthenticated && business}
+                 
+                        isAuthenticated={isAuthenticatedVar && business}
                     >
                         <MainPage />
                     </ProtectedRoutes>
