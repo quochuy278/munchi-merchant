@@ -14,7 +14,6 @@ const BusinessList = ({ data }) => {
                 return (
                     <Box className={styles.business__item} key={business.publicId}>
                         <BusinessItem data={business}/>
-                     
                     </Box>
                 )
             })}

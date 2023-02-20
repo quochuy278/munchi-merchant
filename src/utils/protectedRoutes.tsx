@@ -12,9 +12,7 @@ const ProtectedRoutes = ({
   redirectPath = '/signin',
   children,
 }:any) => {
-  console.log(isAuthenticated, 'protected route level')
-  console.log(redirectPath, 'protected route level')
-  if (!isAuthenticated) {
+  if (!isAuthenticated || isAuthenticated == undefined) {
     return <Navigate to={redirectPath} replace={true} />;
   }
   

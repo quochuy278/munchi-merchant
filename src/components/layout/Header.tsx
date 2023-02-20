@@ -28,6 +28,7 @@ import { setLogoutState } from '../../store/auth-slice'
 import MunchiLogo from '../../assets/icons/logo.svg'
 import { LoginState } from '../../shared/interfaces/user.interface'
 import { displayError } from '../../utils/displayError'
+import { setClearBusinessData } from '../../store/business-slice'
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right'
 export default function Header({ loginState }: any) {
@@ -40,29 +41,6 @@ export default function Header({ loginState }: any) {
     const [state, setState] = React.useState({
         left: false,
     })
-    const getAuthenticateState = async () => {
-        const loginStateObject: any = await Preferences.get({ key: 'loginState' })
-        const preferenceLoginState: LoginState = JSON.parse(loginStateObject.value)
-        console.log('header state level preference loginstate', preferenceLoginState)
-        if (JSON.stringify(loginState) === '{}') {
-            setAuthState(preferenceLoginState)
-        } else {
-            setAuthState(loginState)
-        }
-    }
-    useEffect(() => {
-        try {
-            getAuthenticateState()
-        } catch (error) {
-            displayError(error)
-        }
-        if (JSON.stringify(loginState) === '{}' || JSON.stringify(authState) === '{}') {
-            navigate('/signin', { replace: true })
-        } else if (JSON.stringify(loginState) !== '{}' && JSON.stringify(loginState) !== '{}') {
-            navigate('/business', { replace: true })
-        }
-    }, [loginState])
-    console.log(authState, 'header level')
     const toggleDrawer =
         (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
             if (
@@ -79,7 +57,9 @@ export default function Header({ loginState }: any) {
     const onLogoutHandler = async () => {
         await Preferences.clear()
         dispatch(setLogoutState({}))
-        navigate('/', { replace: true })
+       
+        dispatch(setClearBusinessData())
+        navigate('/signin', { replace: true })
     }
     const list = (anchor: Anchor) => (
         <Box

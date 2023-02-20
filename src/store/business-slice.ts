@@ -38,6 +38,7 @@ export const setPreferenceBusiness = createAsyncThunk(
                     businessName: data.businessName,
                 }),
             })
+            console.log('updated Loginstate')
             dispatch(
                 setLoginState({
                     publicUserId: data.publicUserId,
@@ -76,6 +77,7 @@ export const BusinessSlice = createSlice({
             } else {
                 if (state.businessData.length < 1) {
                     state.businessData.push(payload)
+                    state.isPending = true
                 } else if (JSON.stringify(payload) === '{}') {
                     return
                 } else {
@@ -83,8 +85,6 @@ export const BusinessSlice = createSlice({
                     state.businessData.push(payload)
                 }
             }
-
-            state.isPending = true
         },
         setLockBusiness: (state, { payload }: any) => {
             state.isValid = true
@@ -100,6 +100,7 @@ export const BusinessSlice = createSlice({
         },
         setClearBusinessData: (state) => {
             state.businessData.pop()
+            state.isLocked = false
         },
     },
     extraReducers: (builder) => {
@@ -108,6 +109,7 @@ export const BusinessSlice = createSlice({
             // Add user to the state array
             state.loading = false
             state.isLocked = true
+            state.isPending = false
         })
         builder.addCase(setPreferenceBusiness.pending, (state, { payload }: any) => {
             // Add user to the state array

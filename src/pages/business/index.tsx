@@ -1,6 +1,6 @@
 import { GetResult, Preferences } from '@capacitor/preferences'
 import Typography from '@mui/material/Typography'
-import { Box } from '@mui/system'
+import { Box, Button } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
@@ -16,43 +16,26 @@ import {
 } from '../../shared/interfaces/services.interface'
 import { LoginState } from '../../shared/interfaces/user.interface'
 import { AppDispatch, RootState } from '../../store'
-import { setAuthenticated } from '../../store/auth-slice'
+import { setAuthenticated, setLogoutState } from '../../store/auth-slice'
 import { useGetBusinessByNameQuery } from '../../store/services-slice'
 import { displayError } from '../../utils/displayError'
 import { preferencesCheck } from '../../utils/preferencesCheck'
 import styles from './index.module.css'
-
-const BusinessPage = () => {
-    const [authState, setAuthState] = useState<any>({})
-    const { businessData } = useSelector((state: RootState) => state.business)
+import { setClearBusinessData } from '../../store/business-slice'
+const BusinessPage = ({ loginData }: any) => {
+    const dispatch = useDispatch<AppDispatch>()
+    // const [authState, setAuthState] = useState<any>({})
     const navigate = useNavigate()
-    //
-    const { isPending, loading } = useSelector((state: RootState) => state.business)
+    console.log(loginData)
+    const { isPending, loading, businessData } = useSelector((state: RootState) => state.business)
+    console.log(isPending)
     const { loginState } = useSelector((state: RootState) => state.auth)
-    console.log('🚀 ~ file: index.tsx:32 ~ BusinessPage ~ loginState', loginState)
-    let publicIdParam: string
-    if (JSON.stringify(authState) === '{}') {
-        publicIdParam = loginState.publicUserId as string
-    } else {
-        publicIdParam = authState.publicUserId as string
-    }
-    console.log(authState)
-    const { data, isError, isLoading, error } = useGetBusinessByNameQuery(publicIdParam)
-    const getAuthenticateState = async () => {
-        const loginStateObject: any = await Preferences.get({ key: 'loginState' })
-        const preferenceLoginState = JSON.parse(loginStateObject.value)
-        setAuthState(preferenceLoginState)
-    }
-    const isValid = !!authState || JSON.stringify(loginState) !== '{}'
-    console.log(isValid)
+    const { data, isError, isLoading, error } = useGetBusinessByNameQuery(loginData.publicUserId)
     useEffect(() => {
-        try {
-            getAuthenticateState()
-        } catch (error) {
-            displayError(error)
-        }
-    }, [])
-
+        if (loginData.businessName) {
+            return navigate('/', { replace: true })
+        } else if (error || isError) return navigate('/error', { replace: true })
+    }, [loginData])
     return (
         <Box className={styles.container}>
             {isLoading ? (
@@ -65,7 +48,7 @@ const BusinessPage = () => {
                     <Box className={styles.business__list}>
                         <BusinessList data={data} />
                     </Box>
-                    {isPending ? <BusinessDialog loginState={authState || loginState} /> : null}
+                    {isPending ? <BusinessDialog loginState={loginData} /> : null}
                 </>
             )}
             {loading ? (
@@ -73,6 +56,7 @@ const BusinessPage = () => {
                     <LoadingSpinner />
                 </Box>
             ) : null}
+            This is business page
         </Box>
     )
 }

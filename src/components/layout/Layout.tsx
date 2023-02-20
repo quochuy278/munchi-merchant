@@ -13,38 +13,14 @@ import { preferencesCheck } from '../../utils/preferencesCheck'
 import { displayError } from '../../utils/displayError'
 import { LoginState } from '../../shared/interfaces/user.interface'
 
-export default function Layout({ children }: Props) {
+export default function Layout({ children, isAuthenticated }: any) {
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
-    const [authState, setAuthState] = useState(false)
-    const { loginState, isAuthenticated } = useSelector((state: RootState) => state.auth)
-
-    const getAuthenticateState = async () => {
-        const loginStateObject: any = await Preferences.get({ key: 'loginState' })
-        const loginState: LoginState = JSON.parse(loginStateObject.value)
-        if (!loginState) {
-            setAuthState(false)
-        } else {
-            setAuthState(loginState.isAuthenticated as boolean)
-        }
-    }
-    useEffect(() => {
-        try {
-            getAuthenticateState()
-        } catch (error) {
-            displayError(error)
-        }
-    }, [getAuthenticateState])
-    let isAuthenticatedVar: boolean
-    if (JSON.stringify(loginState) !== '{}') {
-        isAuthenticatedVar = isAuthenticated
-    } else {
-        isAuthenticatedVar = authState
-    }
+    const { loginState } = useSelector((state: RootState) => state.auth)
 
     return (
         <div className={styles.app__container}>
-            {isAuthenticatedVar ? <Header loginState={loginState}/> : null}
+            {isAuthenticated ? <Header loginState={loginState} /> : null}
             <main>{children}</main>
             <Footer />
         </div>

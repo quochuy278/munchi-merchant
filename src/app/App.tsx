@@ -1,77 +1,118 @@
 import { GetResult, Preferences } from '@capacitor/preferences'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes, useNavigate, Navigate } from 'react-router-dom'
+import Layout from '../components/layout/Layout'
 import { BusinessPage, DetailPage, ErrorPage, MainPage, SignInPage, SignUpPage } from '../pages'
 import { PreferencesBusinessData } from '../shared/interfaces/services.interface'
 import { LoginState } from '../shared/interfaces/user.interface'
 import { RootState } from '../store'
 import { displayError } from '../utils/displayError'
+import { isObjectEmpty } from '../utils/isObjectEmpty'
 import ProtectedRoutes from '../utils/protectedRoutes'
 
 import './App.css'
 
 function App() {
     const navigate = useNavigate()
-    
-    const [authState, setAuthState] = useState<any>({})
-    const { isAuthenticated, loginState } = useSelector((state: RootState) => state.auth)
-    const { businessData } = useSelector((state: RootState) => state.business)
-    const getAuthenticateState = async () => {
+    const [data, setData] = useState<any>({})
+    const { loginState } = useSelector((state: RootState) => state.auth)
+    const { businessData, isLocked } = useSelector((state: RootState) => state.business)
+    const getPreferenceData = async () => {
         const loginStateObject: any = await Preferences.get({ key: 'loginState' })
         const preferenceLoginState: LoginState = JSON.parse(loginStateObject.value)
-        console.log('App state level preference loginstate', preferenceLoginState)
-        if (JSON.stringify(loginState) !== '{}') {
-            setAuthState(loginState)
-        } else if (preferenceLoginState) {
-            setAuthState(preferenceLoginState)
+        if (!preferenceLoginState) {
+            return {}
         } else {
-            // move to sign in page in loginState and preference store
-            navigate('/signin', { replace: true })
+            return preferenceLoginState
+        }
+    }
+    const redirectControllerService = (
+        isAuthenticated: boolean,
+        business: boolean,
+        isLocked: boolean
+    ) => {
+        switch (true) {
+            case isAuthenticated:
+                return navigate('/business', { replace: true })
+            case isAuthenticated && business:
+                console.log('should run this after select business')
+                return navigate('/', { replace: true })
+            default:
+                return navigate('/signin', { replace: true })
         }
     }
     let isAuthenticatedVar: boolean
-    const business = !!loginState.businessName || !!authState.businessName
-    if (JSON.stringify(loginState) !== '{}') {
-        isAuthenticatedVar = isAuthenticated
+    let business: boolean
+
+    if (!isObjectEmpty(loginState) && businessData.length > 0) {
+        isAuthenticatedVar = data.isAuthenticated
+        business = true
+    } else if (!isObjectEmpty(data) && data.businessName !== null) {
+        isAuthenticatedVar = data.isAuthenticated
+        business = true
+    } else if (!isObjectEmpty(loginState)) {
+        isAuthenticatedVar = loginState.isAuthenticated as boolean
+        business = false
+    } else if (!isObjectEmpty(data)) {
+        isAuthenticatedVar = data.isAuthenticated
+        business = false
     } else {
-        isAuthenticatedVar = authState.isAuthenticated
+        isAuthenticatedVar = false
+        business = false
     }
+    console.log(isAuthenticatedVar)
     useEffect(() => {
-        try {
-            getAuthenticateState()
-        } catch (error) {
-            displayError(error)
+        document.title = 'Munchi Dashboard'
+        const setAuthDataFromPeference = async () => {
+            const data = await getPreferenceData()
+            setData(data)
         }
-        if (isAuthenticatedVar && business) {
-            navigate('/', { replace: true })
-        } else if (isAuthenticatedVar) {
-            navigate('/business', { replace: true })
-        } else {
-            navigate('/signin', { replace: true })
-        }
-    }, [isAuthenticatedVar, business])
+        setAuthDataFromPeference()
+        redirectControllerService(isAuthenticatedVar, business, isLocked)
+        if (isObjectEmpty(loginState) && isObjectEmpty(data))
+            return navigate('/signin', { replace: true })
+    }, [loginState, isAuthenticatedVar, isLocked, business])
     return (
         <Routes>
             <Route
-                element={<ProtectedRoutes isAuthenticated={isAuthenticated} redirectPath={'/signin'} />}
+                element={
+                    <ProtectedRoutes
+                        isAuthenticated={isAuthenticatedVar}
+                        redirectPath={'/signin'}
+                    />
+                }
             >
-                <Route path="/detail" element={<DetailPage />}>
+                <Route
+                    path="/detail"
+                    element={
+                        <Layout isAuthenticated={isAuthenticatedVar}>
+                            <DetailPage />
+                        </Layout>
+                    }
+                >
                     <Route path="/detail/:detailId" element={<DetailPage />} />
                 </Route>
-                <Route path="/business" element={<BusinessPage />} />
             </Route>
             <Route
                 path="/"
                 element={
-                    <ProtectedRoutes
-                 
-                        isAuthenticated={isAuthenticatedVar && business}
-                    >
-                        <MainPage />
+                    <ProtectedRoutes isAuthenticated={isAuthenticatedVar}>
+                        <Layout isAuthenticated={isAuthenticatedVar && business}>
+                            <MainPage />
+                        </Layout>
                     </ProtectedRoutes>
                 }
             />
+
+            <Route
+                path="/business"
+                element={
+                    <ProtectedRoutes isAuthenticated={isAuthenticatedVar} redirectPath={'/signin'}>
+                        <BusinessPage loginData={loginState && data} />
+                    </ProtectedRoutes>
+                }
+            ></Route>
             <Route path="/signin" element={<SignInPage />} />
             <Route path="/signup" element={<SignUpPage />} />
             <Route path="*" element={<ErrorPage />} />

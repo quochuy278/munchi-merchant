@@ -60,33 +60,40 @@ const SignInPage = () => {
                 email: values.email,
                 password: values.password,
             })
-            await Preferences.set({
-                key: 'loginState',
-                value: JSON.stringify({
-                    publicUserId: response.data.publicId,
-                    verifyToken: response.data.verifyToken,
-                    isAuthenticated: true,
-                    publicBusinessId: null,
-                    businessName: null,
-                }),
-            })
-            dispatch(
-                setLoginState({
-                    publicUserId: response.data.publicId,
-                    verifyToken: response.data.verifyToken,
-                    isAuthenticated: true,
-                    publicBusinessId: null,
-                    businessName: null,
+            console.log(response)
+            if (response.error) {
+                console.log(response)
+                setShowError(true)
+                setError(true)
+                setMessage(response.error.data.result[0])
+                return
+            } else {
+                await Preferences.set({
+                    key: 'loginState',
+                    value: JSON.stringify({
+                        publicUserId: response.data.publicId,
+                        verifyToken: response.data.verifyToken,
+                        isAuthenticated: true,
+                        publicBusinessId: null,
+                        businessName: null,
+                    }),
                 })
-            )
+                dispatch(
+                    setLoginState({
+                        publicUserId: response.data.publicId,
+                        verifyToken: response.data.verifyToken,
+                        isAuthenticated: true,
+                        publicBusinessId: null,
+                        businessName: null,
+                    })
+                )
+            }
+
             // await Preferences.clear()
             // dispatch(setAuthenticated(true))
-            navigate('/business', { replace: true })
+            // navigate('/business', { replace: true }) //async action
         } catch (error) {
             const errorMsg = displayError(error)
-            setShowError(true)
-            setError(true)
-            setMessage(errorMsg)
         }
     }
     setTimeout(() => {

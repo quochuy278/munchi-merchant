@@ -29,11 +29,10 @@ const BusinessDialog = ({ loginState }: any) => {
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
     const { businessData, isLocked } = useSelector((state: RootState) => state.business)
-    console.log(loginState.publicUserId, 'busines Dialog')
-    console.log(isLocked)
     if (isLocked) {
         console.log('business Data is ', businessData, 'business is locked')
     }
+
     const dialogHandler = () => {
         dispatch(setSelectBusinessClose(isLocked))
         setOpen(false)
@@ -48,7 +47,6 @@ const BusinessDialog = ({ loginState }: any) => {
                 businessName: businessData[0].name,
             })
         )
-        navigate('/', { replace: true })
         setOpen(false)
     }
     return (
@@ -61,7 +59,7 @@ const BusinessDialog = ({ loginState }: any) => {
             <DialogTitle>Confirmation</DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-slide-description">
-                    You are choosing {businessData[0].name}
+                    You are choosing {businessData[0]?.name}
                 </DialogContentText>
             </DialogContent>
             <DialogActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
