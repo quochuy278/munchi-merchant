@@ -23,10 +23,7 @@ export default function DetailPage() {
   });
 
   const detailOrder = detailOrderArray[0] as Order;
-  // console.log(
-  //   "🚀 ~ file: index.tsx ~ line 26 ~ DetailPage ~ detailOrder",
-  //   detailOrder
-  // );
+ 
   const { id } = detailOrder;
 
   return (

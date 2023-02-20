@@ -2,6 +2,15 @@
     width: 100vw;
     height: 100vh;
     display: flex;
-    justify-content: center;
+  
     align-items: center;
+    flex-direction: column;
+}
+.business__title{
+    padding: 40px;
+}
+.business__list{
+    height: 40vh;
+    width: 60vw;
+    overflow: hidden;
 }

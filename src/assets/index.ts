@@ -1,3 +1,3 @@
-import MunchiLogo from './img/munchi_logo.png'
+import MunchiLogo from './icons/logo.svg'
 
 export { MunchiLogo };

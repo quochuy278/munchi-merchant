@@ -1,33 +1,36 @@
-import { createSlice, current, PayloadAction } from "@reduxjs/toolkit";
-import { useNavigate } from "react-router-dom";
-import { RootState } from ".";
-import { UserObject } from "../shared/interfaces/user.interface";
+import { createSlice } from '@reduxjs/toolkit'
+import { LoginState, UserObject } from '../shared/interfaces/user.interface'
 
 const initialState = {
-  isAuthenticated: false,
-  userInfo: [] as Array<UserObject>,
-};
+    loading: false,
+    isAuthenticated: false,
+    loginState: {} as LoginState,
+    error: null,
+}
 
 export const AuthSlice = createSlice({
-  name: "auth",
-  initialState,
-  reducers: {
-    signin: (state) => {
-      state.isAuthenticated = true;
-      // console.log(current(state))
+    name: 'auth',
+    initialState,
+    reducers: {
+        setAuthenticated: (state, { payload }: any) => {
+            console.log(payload)
+            if (payload) {
+                state.isAuthenticated = payload
+            } else {
+                state.isAuthenticated = false
+            }
+        },
+        setLoginState: (state, { payload }: any) => {
+            state.isAuthenticated = true
+            state.loginState = {...payload}
+        },
+        setLogoutState: (state, { payload }) => {
+            state.isAuthenticated = false
+            state.loginState = payload
+        },
     },
-    setUser: (state, { payload }: any) => {
-      state.userInfo.push(payload);
-      console.log("set user succeed");
-    },
-    signout: (state, payload) => {
-      state.isAuthenticated = true;
+})
 
-      // console.log(current(state))
-    },
-  },
-});
+export const { setAuthenticated, setLoginState, setLogoutState } = AuthSlice.actions
 
-export const { signin, setUser, signout } = AuthSlice.actions;
-
-export default AuthSlice.reducer;
+export default AuthSlice.reducer

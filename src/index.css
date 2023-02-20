@@ -1,14 +1,13 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+    font-family: 'DM-Sans-Medium';
+    src: url('./assets//font//dm-sans//DMSans-Medium.ttf') format('ttf');
 }
 
-code {
-  font-family: 'DM-sans' ;
+body {
+    margin: 0;
+    font-family: 'DM-Sans-Medium';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 

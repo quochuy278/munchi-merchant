@@ -1,17 +1,24 @@
-import styles from "./index.module.css";
-import BusinessItem from "../item";
-import { RootObject } from "../../../shared/interfaces/business.interface";
-import { Box, Typography } from "@mui/material";
+import { Box } from '@mui/material'
+import { useState } from 'react'
+import BusinessDialog from '../dialog/BusinessDialog'
+import BusinessItem from '../item'
+import styles from './index.module.css'
 
-const BusinessList = () => {
-  return (
-    <Box className={styles.business__list}>
-      <Typography variant="h5" sx={{marginBottom:"50px"}}>
-        Select your business
-      </Typography>
-      <BusinessItem />
-    </Box>
-  );
-};
+const BusinessList = ({ data }) => {
+    // const dispatch = useDispatch<AppDispatch>();
+    // const [business, setBusiness] = useState("");
+    
+    return (
+        <Box className={styles.business__list}>
+            {data.map((business: any) => {
+                return (
+                    <Box className={styles.business__item} key={business.publicId}>
+                        <BusinessItem data={business}/>
+                    </Box>
+                )
+            })}
+        </Box>
+    )
+}
 
-export default BusinessList;
+export default BusinessList

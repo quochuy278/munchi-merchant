@@ -1,94 +1,96 @@
-import { Order, ProductItem } from "./order.interface";
+import { Order, ProductItem } from './order.interface'
 
 export type Props = {
-  children?: JSX.Element | JSX.Element[];
-};
+    children?: JSX.Element | JSX.Element[]
+}
 
+export interface ProtectedRoutesProps{
+    isAuthenticated: boolean,
+}
 
 export interface FooterProps extends Props {
-  prepTime: number;
-  orderId: number;
-  orderStatus: number;
-  deliveryType: number;
+    prepTime: number
+    orderId: number
+    orderStatus: number
+    deliveryType: number
 }
 
 export interface OrderTitleProps extends Props {
-  orderTitle: string;
-  orderQuantity: number;
+    orderTitle: string
+    orderQuantity: number
 }
 
 export interface OrderDataProps extends Props {
-  ordersData: Order[];
+    ordersData: Order[]
 }
 
 export interface DetailOrderDataProps extends Props {
-  detailOrder: Order;
+    detailOrder: Order
 }
 
 export interface FactoryIcon {
-  orderType: number;
+    orderType: number
 }
 
 export interface OrderProductListProps extends Props {
-  productList: ProductItem[];
-  orderId: number
+    productList: ProductItem[]
+    orderId: number
 }
 
 export interface DetailInfoListProps extends Props {
-  name: string;
-  deliveryType: number;
+    name: string
+    deliveryType: number
 }
 
 export interface DialogProps extends FooterProps {
-  open: boolean;
-  newPrepTime: number;
-  onClose: () => void;
+    open: boolean
+    newPrepTime: number
+    onClose: () => void
 }
 
 export interface DetailFooterProps extends Props {
-  timeStamp: string;
-  orderStatus: number;
-  deliveryType: number;
-  orderId: number;
+    timeStamp: string
+    orderStatus: number
+    deliveryType: number
+    orderId: number
 }
 
 export interface DetailFooterChildProps extends DetailFooterProps {
-  onOpen: () => void;
+    onOpen: () => void
 }
 
 export interface DetailTitleProps extends Props {
-  orderId: number;
+    orderId: number
 }
 
 export interface FactoryProps {
-  deliveryType: number;
+    deliveryType: number
 }
 
-
 export interface ClockProps extends Props {
-  targetDate:number
+    targetDate: number
 }
 
 export interface CoundownProps extends Props {
-  targetDate: number;
+    targetDate: number
 }
 
 export interface FactoryTimeFormatProps extends Props {
-  minutes: number;
-  seconds: number;
-  isDanger:boolean
+    minutes: number
+    seconds: number
+    isDanger: boolean
 }
 
 export interface FactoryDialogContentProps extends Props {
-  open:boolean,
-  onClose: () => void,
-  orderId:number,
-  deliveryType:number,
-  orderStatus:number,
-  newPrepTime:number
+    open: boolean
+    onClose: () => void
+    orderId: number
+    deliveryType: number
+    orderStatus: number
+    newPrepTime: number
 }
 
 export interface NotificationProps extends Props {
-  message:string,
-  isError: boolean
+    message: string
+    isError: boolean
 }

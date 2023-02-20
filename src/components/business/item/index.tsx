@@ -1,29 +1,36 @@
-import {
-  Avatar, Card,
-  CardActionArea, CardHeader
-} from "@mui/material";
+import { Avatar, Card, CardActionArea, CardHeader } from '@mui/material'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../../store'
+import {setSelectBusiness } from '../../../store/business-slice'
+import BusinessDialog from '../dialog/BusinessDialog'
 
-const BusinessItem = () => {
-  return (
-    <Card
-      sx={{
-        backgroundColor: "#ebe1e1c9",
-        boxShadow: "10px 5px 5px #F8F8F8",
-        ":active": {
-          backgroundColor: "#888888",
-        },
-      }}
-    >
-      <CardActionArea>
-        <CardHeader
-          avatar={
-            <Avatar src="https://res.cloudinary.com/ordering/image/upload/v1534196961/ak4o8bfgxcpoue0fx1xa.jpg"></Avatar>
-          }
-          title="Twirly Laundry"
-        />
-      </CardActionArea>
-    </Card>
-  );
-};
+const BusinessItem = ({ data }) => {
+    const dispatch = useDispatch<AppDispatch>()
 
-export default BusinessItem;
+    return (
+        <Card
+            sx={{
+                backgroundColor: '#696969',
+                boxShadow: '10px 5px 5px #F8F8F8',
+                ':active': {
+                    backgroundColor: '#888888',
+                },
+                color: 'white',
+            }}
+            onClick={() => dispatch(setSelectBusiness(data))}
+        >
+            <CardActionArea
+                sx={{
+                    '&:focus': {
+                        backgroundColor: 'red',
+                    },
+                }}
+            >
+                <CardHeader title={data.name} />
+            </CardActionArea>
+        </Card>
+    )
+}
+
+export default BusinessItem
