@@ -13,36 +13,36 @@ import Link from '@mui/material/Link'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { TypeOf } from 'zod'
 import Notification from '../../components/notification'
-import { PreferencesData } from '../../shared/interfaces/services.interface'
-import { AppDispatch, RootState } from '../../store'
-import { setAuthenticated, setLoginState } from '../../store/auth-slice'
+import { AppDispatch } from '../../store'
+import { setLoginState } from '../../store/auth-slice'
 import { useSignInUserMutation } from '../../store/services-slice'
 import { displayError } from '../../utils/displayError'
-import { preferencesCheck } from '../../utils/preferencesCheck'
 import { signInSchema } from '../../utils/validateInput'
-
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
+import InputAdornment from '@mui/material/InputAdornment'
+import IconButton from '@mui/material/IconButton'
 type SignInInput = TypeOf<typeof signInSchema>
 const theme = createTheme()
 const SignInPage = () => {
     const [message, setMessage] = useState('')
+    const [show, setShow] = useState(false)
     const [error, setError] = useState(false)
     const [showError, setShowError] = useState(false)
+    const navigate = useNavigate()
     const [signinUser, { isLoading: loading }] = useSignInUserMutation()
     // const { isLoading, isAuthenticated } = useSelector((state: RootState) => state.auth)
-    const { isValid } = useSelector((state: RootState) => state.business)
-    const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
     const {
         register,
         formState: { errors, isSubmitSuccessful },
         handleSubmit,
-        resetField,
     } = useForm<SignInInput>({
         resolver: zodResolver(signInSchema),
     })
@@ -60,12 +60,11 @@ const SignInPage = () => {
                 email: values.email,
                 password: values.password,
             })
-            console.log(response)
             if (response.error) {
                 console.log(response)
                 setShowError(true)
                 setError(true)
-                setMessage(response.error.data.result[0])
+                setMessage('response.error.data?.result[0]')
                 return
             } else {
                 await Preferences.set({
@@ -76,6 +75,7 @@ const SignInPage = () => {
                         isAuthenticated: true,
                         publicBusinessId: null,
                         businessName: null,
+                        enabled: null,
                     }),
                 })
                 dispatch(
@@ -87,6 +87,7 @@ const SignInPage = () => {
                         businessName: null,
                     })
                 )
+                navigate('/business', { replace: true })
             }
 
             // await Preferences.clear()
@@ -141,12 +142,19 @@ const SignInPage = () => {
                             required
                             fullWidth
                             label="Password"
-                            type="password"
+                            {...(show ? { type: 'text' } : { type: 'password' })}
                             id="password"
                             {...register('password')}
                             autoComplete="current-password"
                             error={!!errors['password']}
                             helperText={errors['password'] ? errors['password'].message : ''}
+                            InputProps={{
+                                endAdornment: (
+                                    <IconButton onClick={() => setShow(!show)}>
+                                        {show ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                                    </IconButton>
+                                ),
+                            }}
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary" />}

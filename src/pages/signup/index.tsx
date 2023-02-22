@@ -1,3 +1,4 @@
+import { Preferences } from '@capacitor/preferences'
 import { zodResolver } from '@hookform/resolvers/zod'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import { LoadingButton } from '@mui/lab'
@@ -17,11 +18,12 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { TypeOf } from 'zod'
 import Notification from '../../components/notification'
-import { AppDispatch, RootState } from '../../store'
+import { AppDispatch } from '../../store'
+import { setLoginState } from '../../store/auth-slice'
 import { useSignUpUserMutation } from '../../store/services-slice'
 import { displayError } from '../../utils/displayError'
 import { signUpSchema } from '../../utils/validateInput'
@@ -34,7 +36,6 @@ const SignUpPage = () => {
     const [showError, setShowError] = useState(false)
     const [signUpUser, { isLoading: loading }] = useSignUpUserMutation()
     const navigate = useNavigate()
-    const { isAuthenticated } = useSelector((state: RootState) => state.auth)
     const dispatch = useDispatch<AppDispatch>()
     const {
         register,
@@ -50,13 +51,40 @@ const SignUpPage = () => {
 
     const onHandleSubmit: SubmitHandler<SignUpInput> = async (values) => {
         try {
-            signUpUser({
+            const response: any = await signUpUser({
                 firstName: values.firstName,
                 lastName: values.lastName,
                 email: values.email,
                 password: values.password,
                 role: values.role,
             })
+            if (response.error) {
+                console.log(response)
+                setShowError(true)
+                setError(true)
+                setMessage(response.error.data.result[0])
+            } else {
+                await Preferences.set({
+                    key: 'loginState',
+                    value: JSON.stringify({
+                        publicUserId: response.data.publicId,
+                        verifyToken: response.data.verifyToken,
+                        isAuthenticated: true,
+                        publicBusinessId: null,
+                        businessName: null,
+                        enabled: null
+                    }),
+                })
+                dispatch(
+                    setLoginState({
+                        publicUserId: response.data.publicId,
+                        verifyToken: response.data.verifyToken,
+                        isAuthenticated: true,
+                        publicBusinessId: null,
+                        businessName: null,
+                    })
+                )
+            }
         } catch (error) {
             const errorMsg = displayError(error)
             setShowError(true)
@@ -64,9 +92,7 @@ const SignUpPage = () => {
             setMessage(errorMsg)
         }
     }
-    if (isSubmitSuccessful && !error) {
-        navigate('/business')
-    }
+
     setTimeout(() => {
         setShowError(false)
     }, 5000)

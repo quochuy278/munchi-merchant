@@ -3,7 +3,16 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Route, Routes, useNavigate, Navigate } from 'react-router-dom'
 import Layout from '../components/layout/Layout'
-import { BusinessPage, DetailPage, ErrorPage, MainPage, SignInPage, SignUpPage } from '../pages'
+import {
+    BusinessPage,
+    DetailPage,
+    ErrorPage,
+    MainPage,
+    ProfilePage,
+    SettingPage,
+    SignInPage,
+    SignUpPage,
+} from '../pages'
 import { PreferencesBusinessData } from '../shared/interfaces/services.interface'
 import { LoginState } from '../shared/interfaces/user.interface'
 import { RootState } from '../store'
@@ -36,7 +45,6 @@ function App() {
             case isAuthenticated:
                 return navigate('/business', { replace: true })
             case isAuthenticated && business:
-                console.log('should run this after select business')
                 return navigate('/', { replace: true })
             default:
                 return navigate('/signin', { replace: true })
@@ -61,7 +69,7 @@ function App() {
         isAuthenticatedVar = false
         business = false
     }
-    console.log(isAuthenticatedVar)
+
     useEffect(() => {
         document.title = 'Munchi Dashboard'
         const setAuthDataFromPeference = async () => {
@@ -69,7 +77,7 @@ function App() {
             setData(data)
         }
         setAuthDataFromPeference()
-        redirectControllerService(isAuthenticatedVar, business, isLocked)
+        // redirectControllerService(isAuthenticatedVar, business, isLocked)
         if (isObjectEmpty(loginState) && isObjectEmpty(data))
             return navigate('/signin', { replace: true })
     }, [loginState, isAuthenticatedVar, isLocked, business])
@@ -84,22 +92,52 @@ function App() {
                 }
             >
                 <Route
-                    path="/detail"
+                    path="/:orderId"
                     element={
-                        <Layout isAuthenticated={isAuthenticatedVar}>
-                            <DetailPage />
+                        <Layout
+                            isAuthenticated={isAuthenticatedVar && business}
+                            loginData={loginState && data}
+                        >
+                            <DetailPage loginData={loginState && data} />
                         </Layout>
                     }
-                >
-                    <Route path="/detail/:detailId" element={<DetailPage />} />
-                </Route>
+                ></Route>
             </Route>
             <Route
                 path="/"
                 element={
-                    <ProtectedRoutes isAuthenticated={isAuthenticatedVar}>
-                        <Layout isAuthenticated={isAuthenticatedVar && business}>
-                            <MainPage />
+                    <ProtectedRoutes isAuthenticated={isAuthenticatedVar && business}>
+                        <Layout
+                            isAuthenticated={isAuthenticatedVar && business}
+                            loginData={loginState && data}
+                        >
+                            <MainPage loginData={loginState && data} />
+                        </Layout>
+                    </ProtectedRoutes>
+                }
+            />
+            <Route
+                path="/profile"
+                element={
+                    <ProtectedRoutes isAuthenticated={isAuthenticatedVar && business}>
+                        <Layout
+                            isAuthenticated={isAuthenticatedVar && business}
+                            loginData={loginState && data}
+                        >
+                            <ProfilePage />
+                        </Layout>
+                    </ProtectedRoutes>
+                }
+            />
+            <Route
+                path="/setting"
+                element={
+                    <ProtectedRoutes isAuthenticated={isAuthenticatedVar && business}>
+                        <Layout
+                            isAuthenticated={isAuthenticatedVar && business}
+                            loginData={loginState && data}
+                        >
+                            <SettingPage />
                         </Layout>
                     </ProtectedRoutes>
                 }

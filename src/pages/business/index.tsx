@@ -1,41 +1,31 @@
-import { GetResult, Preferences } from '@capacitor/preferences'
+import { Box } from '@mui/material'
 import Typography from '@mui/material/Typography'
-import { Box, Button } from '@mui/material'
-import { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import BusinessDialog from '../../components/business/dialog/BusinessDialog'
 import BusinessList from '../../components/business/list'
-import MainContent from '../../components/container/MainContent'
 import { LoadingSpinner } from '../../components/customcomponents'
-import { BusinessData } from '../../shared/interfaces/business.interface'
-import {
-    PreferencesAuthenticateData,
-    PreferencesData,
-} from '../../shared/interfaces/services.interface'
-import { LoginState } from '../../shared/interfaces/user.interface'
 import { AppDispatch, RootState } from '../../store'
-import { setAuthenticated, setLogoutState } from '../../store/auth-slice'
-import { useGetBusinessByNameQuery } from '../../store/services-slice'
-import { displayError } from '../../utils/displayError'
-import { preferencesCheck } from '../../utils/preferencesCheck'
+import { logOut, useGetBusinessByNameQuery } from '../../store/services-slice'
 import styles from './index.module.css'
-import { setClearBusinessData } from '../../store/business-slice'
 const BusinessPage = ({ loginData }: any) => {
     const dispatch = useDispatch<AppDispatch>()
     // const [authState, setAuthState] = useState<any>({})
     const navigate = useNavigate()
-    console.log(loginData)
-    const { isPending, loading, businessData } = useSelector((state: RootState) => state.business)
+    const { isPending, loading } = useSelector((state: RootState) => state.business)
     console.log(isPending)
-    const { loginState } = useSelector((state: RootState) => state.auth)
     const { data, isError, isLoading, error } = useGetBusinessByNameQuery(loginData.publicUserId)
     useEffect(() => {
         if (loginData.businessName) {
             return navigate('/', { replace: true })
-        } else if (error || isError) return navigate('/error', { replace: true })
+        }
     }, [loginData])
+    // if (error || isError) {
+    //     setTimeout(() => {
+    //         dispatch(logOut())
+    //     }, 1000)
+    // }
     return (
         <Box className={styles.container}>
             {isLoading ? (
@@ -56,7 +46,6 @@ const BusinessPage = ({ loginData }: any) => {
                     <LoadingSpinner />
                 </Box>
             ) : null}
-            This is business page
         </Box>
     )
 }

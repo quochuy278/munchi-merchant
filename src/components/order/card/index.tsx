@@ -1,6 +1,6 @@
 import { Box, IconButton, Typography } from '@mui/material'
 import { useTranslation } from 'react-i18next'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Order } from '../../../shared/interfaces/order.interface'
 import { OrderDataProps } from '../../../shared/interfaces/props.interface'
 import { FactoryIconInfo } from '../../factory'
@@ -17,6 +17,7 @@ export default function OrderCard({ order }: any) {
     const now = moment()
     return (
         <Box className={styles.main__card__container} key={order.id}>
+            <Link to={`/${order.id}`} style={{textDecoration:'none', color:"black"}} >
             <Box component="form">
                 <Box
                     display="flex"
@@ -73,6 +74,7 @@ export default function OrderCard({ order }: any) {
                 deliveryType={order.deliveryType}
                 prepTime={order.preparedIn}
             />
+            </Link>
         </Box>
     )
 }

@@ -11,9 +11,9 @@ import ItemFooter from "./itemfooter";
 import { useTranslation } from "react-i18next";
 
 
-export default function ItemCard({ detailOrder }: any) {
+export default function ItemCard({ data }: any) {
   const {t} = useTranslation('common')
-  const { products, comments } = detailOrder;
+console.log(data)
   return (
     <Box gridColumn="span 6" className={styles.detail__content}>
       <Box className={styles.detail__card}>
@@ -24,7 +24,7 @@ export default function ItemCard({ detailOrder }: any) {
           className={styles.detail__title}
         >
           <Typography fontSize="18px" lineHeight="24px" fontWeight={600}>
-            {products.length} {t('Items')}
+            {data?.products.length} {t('Items')}
           </Typography>
           <IconButton sx={{ backgroundColor: "#F2F9FE", borderRadius: "8px" }}>
             <PrintIcon
@@ -37,7 +37,7 @@ export default function ItemCard({ detailOrder }: any) {
           </IconButton>
         </Box>
         <Divider sx={{ width: "100%", marginTop: "10px" }} />
-        <ItemList items={products} />
+        <ItemList items={data?.products} />
         <Box sx={{ width: "90%" }}>
           <Box
             sx={{
@@ -54,7 +54,7 @@ export default function ItemCard({ detailOrder }: any) {
               fontFamily="DM-sans"
               fontWeight={600}
             >
-              {comments}
+              {data?.products.comments}
             </Typography>
           </Box>
         </Box>

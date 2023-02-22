@@ -3,8 +3,13 @@ import { LoginState, UserObject } from '../shared/interfaces/user.interface'
 
 const initialState = {
     loading: false,
-    isAuthenticated: false,
-    loginState: {} as LoginState,
+    loginState: {
+        businessName: null,
+        isAuthenticated: false,
+        publicBusinessId: null,
+        publicUserId: null,
+        verifyToken: null,
+    } as LoginState,
     error: null,
 }
 
@@ -15,22 +20,25 @@ export const AuthSlice = createSlice({
         setAuthenticated: (state, { payload }: any) => {
             console.log(payload)
             if (payload) {
-                state.isAuthenticated = payload
+                state.loginState.isAuthenticated = payload
             } else {
-                state.isAuthenticated = false
+                state.loginState.isAuthenticated = false
             }
         },
         setLoginState: (state, { payload }: any) => {
-            state.isAuthenticated = true
-            state.loginState = {...payload}
+            state.loginState.isAuthenticated = true
+            state.loginState = { ...payload }
         },
         setLogoutState: (state, { payload }) => {
-            state.isAuthenticated = false
+            state.loginState.isAuthenticated = true
             state.loginState = payload
+        },
+        tokenReceived(state, { payload }: any) {
+            state.loginState.verifyToken = payload
         },
     },
 })
 
-export const { setAuthenticated, setLoginState, setLogoutState } = AuthSlice.actions
+export const { setAuthenticated, setLoginState, setLogoutState ,tokenReceived} = AuthSlice.actions
 
 export default AuthSlice.reducer

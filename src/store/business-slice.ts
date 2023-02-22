@@ -4,6 +4,7 @@ import { RootState } from '.'
 import { BusinessData } from '../shared/interfaces/business.interface'
 import { LoginState } from '../shared/interfaces/user.interface'
 import { setLoginState } from './auth-slice'
+import { logOut } from './services-slice'
 const initialState = {
     loading: false,
     enabled: false,
@@ -36,6 +37,7 @@ export const setPreferenceBusiness = createAsyncThunk(
                     isAuthenticated: true,
                     publicBusinessId: data.publicBusinessId,
                     businessName: data.businessName,
+                    enabled: null
                 }),
             })
             console.log('updated Loginstate')
@@ -115,8 +117,27 @@ export const BusinessSlice = createSlice({
             // Add user to the state array
             state.loading = true
             state.error = null
+            state.isPending = true
         })
         builder.addCase(setPreferenceBusiness.rejected, (state, { payload }: any) => {
+            // Add user to the state array
+            state.loading = false
+            state.error = payload
+        })
+        builder.addCase(logOut.fulfilled, (state, { payload }: any) => {
+            // Add user to the state array
+            state.loading = false
+            state.error = null
+            state.businessData.pop()
+            state.isLocked = false
+            state.isPending = false
+        })
+        builder.addCase(logOut.pending, (state, { payload }: any) => {
+            // Add user to the state array
+            state.loading = true
+            state.error = null
+        })
+        builder.addCase(logOut.rejected, (state, { payload }: any) => {
             // Add user to the state array
             state.loading = false
             state.error = payload

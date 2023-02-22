@@ -121,22 +121,7 @@ export const FactoryIconInfo = ({ orderType }: FactoryIcon) => {
             )
     }
 }
-const filterData: FilterQuery = {
-    query: '{"status":[0,1,2,5,7]}',
-    paramsQuery: [
-        'id',
-        'business_id',
-        'prepared_in',
-        'customer_id',
-        'status',
-        'delivery_type',
-        'delivery_datetime',
-        'products',
-        'summary',
-        'customer',
-        'created_at',
-    ].join(','),
-}
+
 export const FactoryDialogContent = ({
     open,
     onClose,
@@ -149,7 +134,7 @@ export const FactoryDialogContent = ({
     const { t } = useTranslation('common')
     const dispatch = useDispatch<AppDispatch>()
     const [updateOrder, { isLoading: isUpdating }] = useUpdateOrderMutation()
-    const getFilterOrder = useGetFilterOrderQuery(filterData)
+    console.log(newPrepTime)
     const onUpdateClick = async (dataUpdate: UpdateOrderData) => {
         const updateResponse: any = await updateOrder(dataUpdate)
         onClose()

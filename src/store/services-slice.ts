@@ -1,6 +1,12 @@
 import { GetResult, Preferences } from '@capacitor/preferences'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import {
+    BaseQueryFn,
+    createApi,
+    FetchArgs,
+    fetchBaseQuery,
+    FetchBaseQueryError,
+} from '@reduxjs/toolkit/query/react'
 import axios from 'axios'
 import { RootState } from '.'
 import { FilterQuery, UpdateOrderData } from '../shared/interfaces/order.interface'
@@ -12,28 +18,57 @@ import {
 } from '../shared/interfaces/services.interface'
 import { LoginState } from '../shared/interfaces/user.interface'
 import { getUrl } from '../utils/getUrl'
-
-// Define a service using a base URL and expected endpoints
+import { setLogoutState, tokenReceived } from './auth-slice'
+export const logOut = createAsyncThunk(
+    'auth/logout',
+    async (data, { dispatch, rejectWithValue }) => {
+        await Preferences.clear()
+        dispatch(setLogoutState({}))
+    }
+)
+const baseQuery = fetchBaseQuery({
+    baseUrl: `${process.env.REACT_APP_API__URL_DEV}`,
+    async prepareHeaders(headers, { getState }) {
+        // If we have a token set in state, let's assume that we should be passing it.
+        const authenticateData: GetResult = await Preferences.get({ key: 'loginState' })
+        const data: LoginState = JSON.parse(authenticateData.value!)
+        var verifyToken: string
+        const loginState = (getState() as RootState).auth.loginState
+        if (!data) {
+            verifyToken = loginState.verifyToken as string
+            headers.set('authorization', `Bearer ${verifyToken}`)
+        } else {
+            verifyToken = data.verifyToken as string
+            headers.set('authorization', `Bearer ${verifyToken}`)
+        }
+        return headers
+    },
+})
+const baseQueryWithReauth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQueryError> = async (
+    args,
+    api,
+    extraOptions
+) => {
+    // 
+    let result = await baseQuery(args, api, extraOptions)
+    if (result.error && result.error.status === 401) {
+        // try to get a new token
+        const refreshResult = await baseQuery('/refreshToken', api, extraOptions)
+        if (refreshResult.data) {
+            // store the new token
+            api.dispatch(tokenReceived(refreshResult.data))
+            // retry the initial query
+            result = await baseQuery(args, api, extraOptions)
+        } else {
+            api.dispatch(logOut())
+        }
+    }
+    return result
+    // Define a service using a base URL and expected endpoints
+}
 export const MunchiApi = createApi({
     reducerPath: 'businessApi',
-    baseQuery: fetchBaseQuery({
-        baseUrl: `${process.env.REACT_APP_API__URL_DEV}`,
-        async prepareHeaders(headers, { getState }) {
-            // If we have a token set in state, let's assume that we should be passing it.
-            const authenticateData: GetResult = await Preferences.get({ key: 'loginState' })
-            const data: LoginState = JSON.parse(authenticateData.value!)
-            var verifyToken: string
-            const loginState = (getState() as RootState).auth.loginState
-            if (!data) {
-                verifyToken = loginState.verifyToken as string
-                headers.set('authorization', `Bearer ${verifyToken}`)
-            } else {
-                verifyToken = data.verifyToken as string
-                headers.set('authorization', `Bearer ${verifyToken}`)
-            }
-            return headers
-        },
-    }),
+    baseQuery: baseQueryWithReauth,
     tagTypes: ['Business', 'User', 'Order'],
     endpoints: (builder) => ({
         signInUser: builder.mutation({
@@ -53,7 +88,7 @@ export const MunchiApi = createApi({
                 body: {
                     firstName: signUpData.firstName,
                     lastName: signUpData.lastName,
-                    role: signUpData.role,        
+                    role: signUpData.role,
                     email: signUpData.email,
                     password: signUpData.password,
                 },
@@ -67,17 +102,29 @@ export const MunchiApi = createApi({
                     publicUserId: publicUserId,
                 },
             }),
+            // async onQueryStarted(args, { dispatch, queryFulfilled, }) {
+            //     try {
+            //       await queryFulfilled;
+            //       await dispatch(MunchiApi.endpoints.signInUser.initiate(null));
+            //     } catch (error) {}
+            //   },
         }),
-        editBusinessOnline: builder.mutation({
-            query: (id, ...patch) => ({
-                url: `business/${id}/getBusinessOnline`,
+        activateBusiness: builder.mutation({
+            query: (publicBusinessId: string) => ({
+                url: `business/editBusiness/activate`,
                 method: 'POST',
+                body: {
+                    publicBusinessId: publicBusinessId,
+                },
             }),
         }),
-        editBusinessOffline: builder.mutation({
-            query: (id, ...patch) => ({
-                url: `business/${id}/getBusinessOffline`,
+        deactivateBusiness: builder.mutation({
+            query: (publicBusinessId: string) => ({
+                url: `business/editBusiness/deactivate`,
                 method: 'POST',
+                body: {
+                    publicBusinessId: publicBusinessId,
+                },
             }),
         }),
         getAllOrder: builder.query({
@@ -89,7 +136,7 @@ export const MunchiApi = createApi({
         }),
         getFilterOrder: builder.query({
             query: (filterQuery: FilterQuery) => ({
-                url: `orders/filteredOrders?query=${filterQuery.query}&paramsQuery=${filterQuery.paramsQuery}`,
+                url: `orders/filteredOrders?query=${filterQuery.query}&paramsQuery=${filterQuery.paramsQuery}&publicBusinessId=${filterQuery.publicBusinessId}`,
                 method: 'GET',
             }),
             providesTags: ['Order'],
@@ -101,14 +148,17 @@ export const MunchiApi = createApi({
             }),
         }),
         updateOrder: builder.mutation({
-            query: (data: UpdateOrderData) => ({
-                url: getUrl('orders', data.orderId),
-                method: 'PUT',
-                body: {
-                    preparedIn: data.newPrepTime,
-                    orderStatus: data.orderStatus,
-                },
-            }),
+            query: (data: UpdateOrderData) => (
+                console.log(data.newPrepTime),
+                {
+                    url: getUrl('orders', data.orderId),
+                    method: 'PUT',
+                    body: {
+                        preparedIn: data.newPrepTime,
+                        orderStatus: data.orderStatus,
+                    },
+                }
+            ),
             invalidatesTags: ['Order'],
         }),
     }),
@@ -120,10 +170,10 @@ export const {
     useGetBusinessByNameQuery,
     useGetAllOrderQuery,
     useGetOrderByIdQuery,
-    useEditBusinessOfflineMutation,
-    useEditBusinessOnlineMutation,
     useUpdateOrderMutation,
     useGetFilterOrderQuery,
     useSignInUserMutation,
     useSignUpUserMutation,
+    useActivateBusinessMutation,
+    useDeactivateBusinessMutation,
 } = MunchiApi

@@ -4,6 +4,9 @@ import LogoutIcon from '@mui/icons-material/Logout'
 import MailIcon from '@mui/icons-material/Mail'
 import MenuIcon from '@mui/icons-material/Menu'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
+import SettingsIcon from '@mui/icons-material/Settings'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import DashboardIcon from '@mui/icons-material/Dashboard'
 import {
     Divider,
     IconButton,
@@ -31,13 +34,12 @@ import { displayError } from '../../utils/displayError'
 import { setClearBusinessData } from '../../store/business-slice'
 
 type Anchor = 'top' | 'left' | 'bottom' | 'right'
-export default function Header({ loginState }: any) {
+export default function Header({ loginData }: any) {
     const [isOpen, setIsOpen] = useState(false)
-    const [authState, setAuthState] = useState<any>({})
     const dispatch = useDispatch<AppDispatch>()
     const navigate = useNavigate()
     const { t, i18n } = useTranslation('common')
-    console.log(loginState)
+    console.log(loginData)
     const [state, setState] = React.useState({
         left: false,
     })
@@ -57,7 +59,6 @@ export default function Header({ loginState }: any) {
     const onLogoutHandler = async () => {
         await Preferences.clear()
         dispatch(setLogoutState({}))
-       
         dispatch(setClearBusinessData())
         navigate('/signin', { replace: true })
     }
@@ -81,16 +82,30 @@ export default function Header({ loginState }: any) {
 
             <Divider />
             <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                            </ListItemIcon>
-                            <ListItemText primary={text} />
-                        </ListItemButton>
-                    </ListItem>
-                ))}
+                <ListItem key="Dashboard" disablePadding>
+                    <ListItemButton href='/'>
+                        <ListItemIcon>
+                            <DashboardIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Dashboard" />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem key="Profile" disablePadding>
+                    <ListItemButton href='/profile'>
+                        <ListItemIcon>
+                            <AccountCircleIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Profile" />
+                    </ListItemButton>
+                </ListItem>
+                <ListItem key="Setting" disablePadding>
+                    <ListItemButton href='/setting'>
+                        <ListItemIcon>
+                            <SettingsIcon />
+                        </ListItemIcon>
+                        <ListItemText primary="Setting" />
+                    </ListItemButton>
+                </ListItem>
                 <ListItem key="Logout" disablePadding>
                     <ListItemButton onClick={onLogoutHandler}>
                         <ListItemIcon>
@@ -173,16 +188,17 @@ export default function Header({ loginState }: any) {
                             <img src={MunchiLogo} width={100} height={50} />
                         </Box>
                         {/* </IconButton> */}
-                        {authState.businessName || loginState.businessName ? (
+                        {loginData.businessName ? (
                             <Box display={'flex'} alignItems="center">
                                 <Typography color={'black'} fontSize="16px" lineHeight="13px">
-                                    {authState.businessName || loginState.businessName}
+                                    {loginData.businessName}
                                 </Typography>
 
                                 <Switch
                                     checked={isOpen}
                                     onChange={() => setIsOpen(!isOpen)}
                                     sx={{ color: 'black' }}
+                                    // onClick
                                 />
                                 <CircleIcon
                                     sx={{

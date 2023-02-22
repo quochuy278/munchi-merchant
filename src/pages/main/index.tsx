@@ -9,14 +9,16 @@ import { selectOrders, selectStatus } from '../../store/order-slice'
 import { useTranslation } from 'react-i18next'
 import { OrderEnum } from '../../shared/enum/enum'
 import { FilterQuery, Order } from '../../shared/interfaces/order.interface'
-import { useGetFilterOrderQuery } from '../../store/services-slice'
+import { logOut, useGetFilterOrderQuery } from '../../store/services-slice'
 import OrderCompleteList from '../../components/order/complete/list'
 import { io } from 'socket.io-client'
 import { useEffect } from 'react'
 import { preferencesCheck } from '../../utils/preferencesCheck'
-const MainPage = () => {
+import { Navigate } from 'react-router-dom'
+const MainPage = ({loginData}:any) => {
     const filterData: FilterQuery = {
-        query: '{"status":[0,1,2,5,7]}',
+        publicBusinessId: loginData.publicBusinessId,
+        query: null,
         paramsQuery: [
             'id',
             'business_id',
@@ -31,39 +33,26 @@ const MainPage = () => {
             'created_at',
         ].join(','),
     }
-    const { data, isError, isLoading } = useGetFilterOrderQuery(filterData, {
+    const { data, isError, isLoading, error } = useGetFilterOrderQuery(filterData, {
         refetchOnReconnect: true,
     })
+    console.log(data)
     const { loading } = useSelector((state: RootState) => state.order)
     const dispatch = useDispatch<AppDispatch>()
     const { t } = useTranslation('common')
-    // useEffect(() => {
-    //     const initGateway = async () => {
-    //         const PreferenceData = await preferencesCheck('authenticateData')
-    //         const PreferenceBusinessData = await preferencesCheck('businessData')
- 
-    //         const socket = io('http://localhost:5000')
-    //         socket.on('onOrder', async (socket) => {
-    //             //    await socket.join(PreferenceBusinessData.name)
-    //         })
-    //         socket.emit(
-    //             'orders',
-    //             JSON.stringify({
-    //                 publicUserId: PreferenceData.publicUserId,
-    //                 businessName: PreferenceBusinessData.name,
-    //             })
-    //         )
-    //     }
-    //     initGateway()
-    // }, [])
-   
+    if (error || isError) {
+        setTimeout(() => {
+            dispatch(logOut())
+        }, 1000)
+    }
+
     const pendingOrders = data?.filter((order: Order) => order.status === OrderEnum.PENDING)
 
     const acceptedOrders = data?.filter(
         (order: Order) => order.status === OrderEnum.ACCEPTED_BY_BUSINESS
     )
     const readyOrders = data?.filter((order: Order) => {
-        return order.status === OrderEnum.COMPLETED
+        return order.status === 11 || order.status === 1
     })
 
     return (

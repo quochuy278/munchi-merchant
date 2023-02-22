@@ -13,14 +13,13 @@ import { preferencesCheck } from '../../utils/preferencesCheck'
 import { displayError } from '../../utils/displayError'
 import { LoginState } from '../../shared/interfaces/user.interface'
 
-export default function Layout({ children, isAuthenticated }: any) {
+export default function Layout({ children, isAuthenticated,loginData }: any) {
     const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
-    const { loginState } = useSelector((state: RootState) => state.auth)
-
+    console.log(loginData, 'layout level')
     return (
         <div className={styles.app__container}>
-            {isAuthenticated ? <Header loginState={loginState} /> : null}
+            {isAuthenticated ? <Header loginData={loginData} /> : null}
             <main>{children}</main>
             <Footer />
         </div>

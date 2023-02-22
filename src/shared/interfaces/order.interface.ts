@@ -7,14 +7,15 @@ export interface Summary {
 }
 
 export interface FilterQuery {
-    query: string
+    publicBusinessId: string
+    query?: string | null
     paramsQuery: string[] | string
 }
 
 export interface UpdateOrderData {
-  orderId: number,
-  newPrepTime: number,
-  orderStatus: number
+    orderId: number
+    newPrepTime: number
+    orderStatus: number
 }
 
 export interface Item {

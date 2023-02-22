@@ -25,8 +25,6 @@ import { LoginState } from '../../../shared/interfaces/user.interface'
 import { displayError } from '../../../utils/displayError'
 const BusinessDialog = ({ loginState }: any) => {
     const [open, setOpen] = useState(true)
-    const [authState, setAuthState] = useState<LoginState>()
-    const navigate = useNavigate()
     const dispatch = useDispatch<AppDispatch>()
     const { businessData, isLocked } = useSelector((state: RootState) => state.business)
     if (isLocked) {

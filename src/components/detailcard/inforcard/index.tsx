@@ -7,9 +7,9 @@ import styles from './index.module.css';
 import InfoFooter from './infofooter';
 import InfoList from './infolist';
 
-export default function InfoCard({ detailOrder }: DetailOrderDataProps) {
+export default function InfoCard({ data }: any) {
   // console.log(detailOrder);
-  const { customer, createdAt, status, deliveryType,id } = detailOrder;
+  const { customer, createdAt, status, deliveryType,id } = data;
   return (
     <Box gridColumn="span 6" className={styles.detail__info__container}>
       <InfoList name={customer.name} deliveryType={deliveryType} />

@@ -7,7 +7,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle'
 import DiningIcon from '@mui/icons-material/Dining'
 import { OrderDataProps } from '../../../../shared/interfaces/props.interface'
 import { Order } from '../../../../shared/interfaces/order.interface'
-const OrderCompleteCard = ({order}: any) => {
+const OrderCompleteCard = ({ order }: any) => {
     return (
         <Box className={styles.order__complete__card__container}>
             <Typography
@@ -21,7 +21,7 @@ const OrderCompleteCard = ({order}: any) => {
             </Typography>
             <Typography lineHeight="18px" fontSize="14px" fontWeight={600}>
                 {' '}
-                Julia K.
+                {order.customer.name} {order.customer.lastName['0']}
             </Typography>
             <Box
                 display="flex"
